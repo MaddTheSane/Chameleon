@@ -201,9 +201,9 @@ typedef enum {
         CGRect rightFrame = CGRectZero;
         
         if (backItem) {
-            _leftView = [isa _backButtonWithBarButtonItem:backItem.backBarButtonItem];
+            _leftView = [[self class] _backButtonWithBarButtonItem:backItem.backBarButtonItem];
         } else {
-            _leftView = [isa _viewWithBarButtonItem:topItem.leftBarButtonItem];
+            _leftView = [[self class] _viewWithBarButtonItem:topItem.leftBarButtonItem];
         }
 
         if (_leftView) {
@@ -213,7 +213,7 @@ typedef enum {
             [self addSubview:_leftView];
         }
 
-        _rightView = [isa _viewWithBarButtonItem:topItem.rightBarButtonItem];
+        _rightView = [[self class] _viewWithBarButtonItem:topItem.rightBarButtonItem];
 
         if (_rightView) {
             _rightView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -229,7 +229,7 @@ typedef enum {
         if (!_centerView) {
             UILabel *titleLabel = [[[UILabel alloc] init] autorelease];
             titleLabel.text = topItem.title;
-            titleLabel.textAlignment = UITextAlignmentCenter;
+            titleLabel.textAlignment = NSCenterTextAlignment;
             titleLabel.backgroundColor = [UIColor clearColor];
             titleLabel.textColor = [UIColor whiteColor];
             titleLabel.font = [UIFont boldSystemFontOfSize:14];
