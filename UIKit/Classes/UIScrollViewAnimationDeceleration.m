@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIScrollViewAnimationDeceleration.h"
 
 /*
@@ -110,7 +111,7 @@ static BOOL BounceComponent(NSTimeInterval t, UIScrollViewAnimationDecelerationC
 
         c->bounced = YES;
 
-        if (fabsf(c->velocity) < minimumBounceVelocityBeforeReturning) {
+        if (fabs(c->velocity) < minimumBounceVelocityBeforeReturning) {
             c->returnFrom = c->position;
             c->returnTime = t;
         }

@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIScrollView.h"
 #import "UIScroller.h"
 #import "UITouch.h"

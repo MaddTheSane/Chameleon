@@ -46,7 +46,7 @@ NSString *const UIViewBoundsDidChangeNotification = @"UIViewBoundsDidChangeNotif
 NSString *const UIViewDidMoveToSuperviewNotification = @"UIViewDidMoveToSuperviewNotification";
 NSString *const UIViewHiddenDidChangeNotification = @"UIViewHiddenDidChangeNotification";
 
-static NSMutableArray *_animationGroups;
+static NSMutableArray<UIViewAnimationGroup*> *_animationGroups;
 static BOOL _animationsEnabled = YES;
 
 @implementation UIView {

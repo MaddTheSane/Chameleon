@@ -31,6 +31,10 @@
 #import "UIViewAdapter.h"
 #import <WebKit/WebKit.h>
 
+@interface UIWebView () <WebPolicyDelegate, WebUIDelegate, WebFrameLoadDelegate>
+
+@end
+
 @implementation UIWebView {
     WebView *_webView;
     UIViewAdapter *_webViewAdapter;
