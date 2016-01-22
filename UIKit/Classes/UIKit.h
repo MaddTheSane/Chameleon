@@ -27,6 +27,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <AppKit/NSNib.h>
+
 #ifndef IBAction
 #define IBAction void
 #endif

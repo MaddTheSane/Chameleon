@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIViewAdapter.h"
 #import "UINSClipView.h"
 #import "UIWindow.h"
@@ -217,8 +218,8 @@
 - (void)setContentOffset:(CGPoint)theOffset animated:(BOOL)animated
 {
     // rounding to avoid fuzzy images from subpixel alignment issues
-    theOffset.x = roundf(theOffset.x);
-    theOffset.y = roundf(theOffset.y);
+    theOffset.x = round(theOffset.x);
+    theOffset.y = round(theOffset.y);
 
     [super setContentOffset:theOffset animated:animated];
     [_clipView scrollToPoint:[_clipView constrainScrollPoint:NSPointFromCGPoint(theOffset)]];

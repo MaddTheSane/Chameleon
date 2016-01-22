@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIFont.h"
 #import <Cocoa/Cocoa.h>
 
@@ -175,7 +176,7 @@ static NSArray *_getFontCollectionNames(CTFontCollectionRef collection, CFString
     // the same point sizes. however there's still subtle differences between fonts on the two
     // platforms (iOS and Mac) and I don't know if it's ever going to be possible to make things
     // return exactly the same values in all cases.
-    return ceilf(self.ascender) - floorf(self.descender) + ceilf(CTFontGetLeading(_font));
+    return ceil(self.ascender) - floor(self.descender) + ceil(CTFontGetLeading(_font));
 }
 
 - (NSString *)familyName

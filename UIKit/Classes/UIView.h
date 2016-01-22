@@ -103,7 +103,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 @interface UIView : UIResponder <UIAppearanceContainer, UIAppearance>
 + (Class)layerClass;
 
-- (id)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame;
 - (void)addSubview:(UIView *)subview;
 - (void)insertSubview:(UIView *)subview atIndex:(NSInteger)index;
 - (void)insertSubview:(UIView *)subview belowSubview:(UIView *)below;

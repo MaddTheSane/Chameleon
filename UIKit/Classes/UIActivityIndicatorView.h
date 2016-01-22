@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, UIActivityIndicatorViewStyle) {
 };
 
 @interface UIActivityIndicatorView : UIView
-- (id)initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style;
+- (instancetype)initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style;
 - (void)startAnimating;
 - (void)stopAnimating;
 - (BOOL)isAnimating;

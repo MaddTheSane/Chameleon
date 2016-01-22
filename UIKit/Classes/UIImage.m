@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIImage+UIPrivate.h"
 #import "UIThreePartImage.h"
 #import "UINinePartImage.h"
@@ -133,8 +134,8 @@
     UIImageRep *rep = [_representations lastObject];
     const CGSize repSize = rep.imageSize;
     const CGFloat scale = rep.scale;
-    size.width = floorf(repSize.width / scale);
-    size.height = floorf(repSize.height / scale);
+    size.width = floor(repSize.width / scale);
+    size.height = floor(repSize.height / scale);
     return size;
 }
 

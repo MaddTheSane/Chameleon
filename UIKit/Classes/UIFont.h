@@ -34,12 +34,12 @@
     CTFontRef _font;
 }
 
-+ (UIFont *)fontWithName:(NSString *)fontName size:(CGFloat)fontSize;
-+ (NSArray *)familyNames;
-+ (NSArray *)fontNamesForFamilyName:(NSString *)familyName;
++ (instancetype)fontWithName:(NSString *)fontName size:(CGFloat)fontSize;
++ (NSArray<NSString*> *)familyNames;
++ (NSArray<NSString*> *)fontNamesForFamilyName:(NSString *)familyName;
 
-+ (UIFont *)systemFontOfSize:(CGFloat)fontSize;
-+ (UIFont *)boldSystemFontOfSize:(CGFloat)fontSize;
++ (instancetype)systemFontOfSize:(CGFloat)fontSize;
++ (instancetype)boldSystemFontOfSize:(CGFloat)fontSize;
 
 - (UIFont *)fontWithSize:(CGFloat)fontSize;
 

@@ -48,7 +48,7 @@ typedef NS_OPTIONS(NSUInteger, UIPopoverArrowDirection) {
 @end
 
 @interface UIPopoverController : NSObject
-- (id)initWithContentViewController:(UIViewController *)viewController;
+- (instancetype)initWithContentViewController:(UIViewController *)viewController;
 
 - (void)setContentViewController:(UIViewController *)controller animated:(BOOL)animated;
 - (void)setPopoverContentSize:(CGSize)size animated:(BOOL)animated;

@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, UISegmentedControlSegment) {
 @property (nonatomic, assign) NSInteger selectedSegmentIndex;
 @property (nonatomic, getter=isMomentary) BOOL momentary;
 
-- (id)initWithItems:(NSArray *)items;
+- (instancetype)initWithItems:(NSArray *)items;
 
 - (void)setTitle:(NSString *)title forSegmentAtIndex:(NSUInteger)segment;
 - (NSString *)titleForSegmentAtIndex:(NSUInteger)segment;

@@ -54,8 +54,8 @@ typedef NS_ENUM(NSInteger, UITabBarSystemItem) {
 
 
 @interface UITabBarItem : UIBarItem
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
-- (id)initWithTabBarSystemItem:(UITabBarSystemItem)systemItem tag:(NSInteger)tag;
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag;
+- (instancetype)initWithTabBarSystemItem:(UITabBarSystemItem)systemItem tag:(NSInteger)tag;
 
 @property (nonatomic, copy) NSString *badgeValue;
 @end

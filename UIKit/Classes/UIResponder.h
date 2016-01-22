@@ -71,7 +71,7 @@ extern NSString *const UIKeyInputRightArrow;
 extern NSString *const UIKeyInputEscape;
 
 @interface UIKeyCommand : NSObject <NSCopying, NSSecureCoding>
-+ (UIKeyCommand *)keyCommandWithInput:(NSString *)input modifierFlags:(UIKeyModifierFlags)modifierFlags action:(SEL)action;
++ (instancetype)keyCommandWithInput:(NSString *)input modifierFlags:(UIKeyModifierFlags)modifierFlags action:(SEL)action;
 @property (nonatomic,readonly) NSString *input;
 @property (nonatomic,readonly) UIKeyModifierFlags modifierFlags;
 @end

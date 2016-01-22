@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, UIProgressViewStyle) {
 };
 
 @interface UIProgressView : UIView
-- (id)initWithProgressViewStyle:(UIProgressViewStyle)style;
+- (instancetype)initWithProgressViewStyle:(UIProgressViewStyle)style;
 - (void)setProgress:(float)progress animated:(BOOL)animated;
 
 @property (nonatomic) UIProgressViewStyle progressViewStyle;

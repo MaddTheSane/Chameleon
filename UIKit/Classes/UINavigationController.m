@@ -36,6 +36,10 @@
 - (void)_removeFromParentViewController;
 @end
 
+@interface UINavigationController () <UINavigationBarDelegate>
+
+@end
+
 @implementation UINavigationController {
     UIViewController *_visibleViewController;
     BOOL _needsDeferredUpdate;

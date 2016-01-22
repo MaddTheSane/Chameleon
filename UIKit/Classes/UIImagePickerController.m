@@ -36,6 +36,7 @@ NSString *const UIImagePickerControllerCropRect = @"UIImagePickerControllerCropR
 NSString *const UIImagePickerControllerMediaURL = @"UIImagePickerControllerMediaURL";
 
 @implementation UIImagePickerController
+@synthesize delegate = _delegate;
 
 + (NSArray *)availableMediaTypesForSourceType:(UIImagePickerControllerSourceType)sourceType
 {

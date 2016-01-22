@@ -38,13 +38,13 @@ typedef NS_OPTIONS(NSUInteger, UIRectCorner) {
 };
 
 @interface UIBezierPath : NSObject <NSCopying>
-+ (UIBezierPath *)bezierPath;
-+ (UIBezierPath *)bezierPathWithRect:(CGRect)rect;
-+ (UIBezierPath *)bezierPathWithOvalInRect:(CGRect)rect;
-+ (UIBezierPath *)bezierPathWithRoundedRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
-+ (UIBezierPath *)bezierPathWithRoundedRect:(CGRect)rect byRoundingCorners:(UIRectCorner)corners cornerRadii:(CGSize)cornerRadii;
-+ (UIBezierPath *)bezierPathWithArcCenter:(CGPoint)center radius:(CGFloat)radius startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise;
-+ (UIBezierPath *)bezierPathWithCGPath:(CGPathRef)CGPath;
++ (instancetype)bezierPath;
++ (instancetype)bezierPathWithRect:(CGRect)rect;
++ (instancetype)bezierPathWithOvalInRect:(CGRect)rect;
++ (instancetype)bezierPathWithRoundedRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
++ (instancetype)bezierPathWithRoundedRect:(CGRect)rect byRoundingCorners:(UIRectCorner)corners cornerRadii:(CGSize)cornerRadii;
++ (instancetype)bezierPathWithArcCenter:(CGPoint)center radius:(CGFloat)radius startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise;
++ (instancetype)bezierPathWithCGPath:(CGPathRef)CGPath;
 
 - (void)moveToPoint:(CGPoint)point;
 - (void)addLineToPoint:(CGPoint)point;

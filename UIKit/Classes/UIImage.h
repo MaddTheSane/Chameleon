@@ -46,16 +46,16 @@ typedef NS_ENUM(NSInteger, UIImageOrientation) {
     NSArray *_representations;
 }
 
-+ (UIImage *)imageNamed:(NSString *)name;			// Note, this caches the images somewhat like iPhone OS 2ish in that it never releases them. :)
-+ (UIImage *)imageWithData:(NSData *)data;
-+ (UIImage *)imageWithContentsOfFile:(NSString *)path;
-+ (UIImage *)imageWithCGImage:(CGImageRef)imageRef;
-+ (UIImage *)imageWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation;
++ (instancetype)imageNamed:(NSString *)name;			// Note, this caches the images somewhat like iPhone OS 2ish in that it never releases them. :)
++ (instancetype)imageWithData:(NSData *)data;
++ (instancetype)imageWithContentsOfFile:(NSString *)path;
++ (instancetype)imageWithCGImage:(CGImageRef)imageRef;
++ (instancetype)imageWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation;
 
-- (id)initWithData:(NSData *)data;
-- (id)initWithContentsOfFile:(NSString *)path;
-- (id)initWithCGImage:(CGImageRef)imageRef;
-- (id)initWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation;
+- (instancetype)initWithData:(NSData *)data;
+- (instancetype)initWithContentsOfFile:(NSString *)path;
+- (instancetype)initWithCGImage:(CGImageRef)imageRef;
+- (instancetype)initWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation;
 
 - (UIImage *)stretchableImageWithLeftCapWidth:(NSInteger)leftCapWidth topCapHeight:(NSInteger)topCapHeight;
 - (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets;   // not correctly implemented

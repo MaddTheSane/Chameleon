@@ -30,7 +30,7 @@
 #import "UIAccessibility.h"
 
 @interface UIAccessibilityElement : NSObject
-- (id)initWithAccessibilityContainer:(id)container;
+- (instancetype)initWithAccessibilityContainer:(id)container;
 
 @property (nonatomic, strong) NSString *accessibilityLabel;
 @property (nonatomic, strong) NSString *accessibilityHint;

@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UILongPressGestureRecognizer.h"
 #import "UIGestureRecognizerSubclass.h"
 #import "UITouchEvent.h"
@@ -37,7 +38,7 @@ static CGFloat DistanceBetweenTwoPoints(CGPoint A, CGPoint B)
 {
     CGFloat a = B.x - A.x;
     CGFloat b = B.y - A.y;
-    return sqrtf((a*a) + (b*b));
+    return sqrt((a*a) + (b*b));
 }
 
 @implementation UILongPressGestureRecognizer {

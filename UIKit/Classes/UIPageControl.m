@@ -30,6 +30,7 @@
 #import "UIPageControl.h"
 
 @implementation UIPageControl
+@synthesize currentPage = _currentPage;
 
 - (void)setCurrentPage:(NSInteger)page
 {

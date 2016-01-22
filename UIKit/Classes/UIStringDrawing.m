@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIStringDrawing.h"
 #import "UIFont.h"
 #import <AppKit/AppKit.h>
@@ -99,7 +100,7 @@ static CFArrayRef CreateCTLinesForString(NSString *string, CGSize constrainedToS
             }
             
             if (line) {
-                drawSize.width = MAX(drawSize.width, ceilf(CTLineGetTypographicBounds(line,NULL,NULL,NULL)));
+                drawSize.width = MAX(drawSize.width, ceil(CTLineGetTypographicBounds(line,NULL,NULL,NULL)));
                 
                 CFArrayAppendValue(lines, line);
                 CFRelease(line);

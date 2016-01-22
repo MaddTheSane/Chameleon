@@ -32,8 +32,8 @@
 @class NSImage;
 
 @interface UIImage (AppKitIntegration)
-+ (id)imageWithNSImage:(NSImage *)theImage;
-- (id)initWithNSImage:(NSImage *)theImage;
++ (instancetype)imageWithNSImage:(NSImage *)theImage;
+- (instancetype)initWithNSImage:(NSImage *)theImage;
 - (NSImage *)NSImage;
 
 /*
@@ -74,7 +74,7 @@
  // put them together
  UIImage *finalImage = [UIImage imageWithScaledImages:@[image1, image2]];
  */
-+ (id)imageWithScaledImages:(NSArray *)images;
-- (id)initWithScaledImages:(NSArray *)images;
++ (instancetype)imageWithScaledImages:(NSArray<UIImage*> *)images;
+- (instancetype)initWithScaledImages:(NSArray<UIImage*> *)images;
 
 @end

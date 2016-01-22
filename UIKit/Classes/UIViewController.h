@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 @class UINavigationItem, UINavigationController, UIBarButtonItem, UISplitViewController;
 
 @interface UIViewController : UIResponder
-- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle;	// won't load a nib no matter what you do!
+- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle;	// won't load a nib no matter what you do!
 
 - (BOOL)isViewLoaded;
 - (void)loadView;

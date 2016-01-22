@@ -77,6 +77,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
         unsigned canEditRowAtIndexPath : 1;
     } _dataSourceHas;
 }
+@dynamic delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {

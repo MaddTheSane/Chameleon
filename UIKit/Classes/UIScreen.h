@@ -38,7 +38,7 @@ extern NSString *const UIScreenModeDidChangeNotification;
 
 @interface UIScreen : NSObject
 + (UIScreen *)mainScreen;
-+ (NSArray *)screens;
++ (NSArray<UIScreen*> *)screens;
 
 @property (nonatomic, readonly) CGRect bounds;
 @property (nonatomic, readonly) CGRect applicationFrame;

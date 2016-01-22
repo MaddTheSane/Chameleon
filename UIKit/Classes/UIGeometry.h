@@ -78,11 +78,11 @@ NSString *NSStringFromUIEdgeInsets(UIEdgeInsets insets);
 NSString *NSStringFromUIOffset(UIOffset offset);
 
 @interface NSValue (NSValueUIGeometryExtensions)
-+ (NSValue *)valueWithCGPoint:(CGPoint)point;
-+ (NSValue *)valueWithCGRect:(CGRect)rect;
-+ (NSValue *)valueWithCGSize:(CGSize)size;
-+ (NSValue *)valueWithUIEdgeInsets:(UIEdgeInsets)insets;
-+ (NSValue *)valueWithUIOffset:(UIOffset)offset;
++ (instancetype)valueWithCGPoint:(CGPoint)point;
++ (instancetype)valueWithCGRect:(CGRect)rect;
++ (instancetype)valueWithCGSize:(CGSize)size;
++ (instancetype)valueWithUIEdgeInsets:(UIEdgeInsets)insets;
++ (instancetype)valueWithUIOffset:(UIOffset)offset;
 - (CGPoint)CGPointValue;
 - (CGRect)CGRectValue;
 - (CGSize)CGSizeValue;

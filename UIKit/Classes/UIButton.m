@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIButton.h"
 #import "UIControl+UIPrivate.h"
 #import "UILabel.h"
@@ -288,7 +289,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
     
     switch (self.contentHorizontalAlignment) {
         case UIControlContentHorizontalAlignmentCenter:
-            rect.origin.x += floorf((contentRect.size.width/2.f) - (rect.size.width/2.f));
+            rect.origin.x += floor((contentRect.size.width/2.f) - (rect.size.width/2.f));
             break;
             
         case UIControlContentHorizontalAlignmentRight:
@@ -306,7 +307,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
     
     switch (self.contentVerticalAlignment) {
         case UIControlContentVerticalAlignmentCenter:
-            rect.origin.y += floorf((contentRect.size.height/2.f) - (rect.size.height/2.f));
+            rect.origin.y += floor((contentRect.size.height/2.f) - (rect.size.height/2.f));
             break;
             
         case UIControlContentVerticalAlignmentBottom:

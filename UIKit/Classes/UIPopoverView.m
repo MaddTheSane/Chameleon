@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIPopoverView.h"
 #import "UIImageView.h"
 #import "UIImage+UIPrivate.h"
@@ -76,9 +77,9 @@ static BOOL LineSegmentsIntersect(LineSegment line1, LineSegment line2, CGPoint 
         // if h is exactly 0 or 1, the lines touched on the end - we won't consider that an intersection
         if (h > 0 && h < 1) {
             if (intersection) {
-                const CGPoint I = CGPointMake(C.x+F.x*h, C.y+F.y*h);
-                intersection->x = I.x;
-                intersection->y = I.y;
+                const CGPoint II = CGPointMake(C.x+F.x*h, C.y+F.y*h);
+                intersection->x = II.x;
+                intersection->y = II.y;
             }
             return YES;
         }
@@ -92,7 +93,7 @@ static CGFloat DistanceBetweenTwoPoints(CGPoint A, CGPoint B)
 {
     CGFloat a = B.x - A.x;
     CGFloat b = B.y - A.y;
-    return sqrtf((a*a) + (b*b));
+    return sqrt((a*a) + (b*b));
 }
 
 @implementation UIPopoverView {
@@ -284,8 +285,8 @@ static CGFloat DistanceBetweenTwoPoints(CGPoint A, CGPoint B)
     [_arrowView sizeToFit];
     _arrowView.center = bestIntersection;
     CGRect arrowFrame = _arrowView.frame;
-    arrowFrame.origin.x = roundf(arrowFrame.origin.x);
-    arrowFrame.origin.y = roundf(arrowFrame.origin.y);
+    arrowFrame.origin.x = round(arrowFrame.origin.x);
+    arrowFrame.origin.y = round(arrowFrame.origin.y);
     _arrowView.frame = arrowFrame;
 }
 

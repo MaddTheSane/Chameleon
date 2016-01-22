@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIActivityIndicatorView.h"
 #import "UIImage.h"
 #import "UIGraphics.h"
@@ -74,7 +75,7 @@ static UIImage *UIActivityIndicatorViewFrameImage(UIActivityIndicatorViewStyle s
         
         // position and draw the tooth
         CGContextRotateCTM(c, 1 / numberOfTeeth * TWOPI);
-        [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(-toothWidth/2.f,-radius,toothWidth,ceilf(radius*.54f)) cornerRadius:toothWidth/2.f] fill];
+        [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(-toothWidth/2.f,-radius,toothWidth,ceil(radius*.54f)) cornerRadius:toothWidth/2.f] fill];
     }
     
     // hooray!

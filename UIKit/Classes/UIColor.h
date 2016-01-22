@@ -32,11 +32,11 @@
 @class UIImage;
 
 @interface UIColor : NSObject
-+ (UIColor *)colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
-+ (UIColor *)colorWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;
-+ (UIColor *)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
-+ (UIColor *)colorWithCGColor:(CGColorRef)ref;
-+ (UIColor *)colorWithPatternImage:(UIImage *)patternImage;
++ (instancetype)colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
++ (instancetype)colorWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;
++ (instancetype)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
++ (instancetype)colorWithCGColor:(CGColorRef)ref;
++ (instancetype)colorWithPatternImage:(UIImage *)patternImage;
 
 + (UIColor *)blackColor;
 + (UIColor *)darkGrayColor;
@@ -57,11 +57,11 @@
 + (UIColor *)lightTextColor;
 + (UIColor *)darkTextColor;
 
-- (id)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
-- (id)initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;
-- (id)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
-- (id)initWithCGColor:(CGColorRef)ref;
-- (id)initWithPatternImage:(UIImage *)patternImage;
+- (instancetype)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
+- (instancetype)initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;
+- (instancetype)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+- (instancetype)initWithCGColor:(CGColorRef)ref;
+- (instancetype)initWithPatternImage:(UIImage *)patternImage;
 
 - (UIColor *)colorWithAlphaComponent:(CGFloat)alpha;
 

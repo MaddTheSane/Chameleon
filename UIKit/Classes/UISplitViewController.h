@@ -33,7 +33,7 @@
 
 @interface UISplitViewController : UIViewController
 @property (nonatomic, assign) id <UISplitViewControllerDelegate> delegate;
-@property (nonatomic, copy) NSArray *viewControllers;
+@property (nonatomic, copy) NSArray<UIViewController*> *viewControllers;
 @end
 
 @class UIPopoverController;

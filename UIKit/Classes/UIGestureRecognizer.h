@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, UIGestureRecognizerState) {
 @end
 
 @interface UIGestureRecognizer : NSObject
-- (id)initWithTarget:(id)target action:(SEL)action;
+- (instancetype)initWithTarget:(id)target action:(SEL)action;
 
 - (void)addTarget:(id)target action:(SEL)action;
 - (void)removeTarget:(id)target action:(SEL)action;

@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, UITableViewCellEditingStyle) {
 @class UILabel, UIImageView;
 
 @interface UITableViewCell : UIView
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated;
 - (void)prepareForReuse;

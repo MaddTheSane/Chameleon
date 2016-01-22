@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, UIButtonType) {
 @package
     UIButtonType _buttonType;
 }
-+ (id)buttonWithType:(UIButtonType)buttonType;
++ (instancetype)buttonWithType:(UIButtonType)buttonType;
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state;
 - (void)setTitleColor:(UIColor *)color forState:(UIControlState)state;

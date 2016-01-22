@@ -27,6 +27,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <tgmath.h>
 #import "UIPopoverController+UIPrivate.h"
 #import "UIViewController.h"
 #import "UIWindow.h"
@@ -113,8 +114,8 @@ static NSPoint PopoverWindowOrigin(NSWindow *inWindow, NSRect fromRect, NSSize p
         windowRect.origin.y = NSMinY(screenRect);
     }
     
-    windowRect.origin.x = roundf(windowRect.origin.x);
-    windowRect.origin.y = roundf(windowRect.origin.y);
+    windowRect.origin.x = round(windowRect.origin.x);
+    windowRect.origin.y = round(windowRect.origin.y);
     
     return windowRect.origin;
 }

@@ -90,12 +90,12 @@ typedef NS_ENUM(NSInteger, UITableViewRowAnimation) {
 };
 
 @interface UITableView : UIScrollView
-- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style;
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style;
 - (void)reloadData;
 - (void)reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
-- (NSArray *)indexPathsForRowsInRect:(CGRect)rect;
+- (NSArray<NSIndexPath*> *)indexPathsForRowsInRect:(CGRect)rect;
 - (NSIndexPath *)indexPathForRowAtPoint:(CGPoint)point;
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;
 - (NSArray *)indexPathsForVisibleRows;

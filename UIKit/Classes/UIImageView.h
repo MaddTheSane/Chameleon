@@ -32,7 +32,7 @@
 @class UIImage, CAKeyframeAnimation;
 
 @interface UIImageView : UIView
-- (id)initWithImage:(UIImage *)theImage;
+- (instancetype)initWithImage:(UIImage *)theImage;
 - (void)startAnimating;
 - (void)stopAnimating;
 - (BOOL)isAnimating;
