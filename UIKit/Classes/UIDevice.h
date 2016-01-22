@@ -47,6 +47,13 @@ typedef NS_ENUM(NSInteger, UIUserInterfaceIdiom) {
     UIUserInterfaceIdiomDesktop,
 };
 
+typedef NS_ENUM(NSInteger, UIDeviceBatteryState) {
+    UIDeviceBatteryStateUnknown,
+    UIDeviceBatteryStateUnplugged,
+    UIDeviceBatteryStateCharging,
+    UIDeviceBatteryStateFull,
+};
+
 #define UI_USER_INTERFACE_IDIOM() \
     ([[UIDevice currentDevice] respondsToSelector:@selector(userInterfaceIdiom)] ? \
     [[UIDevice currentDevice] userInterfaceIdiom] : \
@@ -63,15 +70,19 @@ typedef NS_ENUM(NSInteger, UIUserInterfaceIdiom) {
 @interface UIDevice : NSObject
 + (UIDevice *)currentDevice;
 
-- (void)beginGeneratingDeviceOrientationNotifications;  // no effect
-- (void)endGeneratingDeviceOrientationNotifications;    // no effect
-
 @property (nonatomic, readonly, strong) NSString *name;
-@property (nonatomic, assign) UIUserInterfaceIdiom userInterfaceIdiom;                      // default is UIUserInterfaceIdiomDesktop (obviously real UIKit doesn't allow setting this!)
+@property (nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom;					// always returns UIUserInterfaceIdiomDesktop
 @property (nonatomic, readonly) UIDeviceOrientation orientation;							// always returns UIDeviceOrientationPortrait
+@property (nonatomic, readonly) UIDeviceBatteryState batteryState;                          // always returns UIDeviceBatteryStateUnknown
+@property (nonatomic, readonly) float batteryLevel;                                         // always returns -1.0 (unknown)
 @property (nonatomic, readonly,getter=isMultitaskingSupported) BOOL multitaskingSupported;	// always returns YES
 @property (nonatomic, readonly, strong) NSString *systemName;
 @property (nonatomic, readonly, strong) NSString *systemVersion;
 @property (nonatomic, readonly, strong) NSString *model;
 @property (nonatomic, readonly, getter=isGeneratingDeviceOrientationNotifications) BOOL generatesDeviceOrientationNotifications; // aways returns NO
+@property (nonatomic, assign) BOOL batteryMonitoringEnabled;
+
+- (void)beginGeneratingDeviceOrientationNotifications;  // no effect
+- (void)endGeneratingDeviceOrientationNotifications;    // no effect
+
 @end

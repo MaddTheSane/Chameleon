@@ -73,7 +73,10 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated;		// works, but not exactly correctly.
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;												// see comments in dismissModalViewController
 
-- (void)didReceiveMemoryWarning;	// is called when UIApplicationDidReceiveMemoryWarningNotification is posted, which is currently only done by private API for.. fun, I guess?
+- (void)presentViewController:(UIViewController *)modalViewController animated:(BOOL)animated completion:(void(^)(void))completion;
+- (void)dismissViewControllerAnimated:(BOOL)animated completion:(void(^)(void))completion;
+
+- (void)didReceiveMemoryWarning;	// doesn't do anything and is never called...
 
 - (void)setToolbarItems:(NSArray *)toolbarItems animated:(BOOL)animated;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
@@ -103,7 +106,9 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 @property (nonatomic, readonly, copy) NSString *nibName;
 @property (nonatomic, readonly, retain) NSBundle *nibBundle;
 @property (nonatomic, retain) UIView *view;
-@property (nonatomic, assign) BOOL wantsFullScreenLayout;
+@property (nonatomic, assign) BOOL wantsFullScreenLayout;		// doesn't do anything right now
+@property (nonatomic, assign) BOOL shouldAutorotate;            // always returns NO
+@property (nonatomic, assign) NSUInteger supportedInterfaceOrientations; // always returns UIInterfaceOrientationLandscapeLeft
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, readonly) UIInterfaceOrientation interfaceOrientation;
 @property (nonatomic, readonly, retain) UINavigationItem *navigationItem;

@@ -66,4 +66,13 @@ typedef NS_ENUM(NSInteger, UIWebViewNavigationType) {
 @property (nonatomic, readonly, strong) NSURLRequest *request;
 @property (nonatomic) UIDataDetectorTypes dataDetectorTypes;
 @property (nonatomic, readonly, strong) UIScrollView *scrollView;   // not implemented
+
+@property (nonatomic, assign) BOOL allowsInlineMediaPlayback;
+@property (nonatomic, assign) BOOL mediaPlaybackRequiresUserAction;
+@property (nonatomic, assign) BOOL mediaPlaybackAllowsAirPlay;
+@property (nonatomic, assign) BOOL keyboardDisplayRequiresUserAction;
+
+// Chameleon specific
+@property (nonatomic, assign) BOOL chameleonAllowContextMenu;
+
 @end

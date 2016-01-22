@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, UIProgressViewStyle) {
 
 @property (nonatomic) UIProgressViewStyle progressViewStyle;
 @property (nonatomic) float progress;
+@property (nonatomic, strong) UIColor *progressTintColor;
+@property (nonatomic, strong) UIColor *trackTintColor;
 
 @property (nonatomic, strong) UIImage *progressImage;
 @property (nonatomic, strong) UIImage *trackImage;

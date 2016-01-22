@@ -65,13 +65,14 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
         _textLayer = [[UITextLayer alloc] initWithContainer:self isField:YES];
         [self.layer insertSublayer:_textLayer atIndex:0];
 
-        self.textAlignment = UITextAlignmentLeft;
+        self.textAlignment = NSLeftTextAlignment;
         self.font = [UIFont systemFontOfSize:17];
         self.borderStyle = UITextBorderStyleNone;
         self.textColor = [UIColor blackColor];
         self.clearButtonMode = UITextFieldViewModeNever;
         self.leftViewMode = UITextFieldViewModeNever;
         self.rightViewMode = UITextFieldViewModeNever;
+        self.autocorrectionType = UITextAutocorrectionTypeDefault;
         self.opaque = NO;
     }
     return self;
@@ -189,6 +190,11 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
     }
 }
 
+- (void)setHidden:(BOOL)hidden
+{
+    [super setHidden:hidden];
+    [_textLayer setHidden:hidden];
+}
 
 - (CGRect)borderRectForBounds:(CGRect)bounds
 {
@@ -282,6 +288,12 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 
 - (void)drawPlaceholderInRect:(CGRect)rect
 {
+    // inset the rect by the offset required to vertically centre the text
+    CGFloat fontHeight = self.font.ascender + self.font.xHeight;
+    CGRect placeholderRect = CGRectInset(rect, 0, (rect.size.height - fontHeight) / 2);
+    
+    [[UIColor colorWithWhite:0.7 alpha:1.0] set];
+    [self->_placeholder drawInRect:placeholderRect withFont:self.font];
 }
 
 - (void)drawTextInRect:(CGRect)rect
@@ -292,6 +304,10 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 {
     UIImage *background = self.enabled? _background : _disabledBackground;
     [background drawInRect:self.bounds];
+    
+    if ([self.text length] == 0) {
+        [self drawPlaceholderInRect:[self placeholderRectForBounds:self.bounds]];
+    }
 }
 
 
@@ -306,11 +322,13 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 
 - (UITextAutocorrectionType)autocorrectionType
 {
-    return UITextAutocorrectionTypeDefault;
+    return self->_autocorrectionType;
 }
 
 - (void)setAutocorrectionType:(UITextAutocorrectionType)type
 {
+    self->_autocorrectionType = type;
+    [self->_textLayer setAutocorrectionType:type];
 }
 
 - (BOOL)enablesReturnKeyAutomatically
@@ -405,12 +423,12 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
     _textLayer.textColor = newColor;
 }
 
-- (UITextAlignment)textAlignment
+- (NSTextAlignment)textAlignment
 {
     return _textLayer.textAlignment;
 }
 
-- (void)setTextAlignment:(UITextAlignment)textAlignment
+- (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
     _textLayer.textAlignment = textAlignment;
 }
@@ -493,13 +511,13 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 {
     NSString *textAlignment = @"";
     switch (self.textAlignment) {
-        case UITextAlignmentLeft:
+        case NSLeftTextAlignment:
             textAlignment = @"Left";
             break;
-        case UITextAlignmentCenter:
+        case NSCenterTextAlignment:
             textAlignment = @"Center";
             break;
-        case UITextAlignmentRight:
+        case NSRightTextAlignment:
             textAlignment = @"Right";
             break;
     }
@@ -552,8 +570,9 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
     return nil;
 }
 
-@end
+- (UITextLayer *)textLayer { return _textLayer; }
 
+@end
 
 @implementation UIView (UITextField)
 
@@ -573,5 +592,4 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
     
     return NO;
 }
-
 @end

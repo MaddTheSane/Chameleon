@@ -230,7 +230,7 @@ typedef NS_ENUM(NSInteger, _UINavigationBarTransition) {
         if (!_centerView) {
             UILabel *titleLabel = [[UILabel alloc] init];
             titleLabel.text = topItem.title;
-            titleLabel.textAlignment = UITextAlignmentCenter;
+            titleLabel.textAlignment = NSCenterTextAlignment;
             titleLabel.backgroundColor = [UIColor clearColor];
             titleLabel.textColor = [UIColor whiteColor];
             titleLabel.font = [UIFont boldSystemFontOfSize:14];

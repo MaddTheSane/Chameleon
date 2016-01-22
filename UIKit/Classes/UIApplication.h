@@ -160,7 +160,7 @@ extern const NSTimeInterval UIMinimumKeepAliveTimeout;
 
 @property (nonatomic, weak, readonly) UIWindow *keyWindow;
 @property (nonatomic, readonly) NSArray *windows;
-@property (nonatomic, getter=isStatusBarHidden, readonly) BOOL statusBarHidden;
+@property (nonatomic, getter=isStatusBarHidden) BOOL statusBarHidden;
 @property (nonatomic, readonly) CGRect statusBarFrame;
 @property (nonatomic, getter=isNetworkActivityIndicatorVisible) BOOL networkActivityIndicatorVisible;	// does nothing, always returns NO
 @property (nonatomic) UIInterfaceOrientation statusBarOrientation;

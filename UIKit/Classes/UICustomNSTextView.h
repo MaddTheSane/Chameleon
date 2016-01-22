@@ -28,6 +28,7 @@
  */
 
 #import <AppKit/NSTextView.h>
+#import "UITextInputTraits.h"
 
 @class CALayer, UICustomNSTextView;
 
@@ -37,15 +38,19 @@
 - (BOOL)textView:(UICustomNSTextView *)textView shouldAcceptKeyDown:(NSEvent *)event;
 @end
 
-@interface UICustomNSTextView: NSTextView
+@interface UICustomNSTextView: NSTextView {
+    BOOL secureTextEntry;
+	BOOL isBecomingFirstResponder;
+    UITextAutocorrectionType autocorrectionType;
+}
 
-- (id)initWithFrame:(NSRect)frame secureTextEntry:(BOOL)isSecure isField:(BOOL)isField;
+@property (nonatomic) UITextAutocorrectionType autocorrectionType;
+- (instancetype)initWithFrame:(NSRect)frame secureTextEntry:(BOOL)isSecure isField:(BOOL)isField;
 - (void)setSecureTextEntry:(BOOL)isSecure;
 
 - (BOOL)reallyBecomeFirstResponder;
 - (BOOL)reallyResignFirstResponder;
 
-- (id<UICustomNSTextViewDelegate>)delegate;
-- (void)setDelegate:(id<UICustomNSTextViewDelegate>)d;
+@property (weak) id<UICustomNSTextViewDelegate>delegate;
 
 @end

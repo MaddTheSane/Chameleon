@@ -27,12 +27,29 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <AppKit/NSText.h>
 #import "UIView.h"
 #import "UIStringDrawing.h"
 
 @class UIFont, UIColor;
 
-@interface UILabel : UIView
+@interface UILabel : UIView {
+@private
+    NSString *_text;
+    UIFont *_font;
+    UIColor *_textColor;
+    UIColor *_highlightedTextColor;
+    UIColor *_shadowColor;
+    CGSize _shadowOffset;
+    NSTextAlignment _textAlignment;
+    UILineBreakMode _lineBreakMode;
+    BOOL _enabled;
+    NSInteger _numberOfLines;
+    UIBaselineAdjustment _baselineAdjustment;
+    BOOL _adjustsFontSizeToFitWidth;
+    CGFloat _minimumFontSize;
+    BOOL _highlighted;
+}
 - (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines;
 - (void)drawTextInRect:(CGRect)rect;
 
@@ -42,7 +59,7 @@
 @property (nonatomic, strong) UIColor *highlightedTextColor;
 @property (nonatomic, strong) UIColor *shadowColor;
 @property (nonatomic) CGSize shadowOffset;
-@property (nonatomic) UITextAlignment textAlignment;
+@property (nonatomic) NSTextAlignment textAlignment;
 @property (nonatomic) UILineBreakMode lineBreakMode;
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 @property (nonatomic) NSInteger numberOfLines;					// currently only supports 0 or 1

@@ -40,7 +40,7 @@
 {
     if ((self = [super initWithFrame:frame])) {
         self.userInteractionEnabled = NO;
-        self.textAlignment = UITextAlignmentLeft;
+        self.textAlignment = NSLeftTextAlignment;
         self.lineBreakMode = UILineBreakModeTailTruncation;
         self.textColor = [UIColor blackColor];
         self.backgroundColor = [UIColor whiteColor];
@@ -98,7 +98,7 @@
     }
 }
 
-- (void)setTextAlignment:(UITextAlignment)newAlignment
+- (void)setTextAlignment:(NSTextAlignment)newAlignment
 {
     if (newAlignment != _textAlignment) {
         _textAlignment = newAlignment;

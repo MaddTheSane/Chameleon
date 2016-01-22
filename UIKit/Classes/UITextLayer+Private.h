@@ -27,19 +27,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "UIAction.h"
+@interface UITextLayer(Private)
 
-@implementation UIAction
-
-- (BOOL)isEqual:(id)object
-{
-    if (object == self) {
-        return YES;
-    } else if ([object isKindOfClass:[self class]]) {
-        return ([object target] == self.target && [object action] == self.action);
-    } else {
-        return NO;
-    }
-}
+- (id)containerView;
 
 @end
+

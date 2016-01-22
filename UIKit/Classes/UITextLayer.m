@@ -28,6 +28,7 @@
  */
 
 #import "UITextLayer.h"
+#import "UITextLayer+Private.h"
 #import "UIScrollView.h"
 #import "UICustomNSTextView.h"
 #import "UICustomNSClipView.h"
@@ -44,7 +45,9 @@
 @end
 
 @implementation UITextLayer {
+	@protected
     UIView <UITextLayerContainerViewProtocol, UITextLayerTextDelegate> *_containerView;
+	@private
     BOOL _containerCanScroll;
     UICustomNSTextView *_textView;
     UICustomNSClipView *_clipView;
@@ -80,7 +83,7 @@
         [_textView setDelegate:self];
         [_clipView setDocumentView:_textView];
 
-        self.textAlignment = UITextAlignmentLeft;
+        self.textAlignment = NSLeftTextAlignment;
         [self setNeedsLayout];
     }
     return self;
@@ -244,6 +247,16 @@
     }
 }
 
+- (UITextAutocorrectionType)autocorrectionType
+{
+	return _textView.autocorrectionType;
+}
+
+- (void)setAutocorrectionType:(UITextAutocorrectionType)type
+{
+    [_textView setAutocorrectionType:type];
+}
+
 - (void)setEditable:(BOOL)edit
 {
     if (_editable != edit) {
@@ -267,31 +280,24 @@
     [_textView setSelectedRange:range];
 }
 
-- (void)setTextAlignment:(UITextAlignment)textAlignment
+- (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
     switch (textAlignment) {
-        case UITextAlignmentLeft:
+        case NSLeftTextAlignment:
             [_textView setAlignment:NSLeftTextAlignment];
             break;
-        case UITextAlignmentCenter:
+        case NSCenterTextAlignment:
             [_textView setAlignment:NSCenterTextAlignment];
             break;
-        case UITextAlignmentRight:
+        case NSRightTextAlignment:
             [_textView setAlignment:NSRightTextAlignment];
             break;
     }
 }
 
-- (UITextAlignment)textAlignment
+- (NSTextAlignment)textAlignment
 {
-    switch ([_textView alignment]) {
-        case NSCenterTextAlignment:
-            return UITextAlignmentCenter;
-        case NSRightTextAlignment:
-            return UITextAlignmentRight;
-        default:
-            return UITextAlignmentLeft;
-    }
+    return [_textView alignment];
 }
 
 // this is used to fake out AppKit when the UIView that owns this layer/editor stuff is actually *behind* another UIView. Since the NSViews are
@@ -414,7 +420,7 @@
     if ([self shouldBeVisible] && ![_clipView superview]) {
         [self addNSView];
     }
-    
+	
     _changingResponderStatus = YES;
     const BOOL result = [[_textView window] makeFirstResponder:_textView];
     _changingResponderStatus = NO;
@@ -441,5 +447,7 @@
         return YES;
     }
 }
+
+- (id)containerView { return self->_containerView; }
 
 @end

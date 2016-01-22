@@ -164,6 +164,12 @@ void UIAccessibilityPostNotification(UIAccessibilityNotifications notification, 
 {
 }
 
+
+BOOL UIAccessibilityIsGuidedAccessEnabled()
+{
+    return NO;
+}
+
 BOOL UIAccessibilityIsVoiceOverRunning()
 {
     return NO;

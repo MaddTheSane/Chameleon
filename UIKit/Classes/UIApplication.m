@@ -34,6 +34,10 @@
 #import "UIBackgroundTask.h"
 #import "UINSApplicationDelegate.h"
 #import <Cocoa/Cocoa.h>
+#import "UITextLayer.h"
+#import "UITextLayer+Private.h"
+#import "UITextField.h"
+#import "UITextField+Private.h"
 
 NSString *const UIApplicationWillChangeStatusBarOrientationNotification = @"UIApplicationWillChangeStatusBarOrientationNotification";
 NSString *const UIApplicationDidChangeStatusBarOrientationNotification = @"UIApplicationDidChangeStatusBarOrientationNotification";
@@ -115,6 +119,11 @@ static UIApplication *_theApplication = nil;
 - (BOOL)isStatusBarHidden
 {
     return YES;
+}
+
+- (void)setStatusBarHidden:(BOOL)statusBarHidden
+{
+    // do nothing
 }
 
 - (CGRect)statusBarFrame

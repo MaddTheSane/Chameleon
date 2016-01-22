@@ -77,6 +77,7 @@ extern UIAccessibilityNotifications UIAccessibilityPageScrolledNotification;
 @end
 
 extern void UIAccessibilityPostNotification(UIAccessibilityNotifications notification, id argument);
+extern BOOL UIAccessibilityIsGuidedAccessEnabled(void);
 extern BOOL UIAccessibilityIsVoiceOverRunning(void);
 
 extern NSString *const UIAccessibilityVoiceOverStatusChanged;

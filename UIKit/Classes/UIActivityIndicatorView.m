@@ -57,7 +57,7 @@ static UIImage *UIActivityIndicatorViewFrameImage(UIActivityIndicatorViewStyle s
     if (!toothColor) {
         toothColor = (style == UIActivityIndicatorViewStyleGray)? [UIColor grayColor] : [UIColor whiteColor];
     }
-    
+	
     UIGraphicsBeginImageContextWithOptions(frameSize, NO, scale);
     CGContextRef c = UIGraphicsGetCurrentContext();
 

@@ -51,7 +51,10 @@ NSMutableArray *_allScreens = nil;
     NSMutableArray *_windows;
     __weak UIKitView *_UIKitView;
     __weak UIWindow *_keyWindow;
+	__weak UIPopoverController *_popoverController;
 }
+@synthesize currentMode=_currentMode;
+@synthesize overscanCompensation;
 
 + (void)initialize
 {
@@ -83,9 +86,6 @@ NSMutableArray *_allScreens = nil;
         _layer.delegate = self;		// required to get the magic of the UIViewLayoutManager...
         _layer.layoutManager = [UIViewLayoutManager layoutManager];
         
-        _windows = [[NSMutableArray alloc] init];
-        _brightness = 1;
-        
         _grabber = [[UIImageView alloc] initWithImage:[UIImage _windowResizeGrabberImage]];
         _grabber.layer.zPosition = 10000;
         [_layer addSublayer:_grabber.layer];
@@ -112,6 +112,16 @@ NSMutableArray *_allScreens = nil;
     } else {
         return 1;
     }
+}
+
+- (void)_setPopoverController:(UIPopoverController *)controller
+{
+    _popoverController = controller;
+}
+
+- (UIPopoverController *)_popoverController
+{
+    return _popoverController;
 }
 
 - (BOOL)_hasResizeIndicator
@@ -246,6 +256,11 @@ NSMutableArray *_allScreens = nil;
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: %p; bounds = %@; mode = %@>", [self className], self, NSStringFromCGRect(self.bounds), self.currentMode];
+}
+
+- (UIScreen *)mirroredScreen
+{
+    return nil;
 }
 
 @end

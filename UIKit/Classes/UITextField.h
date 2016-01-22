@@ -30,6 +30,7 @@
 #import "UIControl.h"
 #import "UIStringDrawing.h"
 #import "UITextInput.h"
+#import <AppKit/NSText.h>
 
 extern NSString *const UITextFieldTextDidBeginEditingNotification;
 extern NSString *const UITextFieldTextDidChangeNotification;
@@ -63,7 +64,28 @@ typedef NS_ENUM(NSInteger, UITextFieldViewMode) {
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 @end
 
-@interface UITextField : UIControl <UITextInput>
+@interface UITextField : UIControl <UITextInputTraits> {
+@private
+    __weak id _delegate;
+    UITextFieldViewMode _clearButtonMode;
+    UIView *_leftView;
+    UITextFieldViewMode _leftViewMode;
+    UIView *_rightView;
+    UITextFieldViewMode _rightViewMode;
+    UIImage *_background;
+    UIImage *_disabledBackground;
+    BOOL _editing;
+    BOOL _clearsOnBeginEditing;
+    BOOL _adjustsFontSizeToFitWidth;
+    NSString *_placeholder;
+    UITextBorderStyle _borderStyle;
+    CGFloat _minimumFontSize;
+    UITextAutocorrectionType _autocorrectionType;
+
+    UIView *_inputAccessoryView;
+    UIView *_inputView;
+}
+
 - (CGRect)borderRectForBounds:(CGRect)bounds;
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds;
 - (CGRect)editingRectForBounds:(CGRect)bounds;
@@ -75,8 +97,8 @@ typedef NS_ENUM(NSInteger, UITextFieldViewMode) {
 - (void)drawPlaceholderInRect:(CGRect)rect;
 - (void)drawTextInRect:(CGRect)rect;
 
-@property (nonatomic, assign) id<UITextFieldDelegate> delegate;
-@property (nonatomic, assign) UITextAlignment textAlignment;
+@property (nonatomic, weak) id<UITextFieldDelegate> delegate;
+@property (nonatomic, assign) NSTextAlignment textAlignment;
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, strong) UIFont *font;

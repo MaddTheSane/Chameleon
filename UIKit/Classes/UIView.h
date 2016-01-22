@@ -100,7 +100,27 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 
 @class UIColor, CALayer, UIViewController, UIGestureRecognizer;
 
-@interface UIView : UIResponder <UIAppearanceContainer, UIAppearance>
+@interface UIView : UIResponder <UIAppearanceContainer, UIAppearance> {
+@private
+    __unsafe_unretained UIView *_superview;
+    NSMutableSet *_subviews;
+    BOOL _clearsContextBeforeDrawing;
+    BOOL _autoresizesSubviews;
+    BOOL _userInteractionEnabled;
+    CALayer *_layer;
+    CGRect _frame;
+    NSInteger _tag;
+    UIViewContentMode _contentMode;
+    UIColor *_backgroundColor;
+    BOOL _implementsDrawRect;
+    BOOL _multipleTouchEnabled;
+    BOOL _exclusiveTouch;
+    __unsafe_unretained UIViewController *_viewController;
+    UIViewAutoresizing _autoresizingMask;
+    BOOL _needsDidAppearOrDisappear;
+    NSMutableSet *_gestureRecognizers;
+}
+
 + (Class)layerClass;
 
 - (instancetype)initWithFrame:(CGRect)frame;
@@ -184,4 +204,6 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 @property (nonatomic, getter=isMultipleTouchEnabled) BOOL multipleTouchEnabled;	// state is maintained, but it has no effect
 @property (nonatomic, getter=isExclusiveTouch) BOOL exclusiveTouch; // state is maintained, but it has no effect
 @property (nonatomic, copy) NSArray *gestureRecognizers;
+@property (nonatomic, assign) BOOL translatesAutoresizingMaskIntoConstraints;
+
 @end

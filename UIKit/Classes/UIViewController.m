@@ -223,14 +223,6 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
     return nil;
 }
 
-- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion
-{
-}
-
-- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
-{
-}
-
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated
 {
     /*
@@ -286,6 +278,32 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
     }
      */
 }
+
+- (void)presentViewController:(UIViewController *)modalViewController animated:(BOOL)animated completion:(void(^)(void))completion
+{
+    // this isn't exactly right either, but close enough
+    [self presentModalViewController:modalViewController animated:animated];
+    
+    if (completion != NULL) {
+        completion();
+    }
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)animated completion:(void(^)(void))completion
+{
+    // this isn't exactly right either, but close enough
+    [self dismissModalViewControllerAnimated:animated];
+    
+    if (completion != NULL) {
+        completion();
+    }
+}
+
+- (UIViewController *)presentedViewController
+{
+    return self.modalViewController;
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -376,12 +394,6 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
 }
 
 - (UIViewController *)presentingViewController
-{
-    // TODO
-    return nil;
-}
-
-- (UIViewController *)presentedViewController
 {
     // TODO
     return nil;
@@ -526,6 +538,16 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
 - (void)didMoveToParentViewController:(UIViewController *)parent
 {
     _parentageTransition = _UIViewControllerParentageTransitionNone;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationLandscapeLeft;
 }
 
 @end

@@ -124,3 +124,10 @@
 
 // SystemConfiguration-Helper
 #define kSCNetworkReachabilityFlagsIsWWAN kSCNetworkReachabilityFlagsConnectionOnDemand
+
+
+#define NSTextAlignmentLeft NSLeftTextAlignment
+#define NSTextAlignmentCenter NSCenterTextAlignment
+#define NSTextAlignmentRight NSRightTextAlignment
+#define NSTextAlignmentJustified NSJustifiedTextAlignment
+#define NSTextAlignmentNatural NSNaturalTextAlignment

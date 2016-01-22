@@ -208,7 +208,7 @@
 		14CB384612689907003334AD /* UIPopoverNSWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CB384412689907003334AD /* UIPopoverNSWindow.m */; };
 		14CB384912689949003334AD /* UIPopoverOverlayNSView.h in Headers */ = {isa = PBXBuildFile; fileRef = 14CB384712689949003334AD /* UIPopoverOverlayNSView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		14CB384A12689949003334AD /* UIPopoverOverlayNSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CB384812689949003334AD /* UIPopoverOverlayNSView.m */; };
-		14CC840611EFA8AF005988CC /* UIRoundedRectButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 14CC839011EFA8AF005988CC /* UIRoundedRectButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14CC840611EFA8AF005988CC /* UIRoundedRectButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 14CC839011EFA8AF005988CC /* UIRoundedRectButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		14CC840711EFA8AF005988CC /* UIRoundedRectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CC839111EFA8AF005988CC /* UIRoundedRectButton.m */; };
 		14CC844111EFA901005988CC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CC844011EFA901005988CC /* QuartzCore.framework */; };
 		14CC844511EFA91A005988CC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CC844411EFA91A005988CC /* SystemConfiguration.framework */; };
@@ -247,6 +247,8 @@
 		537472D5133ADD4B00EBD5EA /* UIInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 537472D3133ADD4B00EBD5EA /* UIInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		537472D6133ADD4B00EBD5EA /* UIInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537472D4133ADD4B00EBD5EA /* UIInterface.m */; };
 		556152811C48C13C00E9DC19 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 556152801C48C13C00E9DC19 /* Images.xcassets */; };
+		55F8C07A1C52F2FD00F8A4BC /* UITextField+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */; };
+		55F8C07C1C52F31900F8A4BC /* UITextLayer+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */; };
 		7011107C133BE0F400C86512 /* UIDatePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 7011107A133BE0F300C86512 /* UIDatePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7011107D133BE0F400C86512 /* UIDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7011107B133BE0F300C86512 /* UIDatePicker.m */; };
 		7806ED2A133A1D7500273BC6 /* UITabBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 7806ED28133A1D7500273BC6 /* UITabBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -511,6 +513,8 @@
 		537472D3133ADD4B00EBD5EA /* UIInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIInterface.h; sourceTree = "<group>"; };
 		537472D4133ADD4B00EBD5EA /* UIInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIInterface.m; sourceTree = "<group>"; };
 		556152801C48C13C00E9DC19 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
+		55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Private.h"; sourceTree = "<group>"; };
+		55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextLayer+Private.h"; sourceTree = "<group>"; };
 		7011107A133BE0F300C86512 /* UIDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDatePicker.h; sourceTree = "<group>"; };
 		7011107B133BE0F300C86512 /* UIDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDatePicker.m; sourceTree = "<group>"; };
 		7806ED28133A1D7500273BC6 /* UITabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITabBar.h; sourceTree = "<group>"; };
@@ -859,6 +863,8 @@
 				1443DF23121F0D5A00E07C4A /* UIScreenMode+UIPrivate.h */,
 				14805F5812A6E2AE0080C4BA /* UIScrollView+UIPrivate.h */,
 				14A726B91213303400648C9B /* UITableViewCell+UIPrivate.h */,
+				55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */,
+				55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */,
 				14A726BA1213303400648C9B /* UITouch+UIPrivate.h */,
 				14A726BB1213303400648C9B /* UIView+UIPrivate.h */,
 				14A726BD1213303400648C9B /* UIWindow+UIPrivate.h */,
@@ -911,6 +917,7 @@
 				1489857E12EE2CFF003D4751 /* UIApplicationAppKitIntegration.h in Headers */,
 				1489857F12EE2CFF003D4751 /* UIApplicationDelegate.h in Headers */,
 				1489858012EE2CFF003D4751 /* UIBarButtonItem.h in Headers */,
+				55F8C07A1C52F2FD00F8A4BC /* UITextField+Private.h in Headers */,
 				1489858212EE2CFF003D4751 /* UIBarItem.h in Headers */,
 				1489858412EE2CFF003D4751 /* UIBezierPath.h in Headers */,
 				1489858612EE2CFF003D4751 /* UIButton.h in Headers */,
@@ -954,6 +961,7 @@
 				145335851226F3490005644F /* UICustomNSClipView.h in Headers */,
 				14F56F4412664D430045EC82 /* UIPopoverView.h in Headers */,
 				14CB384512689907003334AD /* UIPopoverNSWindow.h in Headers */,
+				55F8C07C1C52F31900F8A4BC /* UITextLayer+Private.h in Headers */,
 				14CB384912689949003334AD /* UIPopoverOverlayNSView.h in Headers */,
 				14805F5A12A6E2AE0080C4BA /* UIScrollView+UIPrivate.h in Headers */,
 				148984A512EE278D003D4751 /* UIGestureRecognizer+UIPrivate.h in Headers */,

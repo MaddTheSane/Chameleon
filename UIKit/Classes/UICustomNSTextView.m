@@ -29,6 +29,7 @@
 
 #import "UICustomNSTextView.h"
 #import "UIBulletGlyphGenerator.h"
+#import "UITextInputTraits.h"
 #import <AppKit/NSLayoutManager.h>
 #import <AppKit/NSTextContainer.h>
 #import <AppKit/NSMenuItem.h>
@@ -48,6 +49,8 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
     BOOL _secureTextEntry;
 	BOOL _isBecomingFirstResponder;
 }
+@dynamic delegate;
+@synthesize autocorrectionType;
 
 - (id)initWithFrame:(NSRect)frame secureTextEntry:(BOOL)isSecure isField:(BOOL)isField
 {
@@ -86,9 +89,8 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
         [self setAllowsImageEditing:NO];
         [self setDisplaysLinkToolTips:NO];
         [self setAutomaticDataDetectionEnabled:NO];
-        
-        // same color as iOS
-        [self setInsertionPointColor:[NSColor colorWithCalibratedRed:62/255.f green:100/255.f blue:243/255.f alpha:1]];
+        [self setSecureTextEntry:isSecure];
+        [self setAutocorrectionType:UITextAutocorrectionTypeDefault];
         
         [self setLayerContentsPlacement:NSViewLayerContentsPlacementTopLeft];
         
@@ -128,7 +130,15 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
         [style setLineBreakMode:NSLineBreakByTruncatingTail];
     }
     
+    // eliminate the built-in padding around the text field
+    [[self textContainer] setLineFragmentPadding:0];
+    
     [self setDefaultParagraphStyle:style];
+}
+
+// vertically centre the text
+- (NSPoint)textContainerOrigin {
+    return NSMakePoint(0, (self.font.ascender + self.font.descender + self.font.xHeight)/2);
 }
 
 - (void)setSecureTextEntry:(BOOL)isSecure
@@ -273,7 +283,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (void)setNeedsFakeSpellCheck
 {
-    if ([self isContinuousSpellCheckingEnabled]) {
+    if ([self isContinuousSpellCheckingEnabled] && self->autocorrectionType != UITextAutocorrectionTypeNo) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(forcedSpellCheck) object:nil];
         [self performSelector:@selector(forcedSpellCheck) withObject:nil afterDelay:0.5];
     }
@@ -332,7 +342,9 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
                 
                 for (NSUInteger i=0; i<count; i++) {
                     if (NSIntersectsRect(rects[i], rect)) {
-                        [underlinePath moveToPoint:NSMakePoint(rects[i].origin.x, rects[i].origin.y+rects[i].size.height-1.5)];
+                        // XXX: This uses a magic number. Where does this
+                        //      constant come from?
+                        [underlinePath moveToPoint:NSMakePoint(rects[i].origin.x, rects[i].origin.y+rects[i].size.height+5.5)];
                         [underlinePath relativeLineToPoint:NSMakePoint(rects[i].size.width,0)];
                     }
                 }
