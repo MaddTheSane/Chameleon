@@ -181,7 +181,7 @@ NSString *const MPMovieDurationAvailableNotification = @"MPMovieDurationAvailabl
     self = [super init];
     if (self) 
     {
-        _contentURL = [url retain];
+        _contentURL = url;
         _loadState = MPMovieLoadStateUnknown;
         _controlStyle = MPMovieControlStyleDefault;
         _movieSourceType = MPMovieSourceTypeUnknown;
@@ -216,8 +216,6 @@ NSString *const MPMovieDurationAvailableNotification = @"MPMovieDurationAvailabl
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
-    [_view release];
-    [super dealloc];
 }
 
 

@@ -16,7 +16,7 @@
 @private
     QTMovieLayer *movieLayer;
 }
-@property (nonatomic, retain) QTMovie* movie;
+@property (nonatomic, strong) QTMovie* movie;
 @property (nonatomic, assign) MPMovieScalingMode scalingMode;
 
 - (id)initWithMovie: (QTMovie*)movie;

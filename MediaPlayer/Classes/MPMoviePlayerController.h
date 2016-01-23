@@ -67,14 +67,14 @@ extern NSString *const MPMovieDurationAvailableNotification;
 
 @interface MPMoviePlayerController : NSObject <MPMediaPlayback> 
 
-@property (nonatomic, readonly) UIView *view;
+@property (weak, nonatomic, readonly) UIView *view;
 @property (nonatomic, readonly) MPMovieLoadState loadState;
 @property (nonatomic, copy) NSURL *contentURL;
 @property (nonatomic) MPMovieControlStyle controlStyle;
 @property (nonatomic) MPMovieSourceType movieSourceType;
 
 // A view for customization which is always displayed behind movie content.
-@property(nonatomic, readonly) UIView *backgroundView;
+@property(weak, nonatomic, readonly) UIView *backgroundView;
 
 @property (nonatomic, readonly) MPMoviePlaybackState playbackState;
 @property (nonatomic) MPMovieRepeatMode repeatMode;
