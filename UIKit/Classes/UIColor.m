@@ -58,7 +58,7 @@ static UIColor *LightTextColor = nil;
 - (id)initWithNSColor:(NSColor *)aColor
 {
     if (!aColor) {
-        self = nil;
+        return nil;
     } else {
         NSColor *c = [aColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
         CGFloat components[[c numberOfComponents]];

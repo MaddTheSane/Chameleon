@@ -44,12 +44,13 @@ typedef NS_ENUM(NSInteger, UIEventSubtype) {
 };
 
 @class UIWindow, UIView, UIGestureRecognizer;
+@class UITouch;
 
 @interface UIEvent : NSObject
-- (NSSet *)allTouches;
-- (NSSet *)touchesForView:(UIView *)view;
-- (NSSet *)touchesForWindow:(UIWindow *)window;
-- (NSSet *)touchesForGestureRecognizer:(UIGestureRecognizer *)gesture;
+- (NSSet<UITouch*> *)allTouches;
+- (NSSet<UITouch*> *)touchesForView:(UIView *)view;
+- (NSSet<UITouch*> *)touchesForWindow:(UIWindow *)window;
+- (NSSet<UITouch*> *)touchesForGestureRecognizer:(UIGestureRecognizer *)gesture;
 
 @property (nonatomic, readonly) NSTimeInterval timestamp;
 @property (nonatomic, readonly) UIEventType type;

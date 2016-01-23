@@ -29,12 +29,14 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIFont : NSObject {
 @package
     CTFontRef _font;
 }
 
-+ (instancetype)fontWithName:(NSString *)fontName size:(CGFloat)fontSize;
++ (nullable instancetype)fontWithName:(NSString *)fontName size:(CGFloat)fontSize;
 + (NSArray<NSString*> *)familyNames;
 + (NSArray<NSString*> *)fontNamesForFamilyName:(NSString *)familyName;
 
@@ -43,12 +45,14 @@
 
 - (UIFont *)fontWithSize:(CGFloat)fontSize;
 
-@property (nonatomic, readonly, strong) NSString *fontName;
+@property (nonatomic, readonly, copy) NSString *fontName;
 @property (nonatomic, readonly) CGFloat ascender;
 @property (nonatomic, readonly) CGFloat descender;
 @property (nonatomic, readonly) CGFloat lineHeight;
 @property (nonatomic, readonly) CGFloat pointSize;
 @property (nonatomic, readonly) CGFloat xHeight;
 @property (nonatomic, readonly) CGFloat capHeight;
-@property (nonatomic, readonly, strong) NSString *familyName;
+@property (nonatomic, readonly, copy) NSString *familyName;
 @end
+
+NS_ASSUME_NONNULL_END

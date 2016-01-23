@@ -29,13 +29,17 @@
 
 #import "UIFont.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class NSFont;
 
 @interface UIFont (AppKitIntegration)
-+ (UIFont *)fontWithNSFont:(NSFont *)aFont;
-- (NSFont *)NSFont;
++ (nullable instancetype)fontWithNSFont:(NSFont *)aFont;
+- (nullable NSFont *)NSFont;
 
-// these override the use of OSX's default system fonts, set to nil to use OSX default
-+ (void)setSystemFontName:(NSString *)aName;
-+ (void)setBoldSystemFontName:(NSString *)aName;
+/// these override the use of OSX's default system fonts, set to nil to use OSX default
++ (void)setSystemFontName:(nullable NSString *)aName;
++ (void)setBoldSystemFontName:(nullable NSString *)aName;
 @end
+
+NS_ASSUME_NONNULL_END

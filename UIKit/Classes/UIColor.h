@@ -29,6 +29,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class UIImage;
 
 @interface UIColor : NSObject
@@ -71,3 +73,5 @@
 
 @property (nonatomic, readonly) CGColorRef CGColor;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, UIBarMetrics) {
 };
 
 @interface UIColor (UIColorSystemColors)
-+ (UIColor *)groupTableViewBackgroundColor;
++ (nonnull UIColor *)groupTableViewBackgroundColor;
 @end
 
 

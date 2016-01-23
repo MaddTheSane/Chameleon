@@ -29,10 +29,15 @@
 
 #import "UIColor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class NSColor;
 
 @interface UIColor (AppKitIntegration)
-+ (id)colorWithNSColor:(NSColor *)c;
-- (id)initWithNSColor:(NSColor *)c;
-- (NSColor *)NSColor;						// NOTE: At present, if the UIColor was created with an image, this is unlikely to work.
++ (instancetype)colorWithNSColor:(NSColor *)c;
+- (instancetype)initWithNSColor:(NSColor *)c;
+/// NOTE: At present, if the UIColor was created with an image, this is unlikely to work.
+@property (readonly) NSColor *NSColor;
 @end
+
+NS_ASSUME_NONNULL_END

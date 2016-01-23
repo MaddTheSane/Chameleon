@@ -42,9 +42,11 @@ typedef NS_ENUM(NSInteger, UIDeviceOrientation) {
 };
 
 typedef NS_ENUM(NSInteger, UIUserInterfaceIdiom) {
+    UIUserInterfaceIdiomUnspecified = -1,
     UIUserInterfaceIdiomPhone,
     UIUserInterfaceIdiomPad,
-    UIUserInterfaceIdiomDesktop,
+    UIUserInterfaceIdiomTV,
+    UIUserInterfaceIdiomDesktop = -2,
 };
 
 typedef NS_ENUM(NSInteger, UIDeviceBatteryState) {

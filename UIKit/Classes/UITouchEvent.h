@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, UITouchEventGesture) {
 };
 
 @interface UITouchEvent : UIEvent
-- (id)initWithTouch:(UITouch *)touch;
+- (instancetype)initWithTouch:(UITouch *)touch;
 - (void)endTouchEvent;
 
 @property (nonatomic, readonly, strong) UITouch *touch;

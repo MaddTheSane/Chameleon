@@ -35,7 +35,7 @@
 - (instancetype)initWithImage:(UIImage *)theImage;
 - (void)startAnimating;
 - (void)stopAnimating;
-- (BOOL)isAnimating;
+@property (nonatomic, readonly, getter=isAnimating) BOOL animating;
 
 @property (nonatomic, strong) UIImage *highlightedImage;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;

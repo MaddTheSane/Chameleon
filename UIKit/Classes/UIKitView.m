@@ -170,7 +170,7 @@
 
 - (UIView *)hitTestUIView:(NSPoint)point
 {
-    NSMutableArray *sortedWindows = [_UIScreen.windows mutableCopy];
+    NSMutableArray<UIWindow*> *sortedWindows = [_UIScreen.windows mutableCopy];
     [sortedWindows sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"windowLevel" ascending:NO]]];
     
     for (UIWindow *window in sortedWindows) {

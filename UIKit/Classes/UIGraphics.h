@@ -27,7 +27,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <ApplicationServices/ApplicationServices.h>
+#import <CoreGraphics/CoreGraphics.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class UIImage;
 
@@ -35,11 +37,11 @@
 extern "C" {
 #endif
 
-void UIGraphicsPushContext(CGContextRef ctx);
+void UIGraphicsPushContext(CGContextRef _Nullable ctx);
 void UIGraphicsPopContext(void);
-CGContextRef UIGraphicsGetCurrentContext(void);
+CGContextRef _Nullable UIGraphicsGetCurrentContext(void);
     
-CGFloat _UIGraphicsGetContextScaleFactor(CGContextRef ctx);
+CGFloat _UIGraphicsGetContextScaleFactor(CGContextRef _Nullable ctx);
 
 void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale);
 void UIGraphicsBeginImageContext(CGSize size);
@@ -57,3 +59,5 @@ void UIRectFrameUsingBlendMode(CGRect rect, CGBlendMode blendMode);
 #ifdef __cplusplus
 }
 #endif
+
+NS_ASSUME_NONNULL_END

@@ -29,14 +29,17 @@
 
 #import "UIImage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class NSImage;
 
 @interface UIImage (AppKitIntegration)
 + (instancetype)imageWithNSImage:(NSImage *)theImage;
 - (instancetype)initWithNSImage:(NSImage *)theImage;
+@property (readonly) NSImage *NSImage;
 - (NSImage *)NSImage;
 
-/*
+/*!
  this is a hack to support screen scale factor changes (retina) which iOS doesn't
  have a decent way to support as far as I can tell.
  
@@ -78,3 +81,5 @@
 - (instancetype)initWithScaledImages:(NSArray<UIImage*> *)images;
 
 @end
+
+NS_ASSUME_NONNULL_END
