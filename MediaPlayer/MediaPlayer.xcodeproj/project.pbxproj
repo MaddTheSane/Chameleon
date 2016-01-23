@@ -16,9 +16,9 @@
 		4C16781613C71E4900814195 /* MPMediaPlayback.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C16781513C71E4900814195 /* MPMediaPlayback.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C16781A13C71E6200814195 /* UIInternalMovieView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C16781813C71E6200814195 /* UIInternalMovieView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		4C16781B13C71E6200814195 /* UIInternalMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C16781913C71E6200814195 /* UIInternalMovieView.m */; };
-		4C16787D13C71FB900814195 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C16787C13C71FB900814195 /* UIKit.framework */; };
 		4C16789F13C7206500814195 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C16789E13C7206500814195 /* QTKit.framework */; };
 		4C72FDF613C746E800D3E453 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C72FDF513C746E800D3E453 /* QuartzCore.framework */; };
+		55FE7F6C1C533F11002F6F1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C16787A13C71F8A00814195 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +27,13 @@
 			containerPortal = 4C16787213C71F8A00814195 /* UIKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = UIKit;
+		};
+		55FE7F6A1C533F09002F6F1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C16787213C71F8A00814195 /* UIKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = UIKit;
 		};
 /* End PBXContainerItemProxy section */
@@ -45,7 +52,6 @@
 		4C16781813C71E6200814195 /* UIInternalMovieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIInternalMovieView.h; path = Classes/UIInternalMovieView.h; sourceTree = "<group>"; };
 		4C16781913C71E6200814195 /* UIInternalMovieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIInternalMovieView.m; path = Classes/UIInternalMovieView.m; sourceTree = "<group>"; };
 		4C16787213C71F8A00814195 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = ../UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
-		4C16787C13C71FB900814195 /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UIKit.framework; sourceTree = SOURCE_ROOT; };
 		4C16789E13C7206500814195 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		4C72FDF513C746E800D3E453 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,9 +63,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FE7F6C1C533F11002F6F1C /* UIKit.framework in Frameworks */,
 				4C72FDF613C746E800D3E453 /* QuartzCore.framework in Frameworks */,
 				4C16789F13C7206500814195 /* QTKit.framework in Frameworks */,
-				4C16787D13C71FB900814195 /* UIKit.framework in Frameworks */,
 				14EFB1BB1211DB5300D19B0C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,28 +84,27 @@
 		0867D691FE84028FC02AAC07 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				4C72FDF513C746E800D3E453 /* QuartzCore.framework */,
-				4C16789E13C7206500814195 /* QTKit.framework */,
-				4C16787C13C71FB900814195 /* UIKit.framework */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				4C16780A13C71DDC00814195 /* Private Classes */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 				4C16787213C71F8A00814195 /* UIKit.xcodeproj */,
 			);
 			name = UIKit;
 			sourceTree = "<group>";
 		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C72FDF513C746E800D3E453 /* QuartzCore.framework */,
+				4C16789E13C7206500814195 /* QTKit.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
 				14EFB1BA1211DB5300D19B0C /* Cocoa.framework */,
 			);
-			name = "External Frameworks and Libraries";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		089C1665FE841158C02AAC07 /* Resources */ = {
@@ -178,6 +183,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55FE7F6B1C533F09002F6F1C /* PBXTargetDependency */,
 			);
 			name = MediaPlayer;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -191,7 +197,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "MediaPlayer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -252,12 +258,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		55FE7F6B1C533F09002F6F1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UIKit;
+			targetProxy = 55FE7F6A1C533F09002F6F1C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -272,9 +289,9 @@
 				GCC_PREFIX_HEADER = MediaPlayer_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.chameleonproject.MediaPlayer;
 				PRODUCT_NAME = MediaPlayer;
 				SYMROOT = ../build;
-				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -283,7 +300,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -296,9 +316,9 @@
 				GCC_PREFIX_HEADER = MediaPlayer_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.chameleonproject.MediaPlayer;
 				PRODUCT_NAME = MediaPlayer;
 				SYMROOT = ../build;
-				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -306,12 +326,13 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -325,7 +346,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};

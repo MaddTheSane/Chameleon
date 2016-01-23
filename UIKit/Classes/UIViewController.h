@@ -73,9 +73,6 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated;		// works, but not exactly correctly.
 - (void)dismissModalViewControllerAnimated:(BOOL)animated;												// see comments in dismissModalViewController
 
-- (void)presentViewController:(UIViewController *)modalViewController animated:(BOOL)animated completion:(void(^)(void))completion;
-- (void)dismissViewControllerAnimated:(BOOL)animated completion:(void(^)(void))completion;
-
 - (void)didReceiveMemoryWarning;	// doesn't do anything and is never called...
 
 - (void)setToolbarItems:(NSArray *)toolbarItems animated:(BOOL)animated;

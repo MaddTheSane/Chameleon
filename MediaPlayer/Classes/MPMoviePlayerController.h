@@ -9,45 +9,38 @@
 #import <UIKit/UIKit.h>
 #import "MPMediaPlayback.h"
 
-#import <QTKit/QTKit.h>
-
-enum {
+typedef NS_OPTIONS(NSUInteger, MPMovieLoadState) {
     MPMovieLoadStateUnknown        = 0,
     MPMovieLoadStatePlayable       = 1 << 0,
     MPMovieLoadStatePlaythroughOK  = 1 << 1,
     MPMovieLoadStateStalled        = 1 << 2,
 };
-typedef NSInteger MPMovieLoadState;
 
-enum {
+typedef NS_ENUM(NSInteger, MPMovieControlStyle) {
     MPMovieControlStyleNone,
     MPMovieControlStyleEmbedded,
     MPMovieControlStyleFullscreen,
     MPMovieControlStyleDefault = MPMovieControlStyleFullscreen
 };
-typedef NSInteger MPMovieControlStyle;
 
-enum {
+typedef NS_ENUM(NSInteger, MPMovieFinishReason) {
     MPMovieFinishReasonPlaybackEnded,
     MPMovieFinishReasonPlaybackError,
     MPMovieFinishReasonUserExited
 };
-typedef NSInteger MPMovieFinishReason;
 
-enum {
+typedef NS_ENUM(NSInteger, MPMovieSourceType) {
     MPMovieSourceTypeUnknown,
     MPMovieSourceTypeFile,
     MPMovieSourceTypeStreaming
 };
-typedef NSInteger MPMovieSourceType;
 
-enum {
+typedef NS_ENUM(NSInteger, MPMovieRepeatMode) {
     MPMovieRepeatModeNone,
     MPMovieRepeatModeOne
 };
-typedef NSInteger MPMovieRepeatMode;
 
-enum {
+typedef NS_ENUM(NSInteger, MPMoviePlaybackState) {
     MPMoviePlaybackStateStopped,
     MPMoviePlaybackStatePlaying,
     MPMoviePlaybackStatePaused,
@@ -55,15 +48,14 @@ enum {
     MPMoviePlaybackStateSeekingForward,
     MPMoviePlaybackStateSeekingBackward
 };
-typedef NSInteger MPMoviePlaybackState;
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MPMovieScalingMode) {
     MPMovieScalingModeNone,
     MPMovieScalingModeAspectFit,
     MPMovieScalingModeAspectFill,
     MPMovieScalingModeFill
-} MPMovieScalingMode;
+};
 
 extern NSString *const MPMoviePlayerPlaybackDidFinishReasonUserInfoKey;
 
@@ -73,15 +65,8 @@ extern NSString *const MPMoviePlayerPlaybackDidFinishNotification;
 extern NSString *const MPMoviePlayerLoadStateDidChangeNotification;
 extern NSString *const MPMovieDurationAvailableNotification;
 
-@class UIInternalMovieView;
-
 @interface MPMoviePlayerController : NSObject <MPMediaPlayback> 
-{
-@private
-    UIInternalMovieView *movieView;
-    
-    QTMovie *movie;
-}
+
 @property (nonatomic, readonly) UIView *view;
 @property (nonatomic, readonly) MPMovieLoadState loadState;
 @property (nonatomic, copy) NSURL *contentURL;
@@ -101,6 +86,6 @@ extern NSString *const MPMovieDurationAvailableNotification;
 @property (nonatomic) MPMovieScalingMode scalingMode;
 
 
-- (id)initWithContentURL: (NSURL*)url;
+- (instancetype)initWithContentURL: (NSURL*)url;
 
 @end

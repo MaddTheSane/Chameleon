@@ -31,9 +31,7 @@
 
 @class ALAssetsGroup, ALAsset;
 
-typedef NSUInteger ALAssetsGroupType;
-
-enum {
+typedef NS_OPTIONS(NSUInteger, ALAssetsGroupType) {
     ALAssetsGroupLibrary        = (1 << 0),
     ALAssetsGroupAlbum          = (1 << 1),
     ALAssetsGroupEvent          = (1 << 2),
@@ -43,7 +41,7 @@ enum {
     ALAssetsGroupAll            = 0xFFFFFFFF,
 };
 
-typedef enum {
+typedef NS_ENUM(NSInteger, ALAssetOrientation) {
     ALAssetOrientationUp,
     ALAssetOrientationDown,
     ALAssetOrientationLeft,
@@ -52,7 +50,7 @@ typedef enum {
     ALAssetOrientationDownMirrored,
     ALAssetOrientationLeftMirrored,
     ALAssetOrientationRightMirrored,
-} ALAssetOrientation;
+};
 
 typedef void (^ALAssetsLibraryGroupsEnumerationResultsBlock)(ALAssetsGroup *group, BOOL *stop);
 typedef void (^ALAssetsLibraryAssetForURLResultBlock)(ALAsset *asset);

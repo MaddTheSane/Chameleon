@@ -31,13 +31,12 @@
 
 @class SKPayment, SKPaymentTransaction;
 
-enum {
+typedef NS_ENUM(NSInteger, SKPaymentTransactionState) {
     SKPaymentTransactionStatePurchasing,
     SKPaymentTransactionStatePurchased,
     SKPaymentTransactionStateFailed,
     SKPaymentTransactionStateRestored
 };
-typedef NSInteger SKPaymentTransactionState;
 
 @interface SKPaymentTransaction : NSObject {
 }

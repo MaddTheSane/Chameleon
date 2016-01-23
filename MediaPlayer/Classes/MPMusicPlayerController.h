@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
+typedef NS_ENUM(NSInteger, MPMusicPlaybackState) {
     MPMusicPlaybackStateStopped,
     MPMusicPlaybackStatePlaying,
     MPMusicPlaybackStatePaused,
@@ -37,7 +37,6 @@ enum {
     MPMusicPlaybackStateSeekingForward,
     MPMusicPlaybackStateSeekingBackward
 };
-typedef NSInteger MPMusicPlaybackState;
 
 extern NSString *const MPMusicPlayerControllerPlaybackStateDidChangeNotification;
 

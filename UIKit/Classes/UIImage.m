@@ -34,6 +34,7 @@
 #import "UIGraphics.h"
 #import "UIPhotosAlbum.h"
 #import "UIImageRep.h"
+#import "UIImageAppKitIntegration.h"
 
 @implementation UIImage
 
@@ -49,6 +50,12 @@
         // for now this little hack makes Ramp Champ work. :)
         path = [[[bundle resourcePath] stringByAppendingPathComponent:[[name stringByDeletingPathExtension] stringByReplacingOccurrencesOfString:@"_" withString:@"-"]] stringByAppendingPathExtension:[name pathExtension]];
         img = [self imageWithContentsOfFile:path];
+    }
+    
+    if (!img) {
+        // Maybe the images are stored as Xcode assets?
+        // Which we can only access via calls to NSImage, it looks like...
+        img = [self imageNamedFromNSImage:name];
     }
     
     return img;

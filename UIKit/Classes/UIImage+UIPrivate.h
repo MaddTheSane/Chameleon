@@ -51,10 +51,10 @@
 + (UIImage *)_tabBarBackgroundImage;
 + (UIImage *)_tabBarItemImage;
 
-- (id)_initWithRepresentations:(NSArray *)reps;
+- (instancetype)_initWithRepresentations:(NSArray<UIImageRep*> *)reps;
 - (UIImageRep *)_bestRepresentationForProposedScale:(CGFloat)scale;
 - (void)_drawRepresentation:(UIImageRep *)rep inRect:(CGRect)rect;
-- (NSArray *)_representations;
+- (NSArray<UIImageRep*> *)_representations;
 - (BOOL)_isOpaque;
 
 - (UIImage *)_toolbarImage;		// returns a new image which is modified as required for toolbar buttons (turned into a solid color)

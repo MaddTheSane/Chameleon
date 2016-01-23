@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		147904DC1211E99400101722 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 147904DB1211E99000101722 /* UIKit.framework */; };
-		147904DD1211E99600101722 /* UIKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 147904DB1211E99000101722 /* UIKit.framework */; };
+		147904DD1211E99600101722 /* UIKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 147904DB1211E99000101722 /* UIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		44337B121341020700098E61 /* AppleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44337B0F1341020700098E61 /* AppleController.m */; };
 		44337B131341020700098E61 /* AppleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44337B0F1341020700098E61 /* AppleController.m */; };
 		44337B141341020700098E61 /* MyUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44337B111341020700098E61 /* MyUIViewController.m */; };
@@ -299,7 +299,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "MultiApple" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -438,7 +438,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -447,19 +449,8 @@
 				GCC_PREFIX_HEADER = Mac/MacApple_Prefix.pch;
 				INFOPLIST_FILE = "Mac/MacApple-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-					"-framework",
-					WebKit,
-					"-framework",
-					QTKit,
-					"-framework",
-					QuartzCore,
-				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MacApple;
 				SDKROOT = macosx;
 				SYMROOT = ../../build;
@@ -470,27 +461,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Mac/MacApple_Prefix.pch;
 				INFOPLIST_FILE = "Mac/MacApple-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-					"-framework",
-					WebKit,
-					"-framework",
-					QTKit,
-					"-framework",
-					QuartzCore,
-				);
 				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MacApple;
 				SDKROOT = macosx;
 				SYMROOT = ../../build;
@@ -527,6 +509,7 @@
 				);
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = iOSApple;
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/iOSApple-SharedPrecompiledHeaders";
@@ -564,6 +547,7 @@
 				);
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = iOSApple;
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/iOSApple-SharedPrecompiledHeaders";
@@ -576,10 +560,15 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -589,9 +578,13 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 			};

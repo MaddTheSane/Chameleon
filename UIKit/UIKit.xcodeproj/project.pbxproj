@@ -571,14 +571,14 @@
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = UIKit;
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				1444318D137D7FEE00B81304 /* IOKit.framework */,
@@ -590,7 +590,7 @@
 				1480633512A851230080C4BA /* QTKit.framework */,
 				1480633712A851230080C4BA /* WebKit.framework */,
 			);
-			name = "External Frameworks and Libraries";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		089C1665FE841158C02AAC07 /* Resources */ = {

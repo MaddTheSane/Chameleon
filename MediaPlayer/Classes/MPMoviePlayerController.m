@@ -8,6 +8,7 @@
 
 #import "MPMoviePlayerController.h"
 #import "UIInternalMovieView.h"
+#import <QTKit/QTKit.h>
 
 NSString *const MPMoviePlayerPlaybackDidFinishReasonUserInfoKey = @"MPMoviePlayerPlaybackDidFinishReasonUserInfoKey";
 
@@ -18,7 +19,12 @@ NSString *const MPMoviePlayerLoadStateDidChangeNotification = @"MPMoviePlayerLoa
 NSString *const MPMovieDurationAvailableNotification = @"MPMovieDurationAvailableNotification";
 
 @implementation MPMoviePlayerController
-
+{
+@private
+	UIInternalMovieView *movieView;
+	
+	QTMovie *movie;
+}
 @synthesize view=_view;
 @synthesize loadState=_loadState;
 @synthesize contentURL=_contentURL;

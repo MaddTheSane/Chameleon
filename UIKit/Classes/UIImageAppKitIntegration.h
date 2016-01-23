@@ -80,6 +80,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)imageWithScaledImages:(NSArray<UIImage*> *)images;
 - (instancetype)initWithScaledImages:(NSArray<UIImage*> *)images;
 
+/// Useful if the image is stored in an Xcode asset.
++ (nullable instancetype)imageNamedFromNSImage:(NSString*)named;
+
++ (nullable instancetype)imageNamedFromNSImage:(NSString*)named bundle:(NSBundle*)bundle;
+
 @end
 
 NS_ASSUME_NONNULL_END

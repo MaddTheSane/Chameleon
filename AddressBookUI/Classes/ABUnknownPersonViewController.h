@@ -27,14 +27,15 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-typedef id ABRecordRef; // is iOS-only
+//typedef id ABRecordRef; // is iOS-only
 
 @interface ABUnknownPersonViewController : NSObject {
-  ABRecordRef _displayedPerson;
+  ABRecord *_displayedPerson;
 }
 
-@property (nonatomic, retain) ABRecordRef displayedPerson;
+@property (nonatomic, retain) ABRecord *displayedPerson;
 
 @end

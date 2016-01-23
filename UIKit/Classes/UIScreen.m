@@ -87,6 +87,9 @@ NSMutableArray *_allScreens = nil;
         _layer.delegate = self;		// required to get the magic of the UIViewLayoutManager...
         _layer.layoutManager = [UIViewLayoutManager layoutManager];
         
+        _windows = [[NSMutableArray alloc] init];
+        _brightness = 1;
+        
         _grabber = [[UIImageView alloc] initWithImage:[UIImage _windowResizeGrabberImage]];
         _grabber.layer.zPosition = 10000;
         [_layer addSublayer:_grabber.layer];

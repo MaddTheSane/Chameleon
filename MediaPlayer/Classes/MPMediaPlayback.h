@@ -10,7 +10,7 @@
 
 
 @protocol MPMediaPlayback <NSObject>
-
+@optional
 - (void)play;
 - (void)pause;
 - (void)prepareToPlay;

@@ -17,7 +17,7 @@
 		38E523DC1339731100E041B3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E523DA1339731100E041B3 /* MainMenu.xib */; };
 		7884CAA8133AC90400D050CF /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884CAA7133AC90400D050CF /* Quartz.framework */; };
 		F4556120133A5D3B0021B1A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3825F4661339775C005A267D /* UIKit.framework */; };
-		F455612E133A5D830021B1A6 /* UIKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3825F4661339775C005A267D /* UIKit.framework */; };
+		F455612E133A5D830021B1A6 /* UIKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3825F4661339775C005A267D /* UIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,7 +188,7 @@
 		38E523B81339731100E041B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "XPlatform Inc";
 			};
 			buildConfigurationList = 38E523BB1339731100E041B3 /* Build configuration list for PBXProject "NavBarUpdates" */;
@@ -295,8 +295,12 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -321,8 +325,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -339,6 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -349,6 +357,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NavBarUpdates/NavBarUpdates-Prefix.pch";
 				INFOPLIST_FILE = "NavBarUpdates/NavBarUpdates-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.alanquatermain.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -358,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -368,6 +378,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NavBarUpdates/NavBarUpdates-Prefix.pch";
 				INFOPLIST_FILE = "NavBarUpdates/NavBarUpdates-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.alanquatermain.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -32,7 +32,7 @@
 @interface SKPayment : NSObject {
 }
 
-+ (id)paymentWithProductIdentifier:(NSString *)identifier;
++ (instancetype)paymentWithProductIdentifier:(NSString *)identifier;
 
 @property (nonatomic, readonly) NSString *productIdentifier;
 

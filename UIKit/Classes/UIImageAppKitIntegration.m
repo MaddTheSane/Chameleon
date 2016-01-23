@@ -107,4 +107,23 @@ static UIImageRep *UIImageRepFromNSImageRep(NSImageRep *rep, NSRect rect, CGFloa
     return [self _initWithRepresentations:reps];
 }
 
++ (instancetype)imageNamedFromNSImage:(NSString*)named bundle:(NSBundle*)bundle
+{
+    NSImage *img = [bundle imageForResource:named];
+    
+    if (!img) {
+        return nil;
+    }
+    return [self imageWithNSImage:img];
+}
+
++ (instancetype)imageNamedFromNSImage:(NSString*)named
+{
+    NSImage *img = [NSImage imageNamed:named];
+    if (!img) {
+        return [self imageNamedFromNSImage:named bundle:[NSBundle bundleForClass:[self class]]];
+    }
+    return [self imageWithNSImage:img];
+}
+
 @end

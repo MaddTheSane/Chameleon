@@ -35,7 +35,7 @@
 @interface SKProductsRequest : SKRequest {
 }
 
-- (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
+- (instancetype)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)start;
 - (void)cancel;
 
