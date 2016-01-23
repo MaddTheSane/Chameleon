@@ -1,9 +1,10 @@
-build
-xcuserdata
+build/
+xcuserdata/
 *.perspectivev3
 *.pbxuser
-*.DS_Store
+.DS_Store
 .svn
 *.xcuserstate
 *.xcsettings
-xcshareddata
+xcshareddata/
+project.xcworkspace/
