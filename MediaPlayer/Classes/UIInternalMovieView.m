@@ -9,9 +9,11 @@
 #import "UIInternalMovieView.h"
 
 
-@implementation UIInternalMovieView
+@implementation UIInternalMovieView {
+	AVPlayer *_player;
+}
 
-@synthesize movie=_movie;
+@synthesize player=_player;
 @synthesize scalingMode=_scalingMode;
 
 
@@ -45,21 +47,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-- (id)initWithMovie:(QTMovie *)movie
+- (instancetype)initWithPlayer:(AVPlayer*)aPlayer
 {
-    if ((self = [super init]) != nil)
-    {
-        self.movie = movie;
-        
-        movieLayer = [[QTMovieLayer alloc] initWithMovie: movie];
-        
-        [self.layer addSublayer: movieLayer];
-    }
-    
-    return self;
+	if (self = [super init]) {
+		_player = aPlayer;
+		movieLayer = [AVPlayerLayer playerLayerWithPlayer: _player];
+		
+		[self.layer addSublayer: movieLayer];
+	}
+	return self;
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //

@@ -260,7 +260,7 @@ static BOOL _animationsEnabled = YES;
 - (void)insertSubview:(UIView *)subview atIndex:(NSInteger)index
 {
     [self addSubview:subview];
-    [_layer insertSublayer:subview.layer atIndex:index];
+    [_layer insertSublayer:subview.layer atIndex:(unsigned)index];
 }
 
 - (void)insertSubview:(UIView *)subview belowSubview:(UIView *)below
@@ -1071,7 +1071,7 @@ static BOOL _animationsEnabled = YES;
 
 + (void)beginAnimations:(NSString *)animationID context:(void *)context
 {
-    [self _beginAnimationsWithOptions:UIViewAnimationCurveEaseInOut];
+    [self _beginAnimationsWithOptions:(UIViewAnimationOptions)(UIViewAnimationCurveEaseInOut << 16)];
     [self _setAnimationName:animationID context:context];
 }
 

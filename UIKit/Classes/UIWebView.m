@@ -44,7 +44,6 @@
 - (void) setOfflineWebApplicationCacheEnabled:(BOOL)offlineWebApplicationCacheEnabled;
 
 - (NSString *)_localStorageDatabasePath;
-- (void)_setLocalStorageDatabasePath:(NSString *)path;
 @end
 
 @implementation UIWebView {
