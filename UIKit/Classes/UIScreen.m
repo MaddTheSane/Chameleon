@@ -59,9 +59,12 @@ NSMutableArray *_allScreens = nil;
 
 + (void)initialize
 {
-    if (self == [UIScreen class]) {
-        _allScreens = [[NSMutableArray alloc] init];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (self == [UIScreen class]) {
+            _allScreens = [[NSMutableArray alloc] init];
+        }
+    });
 }
 
 + (UIScreen *)mainScreen

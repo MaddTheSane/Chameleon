@@ -55,7 +55,7 @@
 @property (readonly) NSUndoManager *undoManager;
 @end
 
-typedef NS_OPTIONS(NSInteger, UIKeyModifierFlags) {
+typedef NS_OPTIONS(NSUInteger, UIKeyModifierFlags) {
     UIKeyModifierAlphaShift     = 1 << 16,  // capslock
     UIKeyModifierShift          = 1 << 17,
     UIKeyModifierControl        = 1 << 18,

@@ -29,6 +29,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class UIImage, UIColor;
 
 @interface UIPasteboard : NSObject
@@ -38,13 +40,15 @@
 - (void)setData:(NSData *)data forPasteboardType:(NSString *)pasteboardType;
 - (void)setValue:(id)value forPasteboardType:(NSString *)pasteboardType;
 
-@property (nonatomic,copy) NSURL *URL;
-@property (nonatomic,copy) NSArray *URLs;
-@property (nonatomic,copy) NSString *string;
-@property (nonatomic,copy) NSArray *strings;
-@property (nonatomic, copy) UIImage *image;
-@property (nonatomic, copy) NSArray *images;
-@property (nonatomic, copy) UIColor *color;
-@property (nonatomic, copy) NSArray *colors;
-@property (nonatomic, copy) NSArray *items;
+@property (nonatomic,copy, nullable) NSURL *URL;
+@property (nonatomic,copy, nullable) NSArray<NSURL*> *URLs;
+@property (nonatomic,copy, nullable) NSString *string;
+@property (nonatomic,copy, nullable) NSArray<NSString*> *strings;
+@property (nonatomic, copy, nullable) UIImage *image;
+@property (nonatomic, copy, nullable) NSArray<UIImage*> *images;
+@property (nonatomic, copy, nullable) UIColor *color;
+@property (nonatomic, copy, nullable) NSArray<UIColor*> *colors;
+@property (nonatomic, copy, nullable) NSArray *items;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -102,7 +102,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 
 @interface UIView : UIResponder <UIAppearanceContainer, UIAppearance> {
 @private
-    __unsafe_unretained UIView *_superview;
+    __weak UIView *_superview;
     NSMutableSet *_subviews;
     BOOL _clearsContextBeforeDrawing;
     BOOL _autoresizesSubviews;
@@ -184,7 +184,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 @property (nonatomic) CGRect bounds;
 @property (nonatomic) CGPoint center;
 @property (nonatomic) CGAffineTransform transform;
-@property (nonatomic, readonly) UIView *superview;
+@property (nonatomic, readonly, weak) UIView *superview;
 @property (nonatomic, readonly) UIWindow *window;
 @property (nonatomic, readonly) NSArray *subviews;
 @property (nonatomic) CGFloat alpha;
