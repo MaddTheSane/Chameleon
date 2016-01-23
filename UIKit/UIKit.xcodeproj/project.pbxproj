@@ -249,6 +249,7 @@
 		556152811C48C13C00E9DC19 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 556152801C48C13C00E9DC19 /* Images.xcassets */; };
 		55F8C07A1C52F2FD00F8A4BC /* UITextField+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */; };
 		55F8C07C1C52F31900F8A4BC /* UITextLayer+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */; };
+		55F8C07E1C52F46500F8A4BC /* SwiftAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C07D1C52F46500F8A4BC /* SwiftAdditions.swift */; };
 		7011107C133BE0F400C86512 /* UIDatePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 7011107A133BE0F300C86512 /* UIDatePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7011107D133BE0F400C86512 /* UIDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7011107B133BE0F300C86512 /* UIDatePicker.m */; };
 		7806ED2A133A1D7500273BC6 /* UITabBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 7806ED28133A1D7500273BC6 /* UITabBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -515,6 +516,8 @@
 		556152801C48C13C00E9DC19 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Private.h"; sourceTree = "<group>"; };
 		55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextLayer+Private.h"; sourceTree = "<group>"; };
+		55F8C07D1C52F46500F8A4BC /* SwiftAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdditions.swift; sourceTree = "<group>"; };
+		55F8C07F1C52F4BE00F8A4BC /* UIKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = UIKit.modulemap; path = Resources/UIKit.modulemap; sourceTree = "<group>"; };
 		7011107A133BE0F300C86512 /* UIDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDatePicker.h; sourceTree = "<group>"; };
 		7011107B133BE0F300C86512 /* UIDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDatePicker.m; sourceTree = "<group>"; };
 		7806ED28133A1D7500273BC6 /* UITabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITabBar.h; sourceTree = "<group>"; };
@@ -594,6 +597,7 @@
 			children = (
 				556152801C48C13C00E9DC19 /* Images.xcassets */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				55F8C07F1C52F4BE00F8A4BC /* UIKit.modulemap */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -765,6 +769,7 @@
 				1489856712EE2CFE003D4751 /* UIWebView.m */,
 				1489856812EE2CFE003D4751 /* UIWindow.h */,
 				1489856912EE2CFE003D4751 /* UIWindow.m */,
+				55F8C07D1C52F46500F8A4BC /* SwiftAdditions.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1131,6 +1136,7 @@
 				1489858112EE2CFF003D4751 /* UIBarButtonItem.m in Sources */,
 				1489858312EE2CFF003D4751 /* UIBarItem.m in Sources */,
 				1489858512EE2CFF003D4751 /* UIBezierPath.m in Sources */,
+				55F8C07E1C52F46500F8A4BC /* SwiftAdditions.swift in Sources */,
 				1489858712EE2CFF003D4751 /* UIButton.m in Sources */,
 				1489858912EE2CFF003D4751 /* UIColor.m in Sources */,
 				1489858C12EE2CFF003D4751 /* UIControl.m in Sources */,
@@ -1219,9 +1225,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1232,8 +1240,11 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Resources/UIKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.chameleonproject.UIKit;
 				PRODUCT_NAME = UIKit;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SYMROOT = ../build;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1243,9 +1254,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1254,6 +1267,8 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Resources/UIKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.chameleonproject.UIKit;
 				PRODUCT_NAME = UIKit;
 				SYMROOT = ../build;
@@ -1270,7 +1285,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1284,7 +1299,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};

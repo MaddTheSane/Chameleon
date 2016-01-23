@@ -32,6 +32,8 @@
 #import "UIDataDetectors.h"
 #import "UITextInput.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString *const UITextViewTextDidBeginEditingNotification;
 extern NSString *const UITextViewTextDidChangeNotification;
 extern NSString *const UITextViewTextDidEndEditingNotification;
@@ -44,7 +46,7 @@ extern NSString *const UITextViewTextDidEndEditingNotification;
 - (void)textViewDidBeginEditing:(UITextView *)textView;
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView;
 - (void)textViewDidEndEditing:(UITextView *)textView;
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(nullable NSString *)text;
 - (void)textViewDidChange:(UITextView *)textView;
 - (void)textViewDidChangeSelection:(UITextView *)textView;
 @end
@@ -56,11 +58,13 @@ extern NSString *const UITextViewTextDidEndEditingNotification;
 @property (nonatomic) NSTextAlignment textAlignment; // stub, not yet implemented!
 @property (nonatomic) NSRange selectedRange;
 @property (nonatomic, getter=isEditable) BOOL editable;
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, strong) UIColor *textColor;
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, copy, nullable) NSString *text;
+@property (nonatomic, strong, nullable) UIColor *textColor;
+@property (nonatomic, strong, nullable) UIFont *font;
 @property (nonatomic) UIDataDetectorTypes dataDetectorTypes;
-@property (nonatomic, assign) id<UITextViewDelegate> delegate;
+@property (nonatomic, weak) id<UITextViewDelegate> delegate;
 @property (readwrite, strong) UIView *inputAccessoryView;
 @property (readwrite, strong) UIView *inputView;
 @end
+
+NS_ASSUME_NONNULL_END

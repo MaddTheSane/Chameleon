@@ -30,6 +30,8 @@
 #import <Foundation/Foundation.h>
 #import <ApplicationServices/ApplicationServices.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct UIEdgeInsets {
     CGFloat top, left, bottom, right;  // specify amount to inset (positive) for each of the edges. values can be negative to 'outset'
 } UIEdgeInsets;
@@ -96,3 +98,5 @@ NSString *NSStringFromUIOffset(UIOffset offset);
 - (void)encodeCGRect:(CGRect)rect forKey:(NSString *)key;
 - (CGRect)decodeCGRectForKey:(NSString *)key;
 @end
+
+NS_ASSUME_NONNULL_END

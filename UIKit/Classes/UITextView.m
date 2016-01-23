@@ -59,7 +59,7 @@ NSString *const UITextViewTextDidEndEditingNotification = @"UITextViewTextDidEnd
     } _delegateHas;
 }
 @synthesize inputAccessoryView, inputView;
-@synthesize delegate = _delegate;
+@dynamic delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {

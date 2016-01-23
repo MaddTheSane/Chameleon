@@ -73,7 +73,7 @@ extern const float UIScrollViewDecelerationRateFast;
 @property (nonatomic) BOOL alwaysBounceVertical;
 @property (nonatomic) BOOL alwaysBounceHorizontal;
 @property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
-@property (nonatomic, assign) id<UIScrollViewDelegate> delegate;
+@property (nonatomic, weak) id<UIScrollViewDelegate> delegate;
 @property (nonatomic) BOOL scrollsToTop;			// no effect
 @property (nonatomic) BOOL delaysContentTouches;	// no effect
 @property (nonatomic) BOOL canCancelContentTouches; // no effect

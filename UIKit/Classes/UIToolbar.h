@@ -30,6 +30,8 @@
 #import "UIView.h"
 #import "UIInterface.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, UIToolbarPosition) {
     UIToolbarPositionAny = 0,
     UIToolbarPositionBottom = 1,
@@ -39,11 +41,13 @@ typedef NS_ENUM(NSInteger, UIToolbarPosition) {
 @interface UIToolbar : UIView
 - (void)setItems:(NSArray *)items animated:(BOOL)animated;
 
-- (UIImage *)backgroundImageForToolbarPosition:(UIToolbarPosition)topOrBottom barMetrics:(UIBarMetrics)barMetrics;
-- (void)setBackgroundImage:(UIImage *)backgroundImage forToolbarPosition:(UIToolbarPosition)topOrBottom barMetrics:(UIBarMetrics)barMetrics;
+- (nullable UIImage *)backgroundImageForToolbarPosition:(UIToolbarPosition)topOrBottom barMetrics:(UIBarMetrics)barMetrics;
+- (void)setBackgroundImage:(nullable UIImage *)backgroundImage forToolbarPosition:(UIToolbarPosition)topOrBottom barMetrics:(UIBarMetrics)barMetrics;
 
 @property (nonatomic) UIBarStyle barStyle;
-@property (nonatomic, strong) UIColor *tintColor;
+@property (nonatomic, strong, nullable) UIColor *tintColor;
 @property (nonatomic, copy) NSArray *items;
 @property (nonatomic,assign,getter=isTranslucent) BOOL translucent;
 @end
+
+NS_ASSUME_NONNULL_END

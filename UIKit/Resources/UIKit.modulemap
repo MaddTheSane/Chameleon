@@ -1,0 +1,44 @@
+framework module UIKit {
+	umbrella header "UIKit.h"
+	
+	export *
+	module * { export * }
+	
+	explicit module AppKitIntegration {
+		header "AppKitIntegration.h"
+		
+		module UIActionSheetAppKitIntegration {
+			header "UIActionSheetAppKitIntegration.h"
+		}
+		
+		module UIApplicationAppKitIntegration {
+			header "UIApplicationAppKitIntegration.h"
+		}
+		
+		module UIColorAppKitIntegration {
+			header "UIColorAppKitIntegration.h"
+		}
+		
+		module UIFontAppKitIntegration {
+			header "UIFontAppKitIntegration.h"
+		}
+		
+		module UIImageAppKitIntegration {
+			header "UIImageAppKitIntegration.h"
+		}
+		
+		module UIKitView {
+			header "UIKitView.h"
+		}
+		
+		module UIResponderAppKitIntegration {
+			header "UIResponderAppKitIntegration.h"
+		}
+		
+		module UIScreenAppKitIntegration {
+			header "UIScreenAppKitIntegration.h"
+		}
+	}
+	link framework "Foundation"
+	link framework "AppKit"
+}

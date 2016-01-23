@@ -111,6 +111,7 @@
 #import "UIDatePicker.h"
 #import "UIAppearance.h"
 #import "UITextInput.h"
+#import "UIGestureRecognizerSubclass.h"
 
 // non-standard imports
 #import "UIScrollWheelGestureRecognizer.h"
