@@ -43,11 +43,11 @@ extern NSMutableArray *_allScreens;
         return toConvert;
     } else {
         // Go all the way through OSX screen coordinates.
-        NSPoint screenCoords = [[self.UIKitView window] convertBaseToScreen:[self.UIKitView convertPoint:NSPointFromCGPoint(toConvert) toView:nil]];
+        NSPoint screenCoords = [[self.UIKitView window] convertRectToScreen:(NSRect){[self.UIKitView convertPoint:NSPointFromCGPoint(toConvert) toView:nil], {1,1}}].origin;
         
         if (toScreen) {
             // Now from there back to the toScreen's window's base
-            return NSPointToCGPoint([toScreen.UIKitView convertPoint:[[toScreen.UIKitView window] convertScreenToBase:screenCoords] fromView:nil]);
+            return NSPointToCGPoint([toScreen.UIKitView convertPoint:[[toScreen.UIKitView window] convertRectFromScreen:(NSRect){screenCoords, {1,1}}].origin fromView:nil]);
         } else {
             return NSPointToCGPoint(screenCoords);
         }
@@ -63,13 +63,13 @@ extern NSMutableArray *_allScreens;
         
         if (fromScreen) {
             // Go all the way through OSX screen coordinates.
-            screenCoords = [[fromScreen.UIKitView window] convertBaseToScreen:[fromScreen.UIKitView convertPoint:NSPointFromCGPoint(toConvert) toView:nil]];
+            screenCoords = [[fromScreen.UIKitView window] convertRectToScreen:(NSRect){[fromScreen.UIKitView convertPoint:NSPointFromCGPoint(toConvert) toView:nil], {1, 1}}].origin;
         } else {
             screenCoords = NSPointFromCGPoint(toConvert);
         }
         
         // Now from there back to the our screen
-        return NSPointToCGPoint([self.UIKitView convertPoint:[[self.UIKitView window] convertScreenToBase:screenCoords] fromView:nil]);
+        return NSPointToCGPoint([self.UIKitView convertPoint:[[self.UIKitView window] convertRectFromScreen:(NSRect){screenCoords, (NSSize){0,0}}].origin fromView:nil]);
     }
 }
 

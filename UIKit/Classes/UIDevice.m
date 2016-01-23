@@ -41,9 +41,12 @@ static UIDevice *theDevice;
 
 + (void)initialize
 {
-    if (self == [UIDevice class]) {
-        theDevice = [[UIDevice alloc] init];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (self == [UIDevice class]) {
+            theDevice = [[UIDevice alloc] init];
+        }
+    });
 }
 
 + (UIDevice *)currentDevice
@@ -61,7 +64,7 @@ static UIDevice *theDevice;
 
 - (NSString *)name
 {
-    return (__bridge_transfer NSString *)SCDynamicStoreCopyComputerName(NULL,NULL);
+    return CFBridgingRelease(SCDynamicStoreCopyComputerName(NULL,NULL));
 }
 
 - (UIDeviceOrientation)orientation
@@ -70,19 +73,18 @@ static UIDevice *theDevice;
 }
 
 
-- (NSDictionary *)primaryPowerSource
+- (NSDictionary<NSString*,id> *)primaryPowerSource
 {
     CFTypeRef powerSourceInfo = IOPSCopyPowerSourcesInfo();
-    CFArrayRef powerSources = IOPSCopyPowerSourcesList(powerSourceInfo);
+    NSArray *powerSources = CFBridgingRelease(IOPSCopyPowerSourcesList(powerSourceInfo));
     
-    if (CFArrayGetCount(powerSources) == 0) return nil;
+    if (powerSources.count == 0) return nil;
     
-    CFDictionaryRef primarySourceRef = IOPSGetPowerSourceDescription(powerSourceInfo, CFArrayGetValueAtIndex(powerSources, 0));
-    NSDictionary *primarySource = [NSDictionary dictionaryWithDictionary:[(__bridge NSDictionary *) primarySourceRef copy]];
+    CFDictionaryRef primarySourceRef = IOPSGetPowerSourceDescription(powerSourceInfo, (__bridge CFTypeRef)(powerSources[0]));
+    NSDictionary *primarySource = [[NSDictionary alloc] initWithDictionary:(__bridge NSDictionary *) primarySourceRef];
     
     CFRelease(primarySourceRef);
     CFRelease(powerSourceInfo);
-    CFRelease(powerSources);
 
     return primarySource;
 }
@@ -91,19 +93,19 @@ static UIDevice *theDevice;
 {
     UIDeviceBatteryState state = UIDeviceBatteryStateUnknown;
     
-    NSDictionary *powerSource = [self primaryPowerSource];
-    id powerSourceState = [powerSource objectForKey:(__bridge NSString *)CFSTR(kIOPSPowerSourceStateKey)];
+    NSDictionary<NSString*,id> *powerSource = [self primaryPowerSource];
+    id powerSourceState = [powerSource objectForKey:@kIOPSPowerSourceStateKey];
     
-    if ([powerSourceState isEqualToString:(__bridge NSString *)CFSTR(kIOPSACPowerValue)]) {
-        id currentObj = [powerSource objectForKey:(__bridge NSString *)CFSTR(kIOPSCurrentCapacityKey)];
-        id capacityObj = [powerSource objectForKey:(__bridge NSString *)CFSTR(kIOPSMaxCapacityKey)];
+    if ([powerSourceState isEqualToString:@kIOPSACPowerValue]) {
+        id currentObj = [powerSource objectForKey:@kIOPSCurrentCapacityKey];
+        id capacityObj = [powerSource objectForKey:@kIOPSMaxCapacityKey];
         
         if ([currentObj isEqualToNumber:capacityObj]) {
             state = UIDeviceBatteryStateFull;
         } else {
             state = UIDeviceBatteryStateCharging;
         }
-    } else if ([powerSourceState isEqualToString:(__bridge NSString *)CFSTR(kIOPSBatteryPowerValue)]) {
+    } else if ([powerSourceState isEqualToString:@kIOPSBatteryPowerValue]) {
         state = UIDeviceBatteryStateUnplugged;
     }
     
@@ -114,11 +116,11 @@ static UIDevice *theDevice;
 {
     float batteryLevel = 1.f;
     
-    NSDictionary *powerSource = [self primaryPowerSource];
-
+    NSDictionary<NSString*,id> *powerSource = [self primaryPowerSource];
+    
     if (powerSource != nil) {
-        id currentObj = [powerSource objectForKey:(__bridge NSString *)CFSTR(kIOPSCurrentCapacityKey)];
-        id capacityObj = [powerSource objectForKey:(__bridge NSString *)CFSTR(kIOPSMaxCapacityKey)];
+        id currentObj = [powerSource objectForKey:@kIOPSCurrentCapacityKey];
+        id capacityObj = [powerSource objectForKey:@kIOPSMaxCapacityKey];
         
         batteryLevel = [currentObj floatValue] / [capacityObj floatValue];
     }

@@ -62,9 +62,9 @@
 // or something became first responder in the usual way). it then proceeds as described above
 // looking for something to use as the start of a responder chain.
 
-// returns nil by default
-- (UIViewController *)defaultResponderChildViewController;
+//! returns nil by default
+- (nullable UIViewController *)defaultResponderChildViewController;
 
-// returns nil by default
-- (UIResponder *)defaultResponder;
+//! returns nil by default
+- (nullable UIResponder *)defaultResponder;
 @end

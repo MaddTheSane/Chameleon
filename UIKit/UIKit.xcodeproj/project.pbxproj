@@ -516,8 +516,8 @@
 		556152801C48C13C00E9DC19 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		55F8C0791C52F2FD00F8A4BC /* UITextField+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Private.h"; sourceTree = "<group>"; };
 		55F8C07B1C52F31900F8A4BC /* UITextLayer+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextLayer+Private.h"; sourceTree = "<group>"; };
-		55F8C07D1C52F46500F8A4BC /* SwiftAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdditions.swift; sourceTree = "<group>"; };
-		55F8C07F1C52F4BE00F8A4BC /* UIKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = UIKit.modulemap; path = Resources/UIKit.modulemap; sourceTree = "<group>"; };
+		55F8C07D1C52F46500F8A4BC /* SwiftAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdditions.swift; sourceTree = "<group>"; usesTabs = 1; };
+		55F8C07F1C52F4BE00F8A4BC /* UIKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = UIKit.modulemap; path = Resources/UIKit.modulemap; sourceTree = "<group>"; usesTabs = 1; };
 		7011107A133BE0F300C86512 /* UIDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDatePicker.h; sourceTree = "<group>"; };
 		7011107B133BE0F300C86512 /* UIDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDatePicker.m; sourceTree = "<group>"; };
 		7806ED28133A1D7500273BC6 /* UITabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITabBar.h; sourceTree = "<group>"; };
@@ -576,6 +576,7 @@
 			);
 			name = UIKit;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;

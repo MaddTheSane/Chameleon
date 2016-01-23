@@ -73,8 +73,8 @@ typedef NS_ENUM(NSInteger, UIDeviceBatteryState) {
 @property (nonatomic, readonly, strong) NSString *name;
 @property (nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom;					// always returns UIUserInterfaceIdiomDesktop
 @property (nonatomic, readonly) UIDeviceOrientation orientation;							// always returns UIDeviceOrientationPortrait
-@property (nonatomic, readonly) UIDeviceBatteryState batteryState;                          // always returns UIDeviceBatteryStateUnknown
-@property (nonatomic, readonly) float batteryLevel;                                         // always returns -1.0 (unknown)
+@property (nonatomic, readonly) UIDeviceBatteryState batteryState;
+@property (nonatomic, readonly) float batteryLevel;
 @property (nonatomic, readonly,getter=isMultitaskingSupported) BOOL multitaskingSupported;	// always returns YES
 @property (nonatomic, readonly, strong) NSString *systemName;
 @property (nonatomic, readonly, strong) NSString *systemVersion;

@@ -21,7 +21,6 @@ extension UIEdgeInsets: Equatable {
 		return UIEdgeInsetsZero
 	}
 	
-	//UIEdgeInsetsInsetRect
 	public func insetRect(rect: CGRect) -> CGRect {
 		return UIEdgeInsetsInsetRect(rect, self)
 	}
