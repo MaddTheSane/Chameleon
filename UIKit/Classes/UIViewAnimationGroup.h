@@ -44,7 +44,7 @@ extern BOOL UIViewAnimationOptionIsSet(UIViewAnimationOptions options, UIViewAni
 
 @interface UIViewAnimationGroup : NSObject
 
-- (id)initWithAnimationOptions:(UIViewAnimationOptions)options;
+- (instancetype)initWithAnimationOptions:(UIViewAnimationOptions)options;
 
 - (id)actionForView:(UIView *)view forKey:(NSString *)keyPath;
 - (void)setTransitionView:(UIView *)view shouldCache:(BOOL)cache;

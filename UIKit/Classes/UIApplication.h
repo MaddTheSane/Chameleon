@@ -165,7 +165,7 @@ extern const NSTimeInterval UIMinimumKeepAliveTimeout;
 @property (nonatomic, getter=isNetworkActivityIndicatorVisible) BOOL networkActivityIndicatorVisible;	// does nothing, always returns NO
 @property (nonatomic) UIInterfaceOrientation statusBarOrientation;
 @property (nonatomic, readonly) NSTimeInterval statusBarOrientationAnimationDuration;
-@property (nonatomic, assign) id<UIApplicationDelegate> delegate;
+@property (nonatomic, weak) id<UIApplicationDelegate> delegate;
 @property (nonatomic, getter=isIdleTimerDisabled) BOOL idleTimerDisabled;	// has no actual affect
 @property (nonatomic) BOOL applicationSupportsShakeToEdit;					// no effect
 @property (nonatomic) UIStatusBarStyle statusBarStyle;                      // always returns UIStatusBarStyleDefault

@@ -59,7 +59,7 @@
     [super dealloc];
 }
 
-- (void)moveTheApple:(id)sender
+- (IBAction)moveTheApple:(id)sender
 {
     [UIView beginAnimations:@"moveTheApple" context:nil];
     [UIView setAnimationDuration:3];
