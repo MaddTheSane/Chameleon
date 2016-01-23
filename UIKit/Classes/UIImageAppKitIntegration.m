@@ -52,8 +52,21 @@ static UIImageRep *UIImageRepFromNSImageRep(NSImageRep *rep, NSRect rect, CGFloa
     NSRect rect1X = NSMakeRect(0, 0, [theImage size].width, [theImage size].height);
     NSRect rect2X = NSMakeRect(0, 0, [theImage size].width*2, [theImage size].height*2);
     
+    //Retina displays mess up this math...
     NSImageRep *theImageRep1X = [theImage bestRepresentationForRect:rect1X context:nil hints:nil];
     NSImageRep *theImageRep2X = [theImage bestRepresentationForRect:rect2X context:nil hints:nil];
+    
+    for (NSImageRep *rep in theImage.representations) {
+        NSSize bitmapSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
+        if (NSEqualSizes(bitmapSize, theImage.size)) {
+            theImageRep1X = rep;
+            break;
+        }
+    }
+    
+    if (theImageRep1X == nil) {
+        theImageRep1X = theImageRep2X;
+    }
     
     if (theImageRep1X == theImageRep2X) {
         theImageRep2X = nil;

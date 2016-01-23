@@ -51,7 +51,7 @@ static CGImageSourceRef CreateCGImageSourceWithFile(NSString *imagePath)
     return nil;
 }
 
-+ (NSArray *)_imageRepsWithContentsOfFiles:(NSString *)imagePath
++ (NSArray<UIImageRep*> *)_imageRepsWithContentsOfFiles:(NSString *)imagePath
 {
     NSMutableArray *reps = [NSMutableArray arrayWithCapacity:2];
     CGImageSourceRef src1X = CreateCGImageSourceWithFile(imagePath);

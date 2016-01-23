@@ -80,7 +80,7 @@ static void drawPatternImage(void *info, CGContextRef ctx)
 - (id)initWithCGColor:(CGColorRef)color
 {
     if (!color) {
-        self = nil;
+        return nil;
     } else if ((self=[super init])) {
         _CGColor = CGColorRetain(color);
     }

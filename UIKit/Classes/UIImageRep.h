@@ -29,13 +29,15 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIImageRep : NSObject
 
-+ (NSArray *)imageRepsWithContentsOfFile:(NSString *)file;
++ (nullable NSArray<UIImageRep*> *)imageRepsWithContentsOfFile:(NSString *)file;
 
-- (id)initWithCGImageSource:(CGImageSourceRef)source imageIndex:(NSUInteger)index scale:(CGFloat)scale;
-- (id)initWithCGImage:(CGImageRef)image scale:(CGFloat)scale;
-- (id)initWithData:(NSData *)data;
+- (nullable instancetype)initWithCGImageSource:(CGImageSourceRef)source imageIndex:(NSUInteger)index scale:(CGFloat)scale;
+- (instancetype)initWithCGImage:(CGImageRef)image scale:(CGFloat)scale;
+- (nullable instancetype)initWithData:(NSData *)data;
 
 // note that the cordinates for fromRect are in the image's *scaled* coordinate system, not in raw pixels
 // so for a 100x100px image with a scale of 2, the largest valid fromRect is of size 50x50.
@@ -48,3 +50,5 @@
 @property (nonatomic, readonly, getter=isOpaque) BOOL opaque;
 
 @end
+
+NS_ASSUME_NONNULL_END
