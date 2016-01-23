@@ -176,7 +176,7 @@
         CGSize offset = _shadowOffset;
 
         // stupid version compatibilities..
-        if (floorf(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
             offset.height *= -1;
         }
         
