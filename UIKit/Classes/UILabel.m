@@ -36,7 +36,7 @@
 
 @implementation UILabel
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self = [super initWithFrame:frame])) {
         self.userInteractionEnabled = NO;
@@ -132,7 +132,7 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines
 {
-    if ([_text length] > 0) {
+    if (_text.length > 0) {
         CGSize maxSize = bounds.size;
         if (numberOfLines > 0) {
             maxSize.height = _font.lineHeight * numberOfLines;
@@ -150,7 +150,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if ([_text length] > 0) {
+    if (_text.length > 0) {
         CGContextSaveGState(UIGraphicsGetCurrentContext());
         
         const CGRect bounds = self.bounds;
@@ -194,7 +194,7 @@
 - (void)setFrame:(CGRect)newFrame
 {
     const BOOL redisplay = !CGSizeEqualToSize(newFrame.size,self.frame.size);
-    [super setFrame:newFrame];
+    super.frame = newFrame;
     if (redisplay) {
         [self setNeedsDisplay];
     }

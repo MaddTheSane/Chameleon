@@ -30,7 +30,7 @@
 #import "UIControl.h"
 
 @interface UISwitch : UIControl
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 - (void)setOn:(BOOL)on animated:(BOOL)animated;
 
 @property(nonatomic, getter=isOn) BOOL on;

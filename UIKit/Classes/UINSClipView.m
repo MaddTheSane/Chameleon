@@ -46,7 +46,7 @@
         [self setDrawsBackground:NO];
         [self setCopiesOnScroll:NO];
         [self setWantsLayer:YES];
-        [self setAutoresizingMask:NSViewNotSizable];
+        self.autoresizingMask = NSViewNotSizable;
     }
     return self;
 }
@@ -64,9 +64,9 @@
 - (void)scrollWheel:(NSEvent *)event
 {
     if (_parentView.scrollEnabled) {
-        NSPoint offset = [self bounds].origin;
-        offset.x -= [event deltaX];
-        offset.y -= [event deltaY];
+        NSPoint offset = self.bounds.origin;
+        offset.x -= event.deltaX;
+        offset.y -= event.deltaY;
         
         [_parentView _quickFlashScrollIndicators];
         [_parentView setContentOffset:NSPointToCGPoint(offset) animated:NO];
@@ -89,7 +89,7 @@
 
 - (void)setFrame:(NSRect)frame
 {
-    [super setFrame:frame];
+    super.frame = frame;
     [_parentView setNeedsLayout];
 }
 

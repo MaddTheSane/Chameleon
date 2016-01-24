@@ -61,7 +61,7 @@ NSString *const UITextViewTextDidEndEditingNotification = @"UITextViewTextDidEnd
 @synthesize inputAccessoryView, inputView;
 @dynamic delegate;
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _textLayer = [[UITextLayer alloc] initWithContainer:self isField:NO];
@@ -155,12 +155,12 @@ NSString *const UITextViewTextDidEndEditingNotification = @"UITextViewTextDidEnd
 
 - (BOOL)isSecureTextEntry
 {
-    return [_textLayer isSecureTextEntry];
+    return _textLayer.secureTextEntry;
 }
 
 - (void)setSecureTextEntry:(BOOL)secure
 {
-    [_textLayer setSecureTextEntry:secure];
+    _textLayer.secureTextEntry = secure;
 }
 
 
@@ -249,14 +249,14 @@ NSString *const UITextViewTextDidEndEditingNotification = @"UITextViewTextDidEnd
 
 - (BOOL)hasText
 {
-  return [_textLayer.text length] > 0;
+  return (_textLayer.text).length > 0;
 }
 
 
 - (void)setDelegate:(id<UITextViewDelegate>)theDelegate
 {
     if (theDelegate != self.delegate) {
-        [super setDelegate:theDelegate];
+        super.delegate = theDelegate;
         _delegateHas.shouldBeginEditing = [theDelegate respondsToSelector:@selector(textViewShouldBeginEditing:)];
         _delegateHas.didBeginEditing = [theDelegate respondsToSelector:@selector(textViewDidBeginEditing:)];
         _delegateHas.shouldEndEditing = [theDelegate respondsToSelector:@selector(textViewShouldEndEditing:)];
@@ -334,7 +334,7 @@ NSString *const UITextViewTextDidEndEditingNotification = @"UITextViewTextDidEnd
             textAlignment = @"Natural";
             break;
     }
-    return [NSString stringWithFormat:@"<%@: %p; textAlignment = %@; selectedRange = %@; editable = %@; textColor = %@; font = %@; delegate = %@>", [self className], self, textAlignment, NSStringFromRange(self.selectedRange), (self.editable ? @"YES" : @"NO"), self.textColor, self.font, self.delegate];
+    return [NSString stringWithFormat:@"<%@: %p; textAlignment = %@; selectedRange = %@; editable = %@; textColor = %@; font = %@; delegate = %@>", self.className, self, textAlignment, NSStringFromRange(self.selectedRange), (self.editable ? @"YES" : @"NO"), self.textColor, self.font, self.delegate];
 }
 
 - (id)mouseCursorForEvent:(UIEvent *)event

@@ -32,7 +32,7 @@
 
 @implementation UIBarButtonItem
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _isSystemItem = NO;
@@ -41,7 +41,7 @@
     return self;
 }
 
-- (id)initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem target:(id)target action:(SEL)action
+- (instancetype)initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem target:(id)target action:(SEL)action
 {
     if ((self=[self init])) {
         _isSystemItem = YES;
@@ -53,7 +53,7 @@
     return self;
 }
 
-- (id)initWithCustomView:(UIView *)customView
+- (instancetype)initWithCustomView:(UIView *)customView
 {
     if ((self=[self init])) {
         self.customView = customView;
@@ -61,7 +61,7 @@
     return self;
 }
 
-- (id)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action
+- (instancetype)initWithTitle:(NSString *)title style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action
 {
     if ((self=[self init])) {
         self.title = title;
@@ -72,7 +72,7 @@
     return self;
 }
 
-- (id)initWithImage:(UIImage *)image style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action
+- (instancetype)initWithImage:(UIImage *)image style:(UIBarButtonItemStyle)style target:(id)target action:(SEL)action
 {
     if ((self=[self init])) {
         self.image = image;

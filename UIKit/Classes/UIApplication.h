@@ -145,7 +145,7 @@ extern const NSTimeInterval UIMinimumKeepAliveTimeout;
 
 - (void)beginIgnoringInteractionEvents;
 - (void)endIgnoringInteractionEvents;
-- (BOOL)isIgnoringInteractionEvents;
+@property (nonatomic, getter=isIgnoringInteractionEvents, readonly) BOOL ignoringInteractionEvents;
 
 - (void)presentLocalNotificationNow:(UILocalNotification *)notification;
 - (void)cancelLocalNotification:(UILocalNotification *)notification;
@@ -153,7 +153,7 @@ extern const NSTimeInterval UIMinimumKeepAliveTimeout;
 
 - (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types;
 - (void)unregisterForRemoteNotifications;
-- (UIRemoteNotificationType)enabledRemoteNotificationTypes;
+@property (nonatomic, readonly) UIRemoteNotificationType enabledRemoteNotificationTypes;
 
 - (UIBackgroundTaskIdentifier)beginBackgroundTaskWithExpirationHandler:(void(^)(void))handler;
 - (void)endBackgroundTask:(UIBackgroundTaskIdentifier)identifier;

@@ -165,13 +165,13 @@ static CFArrayRef CreateCTLinesForString(NSString *string, CGSize constrainedToS
 
 - (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withFont:(UIFont *)font fontSize:(CGFloat)fontSize lineBreakMode:(UILineBreakMode)lineBreakMode baselineAdjustment:(UIBaselineAdjustment)baselineAdjustment
 {
-    UIFont *adjustedFont = ([font pointSize] != fontSize)? [font fontWithSize:fontSize] : font;
+    UIFont *adjustedFont = (font.pointSize != fontSize)? [font fontWithSize:fontSize] : font;
     return [self drawInRect:CGRectMake(point.x,point.y,width,adjustedFont.lineHeight) withFont:adjustedFont lineBreakMode:lineBreakMode];
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withFont:(UIFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode
 {
-    return [self drawAtPoint:point forWidth:width withFont:font fontSize:[font pointSize] lineBreakMode:lineBreakMode baselineAdjustment:UIBaselineAdjustmentNone];
+    return [self drawAtPoint:point forWidth:width withFont:font fontSize:font.pointSize lineBreakMode:lineBreakMode baselineAdjustment:UIBaselineAdjustmentNone];
 }
  
 - (CGSize)drawInRect:(CGRect)rect withFont:(UIFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode alignment:(NSTextAlignment)alignment

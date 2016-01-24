@@ -37,7 +37,7 @@
     NSMutableArray *_registeredActions;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _registeredActions = [[NSMutableArray alloc] init];
@@ -81,7 +81,7 @@
         }
     }
     
-    if ([actions count] == 0) {
+    if (actions.count == 0) {
         return nil;
     } else {
         return actions;

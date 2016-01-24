@@ -40,7 +40,7 @@ static UIView *ContainerForView(UIView *view)
     UIView *containerView = view;
     
     while (containerView && !([containerView isKindOfClass:[UIWindow class]] || [containerView _viewController])) {
-        containerView = [containerView superview];
+        containerView = containerView.superview;
     }
     
     return containerView;
@@ -140,7 +140,7 @@ static UIView *ContainerForView(UIView *view)
 - (void)_viewChangedNotification:(NSNotification *)note
 {
     if (self.inputVisible) {
-        UIView *view = [note object];
+        UIView *view = note.object;
         UIView *referenceView = [self _referenceView];
 
         if (view == referenceView || [ContainerForView(referenceView) isDescendantOfView:view]) {
@@ -153,12 +153,10 @@ static UIView *ContainerForView(UIView *view)
 {
     [self _repositionInputWindow];
     
-    NSDictionary *fakeAnimationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [NSValue valueWithCGRect:_inputWindow.frame], UIKeyboardFrameBeginUserInfoKey,
-                                       [NSValue valueWithCGRect:_inputWindow.frame], UIKeyboardFrameEndUserInfoKey,
-                                       [NSNumber numberWithDouble:0], UIKeyboardAnimationDurationUserInfoKey,
-                                       [NSNumber numberWithInt:UIViewAnimationCurveLinear], UIKeyboardAnimationCurveUserInfoKey,
-                                       nil];
+    NSDictionary *fakeAnimationInfo = @{UIKeyboardFrameBeginUserInfoKey: [NSValue valueWithCGRect:_inputWindow.frame],
+                                       UIKeyboardFrameEndUserInfoKey: [NSValue valueWithCGRect:_inputWindow.frame],
+                                       UIKeyboardAnimationDurationUserInfoKey: @0.0,
+                                       UIKeyboardAnimationCurveUserInfoKey: [NSNumber numberWithInt:UIViewAnimationCurveLinear]};
     
     if (visible) {
         [[NSNotificationCenter defaultCenter] postNotificationName:UIKeyboardWillShowNotification object:nil userInfo:fakeAnimationInfo];

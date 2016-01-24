@@ -91,7 +91,7 @@ static NSArray *_getFontCollectionNames(CTFontCollectionRef collection, CFString
             CFRelease(descriptors);
         }
     }
-    return [names allObjects];
+    return names.allObjects;
 }
 
 + (NSArray *)familyNames

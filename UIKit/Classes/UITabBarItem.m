@@ -38,16 +38,17 @@
 
 @implementation UITabBarItem
 
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image tag:(NSInteger)tag
 {
     if ((self = [super init])) {
         self.title = title;
         self.image = image;
+        self.tag = tag;
     }
     return self;
 }
 
-- (id)initWithTabBarSystemItem:(UITabBarSystemItem)systemItem tag:(NSInteger)tag
+- (instancetype)initWithTabBarSystemItem:(UITabBarSystemItem)systemItem tag:(NSInteger)tag
 {
     if ((self = [super init])) {
     }

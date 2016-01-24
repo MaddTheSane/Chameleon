@@ -33,7 +33,7 @@
 
 @implementation UITapGestureRecognizer
 
-- (id)initWithTarget:(id)target action:(SEL)action
+- (instancetype)initWithTarget:(id)target action:(SEL)action
 {
     if ((self=[super initWithTarget:target action:action])) {
         _numberOfTapsRequired = 1;

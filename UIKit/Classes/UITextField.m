@@ -59,7 +59,7 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 }
 @synthesize inputAccessoryView, inputView;
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _textLayer = [[UITextLayer alloc] initWithContainer:self isField:YES];
@@ -185,15 +185,15 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 - (void)setFrame:(CGRect)frame
 {
     if (!CGRectEqualToRect(frame,self.frame)) {
-        [super setFrame:frame];
+        super.frame = frame;
         [self setNeedsDisplay];
     }
 }
 
 - (void)setHidden:(BOOL)hidden
 {
-    [super setHidden:hidden];
-    [_textLayer setHidden:hidden];
+    super.hidden = hidden;
+    _textLayer.hidden = hidden;
 }
 
 - (CGRect)borderRectForBounds:(CGRect)bounds
@@ -305,7 +305,7 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
     UIImage *background = self.enabled? _background : _disabledBackground;
     [background drawInRect:self.bounds];
     
-    if ([self.text length] == 0) {
+    if ((self.text).length == 0) {
         [self drawPlaceholderInRect:[self placeholderRectForBounds:self.bounds]];
     }
 }
@@ -328,7 +328,7 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 - (void)setAutocorrectionType:(UITextAutocorrectionType)type
 {
     self->_autocorrectionType = type;
-    [self->_textLayer setAutocorrectionType:type];
+    self->_textLayer.autocorrectionType = type;
 }
 
 - (BOOL)enablesReturnKeyAutomatically
@@ -369,12 +369,12 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
 
 - (BOOL)isSecureTextEntry
 {
-    return [_textLayer isSecureTextEntry];
+    return _textLayer.secureTextEntry;
 }
 
 - (void)setSecureTextEntry:(BOOL)secure
 {
-    [_textLayer setSecureTextEntry:secure];
+    _textLayer.secureTextEntry = secure;
 }
 
 
@@ -521,7 +521,7 @@ NSString *const UITextFieldTextDidEndEditingNotification = @"UITextFieldTextDidE
             textAlignment = @"Right";
             break;
     }
-    return [NSString stringWithFormat:@"<%@: %p; textAlignment = %@; editing = %@; textColor = %@; font = %@; delegate = %@>", [self className], self, textAlignment, (self.editing ? @"YES" : @"NO"), self.textColor, self.font, self.delegate];
+    return [NSString stringWithFormat:@"<%@: %p; textAlignment = %@; editing = %@; textColor = %@; font = %@; delegate = %@>", self.className, self, textAlignment, (self.editing ? @"YES" : @"NO"), self.textColor, self.font, self.delegate];
 }
 
 - (id)mouseCursorForEvent:(UIEvent *)event

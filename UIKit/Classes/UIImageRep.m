@@ -32,7 +32,7 @@
 
 static CGImageSourceRef CreateCGImageSourceWithFile(NSString *imagePath)
 {
-    NSString *macPath = [[[imagePath stringByDeletingPathExtension] stringByAppendingString:@"~mac"] stringByAppendingPathExtension:[imagePath pathExtension]];
+    NSString *macPath = [[imagePath.stringByDeletingPathExtension stringByAppendingString:@"~mac"] stringByAppendingPathExtension:imagePath.pathExtension];
     return CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:macPath], NULL) ?: CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:imagePath], NULL);
 }
 
@@ -55,7 +55,7 @@ static CGImageSourceRef CreateCGImageSourceWithFile(NSString *imagePath)
 {
     NSMutableArray *reps = [NSMutableArray arrayWithCapacity:2];
     CGImageSourceRef src1X = CreateCGImageSourceWithFile(imagePath);
-    CGImageSourceRef src2X = CreateCGImageSourceWithFile([[[imagePath stringByDeletingPathExtension] stringByAppendingString:@"@2x"] stringByAppendingPathExtension:[imagePath pathExtension]]);
+    CGImageSourceRef src2X = CreateCGImageSourceWithFile([[imagePath.stringByDeletingPathExtension stringByAppendingString:@"@2x"] stringByAppendingPathExtension:imagePath.pathExtension]);
 
     if (src1X) {
         UIImageRep *rep = [[UIImageRep alloc] initWithCGImageSource:src1X imageIndex:0 scale:1];
@@ -68,7 +68,7 @@ static CGImageSourceRef CreateCGImageSourceWithFile(NSString *imagePath)
         CFRelease(src2X);
     }
     
-    return ([reps count] > 0)? reps : nil;
+    return (reps.count > 0)? reps : nil;
 }
 
 + (NSArray *)imageRepsWithContentsOfFile:(NSString *)imagePath

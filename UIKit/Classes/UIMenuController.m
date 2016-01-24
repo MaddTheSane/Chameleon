@@ -65,21 +65,19 @@ NSString *const UIMenuControllerMenuFrameDidChangeNotification = @"UIMenuControl
     static NSArray *items = nil;
 
     if (!items) {
-        items = [[NSArray alloc] initWithObjects:
-                 [[UIMenuItem alloc] initWithTitle:@"Cut" action:@selector(cut:)],
+        items = @[[[UIMenuItem alloc] initWithTitle:@"Cut" action:@selector(cut:)],
                  [[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copy:)],
                  [[UIMenuItem alloc] initWithTitle:@"Paste" action:@selector(paste:)],
                  [[UIMenuItem alloc] initWithTitle:@"Delete" action:@selector(delete:)],
                  [[UIMenuItem alloc] initWithTitle:@"Select" action:@selector(select:)],
-                 [[UIMenuItem alloc] initWithTitle:@"Select All" action:@selector(selectAll:)],
-                 nil];
+                 [[UIMenuItem alloc] initWithTitle:@"Select All" action:@selector(selectAll:)]];
     }
 
     return items;
 }
 
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _enabledMenuItems = [[NSMutableArray alloc] init];
@@ -99,25 +97,25 @@ NSString *const UIMenuControllerMenuFrameDidChangeNotification = @"UIMenuControl
 
 - (void)setMenuVisible:(BOOL)menuVisible animated:(BOOL)animated
 {
-    const BOOL wasVisible = [self isMenuVisible];
+    const BOOL wasVisible = self.menuVisible;
 
     if (menuVisible && !wasVisible) {
         [self update];
 
-        if ([_enabledMenuItems count] > 0) {
+        if (_enabledMenuItems.count > 0) {
             _menu = [[NSMenu alloc] initWithTitle:@""];
-            [_menu setDelegate:self];
+            _menu.delegate = self;
             [_menu setAutoenablesItems:NO];
             [_menu setAllowsContextMenuPlugIns:NO];
             
             for (UIMenuItem *item in _enabledMenuItems) {
                 NSMenuItem *theItem = [[NSMenuItem alloc] initWithTitle:item.title action:@selector(_didSelectMenuItem:) keyEquivalent:@""];
-                [theItem setTarget:self];
-                [theItem setRepresentedObject:item];
+                theItem.target = self;
+                theItem.representedObject = item;
                 [_menu addItem:theItem];
             }
 
-            _menuFrame.size = NSSizeToCGSize([_menu size]);
+            _menuFrame.size = NSSizeToCGSize(_menu.size);
             _menuFrame.origin = _menuLocation;
 
             // this is offset so that it seems to be aligned on the right of the initial rect given to setTargetRect:inView:
@@ -227,7 +225,7 @@ NSString *const UIMenuControllerMenuFrameDidChangeNotification = @"UIMenuControl
     
     UIApplication *app = [UIApplication sharedApplication];
     UIResponder *firstResponder = [app.keyWindow _firstResponder];
-    UIMenuItem *selectedItem = [sender representedObject];
+    UIMenuItem *selectedItem = sender.representedObject;
 
     // now spin through the enabled actions, make sure the selected one is still in there, and then send it if it is.
     if (firstResponder && selectedItem) {

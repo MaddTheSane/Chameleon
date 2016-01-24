@@ -52,7 +52,7 @@
     } _delegateHas;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _menuTitles = [[NSMutableArray alloc] init];
@@ -64,7 +64,7 @@
     return self;
 }
 
-- (id)initWithTitle:(NSString *)title delegate:(id < UIActionSheetDelegate >)delegate cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
+- (instancetype)initWithTitle:(NSString *)title delegate:(id < UIActionSheetDelegate >)delegate cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
     if ((self=[self initWithFrame:CGRectZero])) {
         self.delegate = delegate;
@@ -111,7 +111,7 @@
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
     [_menuTitles addObject:title ?: @""];
-    NSInteger index = [_menuTitles count]-1;
+    NSInteger index = _menuTitles.count-1;
 
     if (_firstOtherButtonIndex == -1 ) {
         _firstOtherButtonIndex = index;
@@ -122,7 +122,7 @@
 
 - (void)addSeparator
 {
-    [_separatorIndexes addObject:@([_menuTitles count])];
+    [_separatorIndexes addObject:@(_menuTitles.count)];
 }
 
 - (void)setDestructiveButtonIndex:(NSInteger)index
@@ -158,7 +158,7 @@
 
 - (NSInteger)numberOfButtons
 {
-    return [_menuTitles count];
+    return _menuTitles.count;
 }
 
 - (void)_showFromPoint:(CGPoint)point rightAligned:(BOOL)rightAligned inView:(UIView *)view
@@ -170,7 +170,7 @@
         [_menu setAutoenablesItems:NO];
         [_menu setAllowsContextMenuPlugIns:NO];
         
-        for (NSInteger index=0; index<[_menuTitles count]; index++) {
+        for (NSInteger index=0; index<_menuTitles.count; index++) {
             if ([_separatorIndexes containsObject:@(index)]) {
                 [_menu addItem:[NSMenuItem separatorItem]];
             }
@@ -179,9 +179,9 @@
             // as clicking outside of the menu is always the same thing as tapping the cancel button and that's just
             // how it's got to work, I think.
             if (index != _cancelButtonIndex) {				
-                NSMenuItem *theItem = [[NSMenuItem alloc] initWithTitle:[_menuTitles objectAtIndex:index] action:@selector(_didSelectMenuItem:) keyEquivalent:@""];
-                [theItem setTag:index];
-                [theItem setTarget:self];
+                NSMenuItem *theItem = [[NSMenuItem alloc] initWithTitle:_menuTitles[index] action:@selector(_didSelectMenuItem:) keyEquivalent:@""];
+                theItem.tag = index;
+                theItem.target = self;
                 [_menu addItem:theItem];
             }
         }
@@ -192,7 +192,7 @@
 
         // then offset it if desired
         if (rightAligned) {
-            screenPoint.x -= [_menu size].width;
+            screenPoint.x -= _menu.size.width;
         }
 
         if (_delegateHas.willPresentActionSheet) {
@@ -232,7 +232,7 @@
 
 - (void)_didSelectMenuItem:(NSMenuItem *)item
 {
-    [self _clickedButtonAtIndex:[item tag]];
+    [self _clickedButtonAtIndex:item.tag];
 }
 
 - (void)_actuallyPresentTheMenuFromPoint:(NSValue *)aPoint

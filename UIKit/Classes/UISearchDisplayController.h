@@ -39,7 +39,7 @@
 @protocol UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate;
 
 @interface UISearchDisplayController : NSObject
-- (instancetype)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController;
+- (instancetype)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, assign) id<UISearchDisplayDelegate> delegate;
 

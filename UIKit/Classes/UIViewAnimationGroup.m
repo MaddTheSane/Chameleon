@@ -136,7 +136,7 @@ static inline UIViewAnimationOptions UIViewAnimationOptionTransition(UIViewAnima
 - (NSArray *)allAnimatingViews
 {
     @synchronized(runningAnimationGroups) {
-        return [_animatingViews allObjects];
+        return _animatingViews.allObjects;
     }
 }
 
@@ -161,7 +161,7 @@ static inline UIViewAnimationOptions UIViewAnimationOptionTransition(UIViewAnima
 {
     if (_waitingAnimations == 0) {
         if ([self.delegate respondsToSelector:self.didStopSelector]) {
-            NSNumber *finishedArgument = [NSNumber numberWithBool:animationsDidFinish];
+            NSNumber *finishedArgument = @(animationsDidFinish);
             typedef void(*DidFinishMethod)(id, SEL, NSString *, NSNumber *, void *);
             DidFinishMethod method = (DidFinishMethod)[self.delegate methodForSelector:self.didStopSelector];
             method(self.delegate, self.didStopSelector, self.name, finishedArgument, self.context);

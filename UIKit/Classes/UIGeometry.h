@@ -85,11 +85,11 @@ NSString *NSStringFromUIOffset(UIOffset offset);
 + (instancetype)valueWithCGSize:(CGSize)size;
 + (instancetype)valueWithUIEdgeInsets:(UIEdgeInsets)insets;
 + (instancetype)valueWithUIOffset:(UIOffset)offset;
-- (CGPoint)CGPointValue;
-- (CGRect)CGRectValue;
-- (CGSize)CGSizeValue;
-- (UIEdgeInsets)UIEdgeInsetsValue;
-- (UIOffset)UIOffsetValue;
+@property (nonatomic, readonly) CGPoint CGPointValue;
+@property (nonatomic, readonly) CGRect CGRectValue;
+@property (nonatomic, readonly) CGSize CGSizeValue;
+@property (nonatomic, readonly) UIEdgeInsets UIEdgeInsetsValue;
+@property (nonatomic, readonly) UIOffset UIOffsetValue;
 @end
 
 @interface NSCoder (NSCoderUIGeometryExtensions)

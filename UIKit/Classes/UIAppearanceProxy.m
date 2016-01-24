@@ -114,7 +114,7 @@ static IMP GetOriginalMethodIMP(id self, SEL cmd)
     
     while (klass && !boxedMethodImp) {
         NSDictionary *overrides = objc_getAssociatedObject(klass, UIAppearanceSetterOverridesAssociatedObjectKey);
-        boxedMethodImp = [overrides objectForKey:NSStringFromSelector(cmd)];
+        boxedMethodImp = overrides[NSStringFromSelector(cmd)];
         klass = [klass superclass];
     }
     
@@ -243,22 +243,22 @@ static IMP ImplementationForPropertyType(const char *t)
     // each axis must be either NSInteger or NSUInteger.
     // throw an exception if other types are used in an axis.
 
-    NSMethodSignature *methodSignature = [anInvocation methodSignature];
+    NSMethodSignature *methodSignature = anInvocation.methodSignature;
     NSMutableArray *propertyKey = [NSMutableArray array];
 
     // see if this selector is a setter or a getter
-    const BOOL isSetter = [NSStringFromSelector([anInvocation selector]) hasPrefix:@"set"] && [methodSignature numberOfArguments] > 2 && strcmp([methodSignature methodReturnType], @encode(void)) == 0;
-    const BOOL isGetter = !isSetter && strcmp([methodSignature methodReturnType], @encode(void)) != 0;
+    const BOOL isSetter = [NSStringFromSelector(anInvocation.selector) hasPrefix:@"set"] && methodSignature.numberOfArguments > 2 && strcmp(methodSignature.methodReturnType, @encode(void)) == 0;
+    const BOOL isGetter = !isSetter && strcmp(methodSignature.methodReturnType, @encode(void)) != 0;
     
     // ensure that the property type is legit
-    const char *propertyType = isSetter? [methodSignature getArgumentTypeAtIndex:2] : (isGetter? [methodSignature methodReturnType] : NULL);
+    const char *propertyType = isSetter? [methodSignature getArgumentTypeAtIndex:2] : (isGetter? methodSignature.methodReturnType : NULL);
     if (!TypeIsPropertyType(propertyType)) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"property type must be id, NSInteger, NSUInteger, CGFloat, CGPoint, CGSize, CGRect, UIEdgeInsets or UIOffset" userInfo:nil];
     }
     
     // use axis arguments when building the unique key for this property
     const int axisStartIndex = isSetter? 3 : 2;
-    for (int i=axisStartIndex; i<[methodSignature numberOfArguments]; i++) {
+    for (int i=axisStartIndex; i<methodSignature.numberOfArguments; i++) {
         const char *type = [methodSignature getArgumentTypeAtIndex:i];
         
         // ensure that the axis arguments are integers
@@ -273,19 +273,19 @@ static IMP ImplementationForPropertyType(const char *t)
     
     if (isGetter) {
         // convert the getter's selector into a setter's selector since that's what we actually key the property value with
-        NSMutableString *selectorKeyString = [NSStringFromSelector([anInvocation selector]) mutableCopy];
-        [selectorKeyString replaceCharactersInRange:NSMakeRange(0, 1) withString:[[selectorKeyString substringToIndex:1] uppercaseString]];
+        NSMutableString *selectorKeyString = [NSStringFromSelector(anInvocation.selector) mutableCopy];
+        [selectorKeyString replaceCharactersInRange:NSMakeRange(0, 1) withString:[selectorKeyString substringToIndex:1].uppercaseString];
         [selectorKeyString insertString:@"set" atIndex:0];
         
         // if the property has 1 or more axis parts, we need to take those into account, too
-        if ([methodSignature numberOfArguments] > 2) {
+        if (methodSignature.numberOfArguments > 2) {
             const NSRange colonRange = [selectorKeyString rangeOfString:@":"];
             const NSRange forRange = [selectorKeyString rangeOfString:@"For"];
             
             if (colonRange.location != NSNotFound && forRange.location != NSNotFound && colonRange.location > NSMaxRange(forRange)) {
                 const NSRange axisNameRange = NSMakeRange(forRange.location+3, colonRange.location-forRange.location-3);
                 NSString *axisName = [selectorKeyString substringWithRange:axisNameRange];
-                axisName = [axisName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[[axisName substringToIndex:1] uppercaseString]];
+                axisName = [axisName stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[axisName substringToIndex:1].uppercaseString];
                 NSString *axisSelectorPartName = [NSString stringWithFormat:@"for%@:", axisName];
                 [selectorKeyString insertString:axisSelectorPartName atIndex:NSMaxRange(colonRange)];
                 [selectorKeyString replaceCharactersInRange:NSMakeRange(forRange.location, colonRange.location-forRange.location) withString:@""];
@@ -299,17 +299,17 @@ static IMP ImplementationForPropertyType(const char *t)
 
         // fetch the current property value using the key and put it in the current invocation
         // so it can be returned to the caller
-        UIAppearanceProperty *propertyValue = [_settings objectForKey:propertyKey];
+        UIAppearanceProperty *propertyValue = _settings[propertyKey];
         [propertyValue setReturnValueForInvocation:anInvocation];
     }
     else if (isSetter) {
-        NSString *selectorString = NSStringFromSelector([anInvocation selector]);
+        NSString *selectorString = NSStringFromSelector(anInvocation.selector);
 
         // finish building the property key using the selector we have
         [propertyKey addObject:selectorString];
         
         // save the actual property value using the key
-        [_settings setObject:[[UIAppearanceProperty alloc] initWithInvocation:anInvocation] forKey:propertyKey];
+        _settings[propertyKey] = [[UIAppearanceProperty alloc] initWithInvocation:anInvocation];
         
         // WARNING! Swizzling ahead!
         
@@ -331,23 +331,23 @@ static IMP ImplementationForPropertyType(const char *t)
             objc_setAssociatedObject(_targetClass, UIAppearanceSetterOverridesAssociatedObjectKey, methodOverrides, OBJC_ASSOCIATION_RETAIN);
         }
         
-        if (![methodOverrides objectForKey:selectorString]) {
-            Method method = class_getInstanceMethod(_targetClass, [anInvocation selector]);
+        if (!methodOverrides[selectorString]) {
+            Method method = class_getInstanceMethod(_targetClass, anInvocation.selector);
             
             if (method) {
                 IMP implementation = method_getImplementation(method);
                 IMP overrideImplementation =  ImplementationForPropertyType([methodSignature getArgumentTypeAtIndex:2]);
                 
                 if (implementation != overrideImplementation) {
-                    [methodOverrides setObject:[NSValue valueWithBytes:&implementation objCType:@encode(IMP)] forKey:selectorString];
-                    class_replaceMethod(_targetClass, [anInvocation selector], overrideImplementation, method_getTypeEncoding(method));
+                    methodOverrides[selectorString] = [NSValue valueWithBytes:&implementation objCType:@encode(IMP)];
+                    class_replaceMethod(_targetClass, anInvocation.selector, overrideImplementation, method_getTypeEncoding(method));
                 }
             }
         }
     }
     else {
         // derp
-        [self doesNotRecognizeSelector:[anInvocation selector]];
+        [self doesNotRecognizeSelector:anInvocation.selector];
     }
 }
 

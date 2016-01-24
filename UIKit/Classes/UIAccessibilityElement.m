@@ -31,7 +31,7 @@
 
 @implementation UIAccessibilityElement
 
-- (id)initWithAccessibilityContainer:(id)container
+- (instancetype)initWithAccessibilityContainer:(id)container
 {
     if ((self=[super init])) {
     }

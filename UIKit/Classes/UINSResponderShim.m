@@ -68,7 +68,7 @@
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
     for (UIResponder *responder = [self.delegate responderForResponderShim:self]; responder != nil; responder = [responder nextResponder]) {
-        if ([responder respondsToSelector:[anInvocation selector]]) {
+        if ([responder respondsToSelector:anInvocation.selector]) {
             [anInvocation invokeWithTarget:responder];
             return;
         }

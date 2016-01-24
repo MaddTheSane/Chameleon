@@ -47,7 +47,7 @@
     BOOL _toolbarHidden;
 }
 
-- (id)initWithRootViewController:(UIViewController *)rootViewController
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController
 {
     if ((self=[super initWithNibName:nil bundle:nil])) {
         _navigationBar = [UINavigationBar new];
@@ -250,7 +250,7 @@
         
         // add them back in one-by-one and only apply animation to the last one (if any)
         for (UIViewController *controller in newViewControllers) {
-            [self pushViewController:controller animated:(animated && (controller == [newViewControllers lastObject]))];
+            [self pushViewController:controller animated:(animated && (controller == newViewControllers.lastObject))];
         }
     }
 }
@@ -262,7 +262,7 @@
 
 - (UIViewController *)topViewController
 {
-    return [self.childViewControllers lastObject];
+    return (self.childViewControllers).lastObject;
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -296,7 +296,7 @@
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
     // don't allow popping the rootViewController
-    if ([self.viewControllers count] <= 1) {
+    if ((self.viewControllers).count <= 1) {
         return nil;
     }
 
@@ -353,7 +353,7 @@
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated
 {
-    return [self popToViewController:[self.viewControllers objectAtIndex:0] animated:animated];
+    return [self popToViewController:(self.viewControllers)[0] animated:animated];
 }
 
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item

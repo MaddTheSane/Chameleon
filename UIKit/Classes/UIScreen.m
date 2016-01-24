@@ -69,21 +69,21 @@ NSMutableArray *_allScreens = nil;
 
 + (UIScreen *)mainScreen
 {
-    return ([_allScreens count] > 0)? [[_allScreens objectAtIndex:0] nonretainedObjectValue] : nil;
+    return (_allScreens.count > 0)? [_allScreens[0] nonretainedObjectValue] : nil;
 }
 
 + (NSArray *)screens
 {
-    NSMutableArray *screens = [NSMutableArray arrayWithCapacity:[_allScreens count]];
+    NSMutableArray *screens = [NSMutableArray arrayWithCapacity:_allScreens.count];
 
     for (NSValue *v in _allScreens) {
-        [screens addObject:[v nonretainedObjectValue]];
+        [screens addObject:v.nonretainedObjectValue];
     }
 
     return screens;
 }
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init])) {
         _layer = [CALayer layer];
@@ -114,8 +114,8 @@ NSMutableArray *_allScreens = nil;
 
 - (CGFloat)scale
 {
-    if ([[_UIKitView window] respondsToSelector:@selector(backingScaleFactor)]) {
-        return [[_UIKitView window] backingScaleFactor];
+    if ([_UIKitView.window respondsToSelector:@selector(backingScaleFactor)]) {
+        return _UIKitView.window.backingScaleFactor;
     } else {
         return 1;
     }
@@ -133,17 +133,17 @@ NSMutableArray *_allScreens = nil;
 
 - (BOOL)_hasResizeIndicator
 {
-    NSWindow *realWindow = [_UIKitView window];
-    NSView *contentView = [realWindow contentView];
+    NSWindow *realWindow = _UIKitView.window;
+    NSView *contentView = realWindow.contentView;
 
-    if (_UIKitView && realWindow && contentView && ([realWindow styleMask] & NSResizableWindowMask) && [realWindow showsResizeIndicator] && !NSEqualSizes([realWindow minSize], [realWindow maxSize])) {
-        const CGRect myBounds = NSRectToCGRect([_UIKitView bounds]);
+    if (_UIKitView && realWindow && contentView && (realWindow.styleMask & NSResizableWindowMask) && realWindow.showsResizeIndicator && !NSEqualSizes(realWindow.minSize, realWindow.maxSize)) {
+        const CGRect myBounds = NSRectToCGRect(_UIKitView.bounds);
         const CGPoint myLowerRight = CGPointMake(CGRectGetMaxX(myBounds),CGRectGetMaxY(myBounds));
-        const CGRect contentViewBounds = NSRectToCGRect([contentView frame]);
+        const CGRect contentViewBounds = NSRectToCGRect(contentView.frame);
         const CGPoint contentViewLowerRight = CGPointMake(CGRectGetMaxX(contentViewBounds),0);
         const CGPoint convertedPoint = NSPointToCGPoint([_UIKitView convertPoint:NSPointFromCGPoint(myLowerRight) toView:contentView]);
 
-        if (CGPointEqualToPoint(convertedPoint,contentViewLowerRight) && [realWindow showsResizeIndicator]) {
+        if (CGPointEqualToPoint(convertedPoint,contentViewLowerRight) && realWindow.showsResizeIndicator) {
             return YES;
         }
     }
@@ -173,7 +173,7 @@ NSMutableArray *_allScreens = nil;
 - (CGRect)applicationFrame
 {
     const float statusBarHeight = [UIApplication sharedApplication].statusBarHidden? 0 : 20;
-    const CGSize size = [self bounds].size;
+    const CGSize size = self.bounds.size;
     return CGRectMake(0,statusBarHeight,size.width,size.height-statusBarHeight);
 }
 
@@ -189,7 +189,7 @@ NSMutableArray *_allScreens = nil;
 
 - (void)_UIKitViewFrameDidChange
 {
-    NSDictionary *userInfo = (self.currentMode)? [NSDictionary dictionaryWithObject:self.currentMode forKey:@"_previousMode"] : nil;
+    NSDictionary *userInfo = (self.currentMode)? @{@"_previousMode": self.currentMode} : nil;
     self.currentMode = [UIScreenMode screenModeWithNSView:_UIKitView];
     [[NSNotificationCenter defaultCenter] postNotificationName:UIScreenModeDidChangeNotification object:self userInfo:userInfo];
 }
@@ -210,7 +210,7 @@ NSMutableArray *_allScreens = nil;
             self.currentMode = [UIScreenMode screenModeWithNSView:_UIKitView];
             [[NSNotificationCenter defaultCenter] postNotificationName:UIScreenDidConnectNotification object:self];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_UIKitViewFrameDidChange) name:NSViewFrameDidChangeNotification object:_UIKitView];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_NSScreenDidChange) name:NSWindowDidChangeScreenNotification object:[_UIKitView window]];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_NSScreenDidChange) name:NSWindowDidChangeScreenNotification object:_UIKitView.window];
             [self _NSScreenDidChange];
         } else {
             self.currentMode = nil;
@@ -227,7 +227,7 @@ NSMutableArray *_allScreens = nil;
 
 - (NSArray *)availableModes
 {
-    return (self.currentMode)? [NSArray arrayWithObject:self.currentMode] : nil;
+    return (self.currentMode)? @[self.currentMode] : nil;
 }
 
 - (void)_addWindow:(UIWindow *)window
@@ -262,7 +262,7 @@ NSMutableArray *_allScreens = nil;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; bounds = %@; mode = %@>", [self className], self, NSStringFromCGRect(self.bounds), self.currentMode];
+    return [NSString stringWithFormat:@"<%@: %p; bounds = %@; mode = %@>", self.className, self, NSStringFromCGRect(self.bounds), self.currentMode];
 }
 
 - (UIScreen *)mirroredScreen

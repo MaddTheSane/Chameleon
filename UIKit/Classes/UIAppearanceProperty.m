@@ -36,12 +36,12 @@
 - (id)initWithInvocation:(NSInvocation *)setterInvocation
 {
     if ((self=[super init])) {
-        NSMethodSignature *methodSignature = [setterInvocation methodSignature];
+        NSMethodSignature *methodSignature = setterInvocation.methodSignature;
         _invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
         
         // we want to copy every argument except for target (which is argument 0)
         // so start at 1 and copy...
-        for (int i = 1; i < [methodSignature numberOfArguments]; i++) {
+        for (int i = 1; i < methodSignature.numberOfArguments; i++) {
             const char *valueType = [methodSignature getArgumentTypeAtIndex:i];
             NSUInteger bufferSize = 0;
             NSGetSizeAndAlignment(valueType, &bufferSize, NULL);
@@ -65,7 +65,7 @@
 
 - (void)setReturnValueForInvocation:(NSInvocation *)getterInvocation
 {
-    NSMethodSignature *methodSignature = [_invocation methodSignature];
+    NSMethodSignature *methodSignature = _invocation.methodSignature;
     
     // ensure we have a value to return (which is expected to be at argument index 2)
     NSAssert([methodSignature numberOfArguments] >= 2, @"stored invocation has no property value");

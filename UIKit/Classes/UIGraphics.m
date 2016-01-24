@@ -50,15 +50,15 @@ void UIGraphicsPushContext(CGContextRef ctx)
 
 void UIGraphicsPopContext()
 {
-    if ([contextStack lastObject]) {
-        [NSGraphicsContext setCurrentContext:[contextStack lastObject]];
+    if (contextStack.lastObject) {
+        [NSGraphicsContext setCurrentContext:contextStack.lastObject];
         [contextStack removeLastObject];
     }
 }
 
 CGContextRef UIGraphicsGetCurrentContext()
 {
-    return [[NSGraphicsContext currentContext] graphicsPort];
+    return [NSGraphicsContext currentContext].graphicsPort;
 }
 
 CGFloat _UIGraphicsGetContextScaleFactor(CGContextRef ctx)
@@ -83,7 +83,7 @@ void UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat sc
             imageContextStack = [[NSMutableArray alloc] initWithCapacity:1];
         }
         
-        [imageContextStack addObject:[NSNumber numberWithFloat:scale]];
+        [imageContextStack addObject:@(scale)];
 
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef ctx = CGBitmapContextCreate(NULL, width, height, 8, 4*width, colorSpace, (opaque? kCGImageAlphaNoneSkipFirst : kCGImageAlphaPremultipliedFirst));
@@ -102,8 +102,8 @@ void UIGraphicsBeginImageContext(CGSize size)
 
 UIImage *UIGraphicsGetImageFromCurrentImageContext()
 {
-    if ([imageContextStack lastObject]) {
-        const CGFloat scale = [[imageContextStack lastObject] floatValue];
+    if (imageContextStack.lastObject) {
+        const CGFloat scale = [imageContextStack.lastObject floatValue];
         CGImageRef theCGImage = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext());
         UIImage *image = [UIImage imageWithCGImage:theCGImage scale:scale orientation:UIImageOrientationUp];
         CGImageRelease(theCGImage);
@@ -115,7 +115,7 @@ UIImage *UIGraphicsGetImageFromCurrentImageContext()
 
 void UIGraphicsEndImageContext()
 {
-    if ([imageContextStack lastObject]) {
+    if (imageContextStack.lastObject) {
         [imageContextStack removeLastObject];
         UIGraphicsPopContext();
     }

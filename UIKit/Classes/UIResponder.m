@@ -41,7 +41,7 @@
 - (UIWindow *)_responderWindow
 {
     if ([self isKindOfClass:[UIView class]]) {
-        return [(UIView *)self window];
+        return ((UIView *)self).window;
     } else {
         return [[self nextResponder] _responderWindow];
     }
@@ -143,7 +143,7 @@
 
 - (NSUndoManager *)undoManager
 {
-    return [[self nextResponder] undoManager];
+    return [self nextResponder].undoManager;
 }
 
 // curiously, the documentation states that all of the following methods do nothing by default but that
@@ -203,7 +203,7 @@
     return YES;
 }
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
     // note, this requires NSSecureCoding, so you have to do something like this:
     //id obj = [decoder decodeObjectOfClass:[MyClass class] forKey:@"myKey"];

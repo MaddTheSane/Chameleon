@@ -78,10 +78,10 @@
             && [_containerView respondsToSelector:@selector(isScrollEnabled)];
         
         _clipView = [(UICustomNSClipView *)[UICustomNSClipView alloc] initWithFrame:NSMakeRect(0,0,100,100)];
-        _textView = [(UICustomNSTextView *)[UICustomNSTextView alloc] initWithFrame:[_clipView frame] secureTextEntry:_secureTextEntry isField:isField];
+        _textView = [(UICustomNSTextView *)[UICustomNSTextView alloc] initWithFrame:_clipView.frame secureTextEntry:_secureTextEntry isField:isField];
 
-        [_textView setDelegate:self];
-        [_clipView setDocumentView:_textView];
+        _textView.delegate = self;
+        _clipView.documentView = _textView;
 
         self.textAlignment = NSLeftTextAlignment;
         [self setNeedsLayout];
@@ -137,29 +137,29 @@
 {
     if (_containerCanScroll) {
         // also update the content size in the UIScrollView
-        const NSRect docRect = [_clipView documentRect];
+        const NSRect docRect = _clipView.documentRect;
         [_containerView setContentSize:CGSizeMake(docRect.size.width+docRect.origin.x, docRect.size.height+docRect.origin.y)];
     }
 }
 
 - (BOOL)shouldBeVisible
 {
-    return ([_containerView window] && (self.superlayer == [_containerView layer]) && !self.hidden && ![_containerView isHidden]);
+    return (_containerView.window && (self.superlayer == _containerView.layer) && !self.hidden && !_containerView.hidden);
 }
 
 - (void)updateNSViews
 {
     if ([self shouldBeVisible]) {
-        if (![_clipView superview]) {
+        if (!_clipView.superview) {
             [self addNSView];
         }
         
-        UIWindow *window = [_containerView window];
+        UIWindow *window = _containerView.window;
         const CGRect windowRect = [window convertRect:self.frame fromView:_containerView];
         const CGRect screenRect = [window convertRect:windowRect toWindow:nil];
         NSRect desiredFrame = NSRectFromCGRect(screenRect);
 
-        [_clipView setFrame:desiredFrame];
+        _clipView.frame = desiredFrame;
         [self updateScrollViewContentSize];
     } else {
         [self removeNSView];
@@ -181,14 +181,14 @@
 - (void)setHidden:(BOOL)hide
 {
     if (hide != self.hidden) {
-        [super setHidden:hide];
+        super.hidden = hide;
         [self updateNSViews];
     }
 }
 
 - (void)hierarchyDidChangeNotification:(NSNotification *)note
 {
-    if ([_containerView isDescendantOfView:[note object]]) {
+    if ([_containerView isDescendantOfView:note.object]) {
         if ([self shouldBeVisible]) {
             [self setNeedsLayout];
         } else {
@@ -207,7 +207,7 @@
 - (void)updateScrollViewContentOffset
 {
     if (_containerCanScroll) {
-        [_containerView setContentOffset:NSPointToCGPoint([_clipView bounds].origin)];
+        [_containerView setContentOffset:NSPointToCGPoint(_clipView.bounds.origin)];
     }
 }
 
@@ -216,7 +216,7 @@
     assert(newFont != nil);
     if (newFont != _font) {
         _font = newFont;
-        [_textView setFont:[_font NSFont]];
+        _textView.font = [_font NSFont];
     }
 }
 
@@ -224,18 +224,18 @@
 {
     if (newColor != _textColor) {
         _textColor = newColor;
-        [_textView setTextColor:[_textColor NSColor]];
+        _textView.textColor = _textColor.NSColor;
     }
 }
 
 - (NSString *)text
 {
-    return [_textView string];
+    return _textView.string;
 }
 
 - (void)setText:(NSString *)newText
 {
-    [_textView setString:newText ?: @""];
+    _textView.string = newText ?: @"";
     [self updateScrollViewContentSize];
 }
 
@@ -254,14 +254,14 @@
 
 - (void)setAutocorrectionType:(UITextAutocorrectionType)type
 {
-    [_textView setAutocorrectionType:type];
+    _textView.autocorrectionType = type;
 }
 
 - (void)setEditable:(BOOL)edit
 {
     if (_editable != edit) {
         _editable = edit;
-        [_textView setEditable:_editable];
+        _textView.editable = _editable;
     }
 }
 
@@ -284,20 +284,20 @@
 {
     switch (textAlignment) {
         case NSLeftTextAlignment:
-            [_textView setAlignment:NSLeftTextAlignment];
+            _textView.alignment = NSLeftTextAlignment;
             break;
         case NSCenterTextAlignment:
-            [_textView setAlignment:NSCenterTextAlignment];
+            _textView.alignment = NSCenterTextAlignment;
             break;
         case NSRightTextAlignment:
-            [_textView setAlignment:NSRightTextAlignment];
+            _textView.alignment = NSRightTextAlignment;
             break;
     }
 }
 
 - (NSTextAlignment)textAlignment
 {
-    return [_textView alignment];
+    return _textView.alignment;
 }
 
 // this is used to fake out AppKit when the UIView that owns this layer/editor stuff is actually *behind* another UIView. Since the NSViews are
@@ -305,7 +305,7 @@
 // be less than ideal. This makes it ideal. Awesome.
 - (BOOL)hitTestForClipViewPoint:(NSPoint)point
 {
-    UIScreen *screen = [_containerView window].screen;
+    UIScreen *screen = _containerView.window.screen;
     
     if (screen) {
         return (_containerView == [screen.UIKitView hitTestUIView:point]);
@@ -376,7 +376,7 @@
     // it should really probably be in the UICustomNSTextView class somewhere and not here, but this works okay, too, I guess.
     // this is also being done in doCommandBySelector: below, but it's done here as well to prevent pasting stuff in with newlines in it.
     // seems like a hack, I dunno.
-    if ([_textView isFieldEditor] && ([replacementString rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound)) {
+    if (_textView.fieldEditor && ([replacementString rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound)) {
         return NO;
     } else {
         return [_containerView _textShouldChangeTextInRange:affectedCharRange replacementText:replacementString];
@@ -387,7 +387,7 @@
 {
     // this makes sure there's no newlines added when in field editing mode.
     // it also allows us to handle when return/enter is pressed differently for fields. Dunno if there's a better way or not.
-    if ([_textView isFieldEditor] && ((aSelector == @selector(insertNewline:) || (aSelector == @selector(insertNewlineIgnoringFieldEditor:))))) {
+    if (_textView.fieldEditor && ((aSelector == @selector(insertNewline:) || (aSelector == @selector(insertNewlineIgnoringFieldEditor:))))) {
         if (_textDelegateHas.didReturnKey) {
             [_containerView _textDidReceiveReturnKey];
         }
@@ -417,12 +417,12 @@
 
 - (BOOL)becomeFirstResponder
 {
-    if ([self shouldBeVisible] && ![_clipView superview]) {
+    if ([self shouldBeVisible] && !_clipView.superview) {
         [self addNSView];
     }
 	
     _changingResponderStatus = YES;
-    const BOOL result = [[_textView window] makeFirstResponder:_textView];
+    const BOOL result = [_textView.window makeFirstResponder:_textView];
     _changingResponderStatus = NO;
 
     return result;
@@ -431,7 +431,7 @@
 - (BOOL)resignFirstResponder
 {
     _changingResponderStatus = YES;
-    const BOOL result = [[_textView window] makeFirstResponder:_containerView.window.screen.UIKitView];
+    const BOOL result = [_textView.window makeFirstResponder:_containerView.window.screen.UIKitView];
     _changingResponderStatus = NO;
     return result;
 }

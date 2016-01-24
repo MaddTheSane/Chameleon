@@ -38,11 +38,11 @@
 - (id)initWithNSEvent:(NSEvent *)event
 {
     if ((self=[super init])) {
-        _keyCode = [event keyCode];
-        _characters = [[event charactersIgnoringModifiers] copy];
-        _charactersWithModifiers = [[event characters] copy];
-        _repeat = [event isARepeat];
-        _modifierFlags = [event modifierFlags];
+        _keyCode = event.keyCode;
+        _characters = [event.charactersIgnoringModifiers copy];
+        _charactersWithModifiers = [event.characters copy];
+        _repeat = event.ARepeat;
+        _modifierFlags = event.modifierFlags;
     }
     return self;
 }
@@ -54,7 +54,7 @@
         return UIKeyTypeEscape;
     }
     
-    if ([_characters length] > 0) {
+    if (_characters.length > 0) {
         switch ([_characters characterAtIndex:0]) {
             case NSUpArrowFunctionKey:			return UIKeyTypeUpArrow;
             case NSDownArrowFunctionKey:		return UIKeyTypeDownArrow;

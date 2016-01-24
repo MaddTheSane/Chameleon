@@ -83,8 +83,8 @@ typedef NS_ENUM(NSInteger, UIControlContentVerticalAlignment) {
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 - (void)removeTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 - (NSArray *)actionsForTarget:(id)target forControlEvent:(UIControlEvents)controlEvent;
-- (NSSet *)allTargets;
-- (UIControlEvents)allControlEvents;
+@property (nonatomic, readonly, copy) NSSet *allTargets;
+@property (nonatomic, readonly) UIControlEvents allControlEvents;
 
 - (void)sendActionsForControlEvents:(UIControlEvents)controlEvents;
 - (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event;

@@ -30,12 +30,12 @@
 #import "UIEvent.h"
 
 @interface UIResponder : NSObject
-- (UIResponder *)nextResponder;
-- (BOOL)isFirstResponder;
-- (BOOL)canBecomeFirstResponder;
-- (BOOL)becomeFirstResponder;
-- (BOOL)canResignFirstResponder;
-- (BOOL)resignFirstResponder;
+@property (nonatomic, readonly, strong) UIResponder *nextResponder;
+@property (nonatomic, getter=isFirstResponder, readonly) BOOL firstResponder;
+@property (nonatomic, readonly) BOOL canBecomeFirstResponder;
+@property (nonatomic, readonly) BOOL becomeFirstResponder;
+@property (nonatomic, readonly) BOOL canResignFirstResponder;
+@property (nonatomic, readonly) BOOL resignFirstResponder;
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender;
 

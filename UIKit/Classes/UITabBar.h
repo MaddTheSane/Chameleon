@@ -55,7 +55,7 @@
 - (void)setItems:(NSArray *)items animated:(BOOL)animated;
 - (void)beginCustomizingItems:(NSArray *)items;
 - (BOOL)endCustomizingAnimated:(BOOL)animated;
-- (BOOL)isCustomizing;
+@property (nonatomic, getter=isCustomizing, readonly) BOOL customizing;
 
 @property (nonatomic, assign) id<UITabBarDelegate> delegate;
 @property (nonatomic, copy) NSArray *items;

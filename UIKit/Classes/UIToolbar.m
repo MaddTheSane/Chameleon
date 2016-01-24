@@ -89,7 +89,7 @@ static const CGFloat kBarHeight = 28;
     NSMutableArray<UIToolbarItem*> *_toolbarItems;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     frame.size.height = kBarHeight;
     
@@ -278,7 +278,7 @@ static const CGFloat kBarHeight = 28;
             barStyle = @"Black Translucent (Deprecated)";
             break;
     }
-    return [NSString stringWithFormat:@"<%@: %p; barStyle = %@; tintColor = %@, isTranslucent = %@>", [self className], self, barStyle, ([self.tintColor description] ?: @"Default"), (self.translucent ? @"YES" : @"NO")];
+    return [NSString stringWithFormat:@"<%@: %p; barStyle = %@; tintColor = %@, isTranslucent = %@>", self.className, self, barStyle, ((self.tintColor).description ?: @"Default"), (self.translucent ? @"YES" : @"NO")];
 }
 
 - (UIImage *)backgroundImageForToolbarPosition:(UIToolbarPosition)topOrBottom barMetrics:(UIBarMetrics)barMetrics

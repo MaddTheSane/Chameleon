@@ -46,17 +46,17 @@
 
 - (void)_writeImageWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:@"image"];
+    UIImage *image = info[@"image"];
     NSError *error = nil;
 
     NSSavePanel *panel = [NSSavePanel savePanel];
-    [panel setAllowedFileTypes:[NSArray arrayWithObject:@"png"]];
+    panel.allowedFileTypes = @[@"png"];
 
-    if (NSFileHandlingPanelOKButton == [panel runModal] && [panel URL]) {
+    if (NSFileHandlingPanelOKButton == [panel runModal] && panel.URL) {
         NSData *imageData = UIImagePNGRepresentation(image);
         
         if (imageData) {
-            [imageData writeToURL:[panel URL] options:NSDataWritingAtomic error:&error];
+            [imageData writeToURL:panel.URL options:NSDataWritingAtomic error:&error];
         } else {
             error = [NSError errorWithDomain:@"could not generate png image" code:2 userInfo:nil];
         }
@@ -64,11 +64,11 @@
         error = [NSError errorWithDomain:@"save panel cancelled" code:1 userInfo:nil];
     }
     
-    id target = [info objectForKey:@"target"];
+    id target = info[@"target"];
 
     if (target) {
-        SEL action = NSSelectorFromString([info objectForKey:@"action"]);
-        void *context = [[info objectForKey:@"context"] pointerValue];
+        SEL action = NSSelectorFromString(info[@"action"]);
+        void *context = [info[@"context"] pointerValue];
         typedef void(*ActionMethod)(id, SEL, id, NSError *, void *);
         ActionMethod method = (ActionMethod)[target methodForSelector:action];
         method(target, action, image, error, context);
@@ -79,15 +79,15 @@
 {
     if (image) {
         NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:4];
-        [info setObject:image forKey:@"image"];
+        info[@"image"] = image;
 
         if (target && action) {
-            [info setObject:target forKey:@"target"];
-            [info setObject:NSStringFromSelector(action) forKey:@"action"];
+            info[@"target"] = target;
+            info[@"action"] = NSStringFromSelector(action);
         }
         
         if (context) {
-            [info setObject:[NSValue valueWithPointer:context] forKey:@"context"];
+            info[@"context"] = [NSValue valueWithPointer:context];
         }
         
         // deferring this partly because the save dialog is modal and partly because I don't think code is going

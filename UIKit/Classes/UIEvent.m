@@ -32,7 +32,7 @@
 
 @implementation UIEvent
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _timestamp = [NSDate timeIntervalSinceReferenceDate];

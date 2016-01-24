@@ -31,7 +31,7 @@
 #import "UITableView.h"
 
 @interface UITableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-- (instancetype)initWithStyle:(UITableViewStyle)style;
+- (instancetype)initWithStyle:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic) BOOL clearsSelectionOnViewWillAppear;

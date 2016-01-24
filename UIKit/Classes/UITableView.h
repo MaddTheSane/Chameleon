@@ -90,16 +90,16 @@ typedef NS_ENUM(NSInteger, UITableViewRowAnimation) {
 };
 
 @interface UITableView : UIScrollView
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style;
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
 - (void)reloadData;
 - (void)reloadRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;
-- (NSInteger)numberOfSections;
+@property (nonatomic, readonly) NSInteger numberOfSections;
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 - (NSArray<NSIndexPath*> *)indexPathsForRowsInRect:(CGRect)rect;
 - (NSIndexPath *)indexPathForRowAtPoint:(CGPoint)point;
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;
-- (NSArray *)indexPathsForVisibleRows;
-- (NSArray *)visibleCells;
+@property (nonatomic, readonly, copy) NSArray *indexPathsForVisibleRows;
+@property (nonatomic, readonly, copy) NSArray *visibleCells;
 - (UITableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier;
 - (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowAnimation) {
 - (void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;	// not implemented
 - (void)deleteRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation;	// not implemented
 
-- (NSIndexPath *)indexPathForSelectedRow;
+@property (nonatomic, readonly, copy) NSIndexPath *indexPathForSelectedRow;
 - (void)deselectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 - (void)selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition;
 

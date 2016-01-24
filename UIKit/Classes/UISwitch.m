@@ -31,7 +31,7 @@
 
 @implementation UISwitch
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         // UIView's initWithFrame: calls setFrame:, so we'll enforce UISwitch's size invariant down there (see below)
@@ -52,7 +52,7 @@
 - (void)setFrame:(CGRect)frame
 {
     frame.size = CGSizeMake(94, 27);
-    [super setFrame:frame];
+    super.frame = frame;
 }
 
 @end

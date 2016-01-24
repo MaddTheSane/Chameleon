@@ -46,7 +46,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
         return;
     }
     
-    NSUInteger index = (NSUInteger)floor((CGFloat)x / (self.frame.size.width / (CGFloat)[self numberOfSegments]));
+    NSUInteger index = (NSUInteger)floor((CGFloat)x / (self.frame.size.width / (CGFloat)self.numberOfSegments));
     if ([self isEnabledForSegmentAtIndex:index]) {
         self.selectedSegmentIndex = (NSInteger)index;
     }
@@ -66,7 +66,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 #pragma mark UIView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self = [super initWithFrame:frame])) {
         self.backgroundColor = [UIColor clearColor];
@@ -96,7 +96,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 {
     static CGFloat dividerWidth = 1.0f;
     
-    NSInteger count = (NSInteger)[self numberOfSegments];
+    NSInteger count = (NSInteger)self.numberOfSegments;
     CGSize size = frame.size;
     CGFloat segmentWidth = round((size.width - count - 1) / (CGFloat)count);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -104,7 +104,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
     for (NSInteger i = 0; i < count; i++) {
         CGContextSaveGState(context);
         
-        id item = [_segments objectAtIndex:(NSUInteger)i];
+        id item = _segments[(NSUInteger)i];
         BOOL enabled = [self isEnabledForSegmentAtIndex:(NSUInteger)i];
         
         CGFloat x = (segmentWidth * (CGFloat)i + (((CGFloat)i + 1) * dividerWidth));
@@ -226,7 +226,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 #pragma mark Initializer
 
-- (id)initWithItems:(NSArray *)items
+- (instancetype)initWithItems:(NSArray *)items
 {
     if ((self = [self initWithFrame:CGRectZero])) {
         NSInteger index = 0;
@@ -248,16 +248,16 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 - (NSUInteger)numberOfSegments
 {
-    return [_segments count];
+    return _segments.count;
 }
 
 
 - (void)setTitle:(NSString *)title forSegmentAtIndex:(NSUInteger)segment
 {
-    if ((NSInteger)([self numberOfSegments] - 1) < (NSInteger)segment) {
+    if ((NSInteger)(self.numberOfSegments - 1) < (NSInteger)segment) {
         [_segments addObject:title];
     } else {
-        [_segments replaceObjectAtIndex:segment withObject:title];
+        _segments[segment] = title;
     }
     
     [self setNeedsDisplay];
@@ -266,11 +266,11 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 - (NSString *)titleForSegmentAtIndex:(NSUInteger)segment
 {
-    if ([self numberOfSegments] - 1 >= segment) {
+    if (self.numberOfSegments - 1 >= segment) {
         return nil;
     }
     
-    id item = [_segments objectAtIndex:segment];
+    id item = _segments[segment];
     if ([item isKindOfClass:[NSString class]]) {
         return item;
     }
@@ -281,10 +281,10 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 - (void)setImage:(UIImage *)image forSegmentAtIndex:(NSUInteger)segment
 {
-    if ((NSInteger)([self numberOfSegments] - 1) < (NSInteger)segment) {
+    if ((NSInteger)(self.numberOfSegments - 1) < (NSInteger)segment) {
         [_segments addObject:image];
     } else {
-        [_segments replaceObjectAtIndex:segment withObject:image];
+        _segments[segment] = image;
     }
     
     [self setNeedsDisplay];
@@ -293,11 +293,11 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 - (UIImage *)imageForSegmentAtIndex:(NSUInteger)segment
 {
-    if ([self numberOfSegments] - 1 >= segment) {
+    if (self.numberOfSegments - 1 >= segment) {
         return nil;
     }
     
-    id item = [_segments objectAtIndex:segment];
+    id item = _segments[segment];
     if ([item isKindOfClass:[UIImage class]]) {
         return item;
     }
@@ -308,7 +308,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
 
 - (void)setEnabled:(BOOL)enabled forSegmentAtIndex:(NSUInteger)segment
 {
-    [self _setMetaValue:[NSNumber numberWithBool:enabled] forKey:kSSSegmentedControlEnabledKey segmentIndex:segment];
+    [self _setMetaValue:@(enabled) forKey:kSSSegmentedControlEnabledKey segmentIndex:segment];
     
 }
 
@@ -319,7 +319,7 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
     if (!value) {
         return YES;
     }
-    return [value boolValue];
+    return value.boolValue;
 }
 
 
@@ -346,14 +346,14 @@ static NSString *kSSSegmentedControlEnabledKey = @"enabled";
     }
     
     NSString *key = [NSString stringWithFormat:@"%lu", (unsigned long)index];
-    return [_segmentMeta objectForKey:key];
+    return _segmentMeta[key];
 }
 
 
 - (id)_metaValueForKey:(NSString *)key segmentIndex:(NSUInteger)index
 {
     NSMutableDictionary *meta = [self _metaForSegmentIndex:index];
-    return [meta objectForKey:key];
+    return meta[key];
 }
 
 

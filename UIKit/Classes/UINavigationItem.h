@@ -32,7 +32,7 @@
 @class UIBarButtonItem, UIView;
 
 @interface UINavigationItem : NSObject
-- (instancetype)initWithTitle:(NSString *)title;
+- (instancetype)initWithTitle:(NSString *)title NS_DESIGNATED_INITIALIZER;
 - (void)setLeftBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
 - (void)setRightBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
 - (void)setHidesBackButton:(BOOL)hidesBackButton animated:(BOOL)animated;

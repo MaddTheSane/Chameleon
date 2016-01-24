@@ -81,7 +81,7 @@ static UIApplication *_theApplication = nil;
     return _theApplication;
 }
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _backgroundTasks = [[NSMutableArray alloc] init];
@@ -96,11 +96,11 @@ static UIApplication *_theApplication = nil;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationWillResignActive:) name:NSApplicationWillResignActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationDidBecomeActive:) name:NSApplicationDidBecomeActiveNotification object:nil];
         
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(_applicationWillResignActive:) name:NSWorkspaceScreensDidSleepNotification object:nil];
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(_applicationDidBecomeActive:) name:NSWorkspaceScreensDidWakeNotification object:nil];
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(_applicationWillResignActive:) name:NSWorkspaceScreensDidSleepNotification object:nil];
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(_applicationDidBecomeActive:) name:NSWorkspaceScreensDidWakeNotification object:nil];
 
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(_computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
-        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(_computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(_computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
+        [[NSWorkspace sharedWorkspace].notificationCenter addObserver:self selector:@selector(_computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
     }
     return self;
 }
@@ -108,7 +108,7 @@ static UIApplication *_theApplication = nil;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    [[NSWorkspace sharedWorkspace].notificationCenter removeObserver:self];
 }
 
 - (NSTimeInterval)statusBarOrientationAnimationDuration
@@ -133,12 +133,12 @@ static UIApplication *_theApplication = nil;
 
 - (NSTimeInterval)backgroundTimeRemaining
 {
-    return [_backgroundTasksExpirationDate timeIntervalSinceNow];
+    return _backgroundTasksExpirationDate.timeIntervalSinceNow;
 }
 
 - (void)setNetworkActivityIndicatorVisible:(BOOL)b
 {
-    if (b != [self isNetworkActivityIndicatorVisible]) {
+    if (b != self.networkActivityIndicatorVisible) {
         _networkActivityIndicatorVisible = b;
         [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationNetworkActivityIndicatorChangedNotification object:self];
     }
@@ -269,7 +269,7 @@ static UIApplication *_theApplication = nil;
 - (BOOL)_runRunLoopForBackgroundTasksBeforeDate:(NSDate *)date
 {
     // check if all tasks were done, and if so, break
-    if ([_backgroundTasks count] == 0) {
+    if (_backgroundTasks.count == 0) {
         return NO;
     }
 
@@ -280,7 +280,7 @@ static UIApplication *_theApplication = nil;
     [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:date];
     
     // otherwise check if we've timed out and if we are, break
-    if ([[NSDate date] timeIntervalSinceReferenceDate] >= [_backgroundTasksExpirationDate timeIntervalSinceReferenceDate]) {
+    if ([NSDate date].timeIntervalSinceReferenceDate >= _backgroundTasksExpirationDate.timeIntervalSinceReferenceDate) {
         return NO;
     }
     
@@ -318,14 +318,14 @@ static UIApplication *_theApplication = nil;
     NSDate *blockingBackgroundExpiration = [NSDate dateWithTimeIntervalSinceNow:1.33];
 
     for (;;) {
-        if (![self _runRunLoopForBackgroundTasksBeforeDate:blockingBackgroundExpiration] || [NSDate timeIntervalSinceReferenceDate] >= [blockingBackgroundExpiration timeIntervalSinceReferenceDate]) {
+        if (![self _runRunLoopForBackgroundTasksBeforeDate:blockingBackgroundExpiration] || [NSDate timeIntervalSinceReferenceDate] >= blockingBackgroundExpiration.timeIntervalSinceReferenceDate) {
             break;
         }
     }
 
     // if it turns out we're all done with tasks (or maybe had none to begin with), we'll clean up the structures
     // and tell our app we can terminate immediately now.
-    if ([_backgroundTasks count] == 0) {
+    if (_backgroundTasks.count == 0) {
         [self _cancelBackgroundTasks];
     
         // and reset our timer since we're done
@@ -339,10 +339,10 @@ static UIApplication *_theApplication = nil;
     
     void (^taskFinisher)(void) = ^{
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert setAlertStyle:NSInformationalAlertStyle];
+        alert.alertStyle = NSInformationalAlertStyle;
         [alert setShowsSuppressionButton:NO];
-        [alert setMessageText:@"Quitting"];
-        [alert setInformativeText:@"Finishing some tasks..."];
+        alert.messageText = @"Quitting";
+        alert.informativeText = @"Finishing some tasks...";
         [alert addButtonWithTitle:@"Quit Now"];
         [alert layout];
 
@@ -371,7 +371,7 @@ static UIApplication *_theApplication = nil;
         // if the user closed the alert, so in that case then this delay won't happen at all. however if the tasks finished too quickly
         // then what this does is kill time until the user clicks the quit button or the timer expires.
         while ([NSApp runModalSession:session] == NSRunContinuesResponse) {
-            if ([NSDate timeIntervalSinceReferenceDate] >= [minimumDisplayTime timeIntervalSinceReferenceDate]) {
+            if ([NSDate timeIntervalSinceReferenceDate] >= minimumDisplayTime.timeIntervalSinceReferenceDate) {
                 break;
             }
         }
@@ -389,7 +389,7 @@ static UIApplication *_theApplication = nil;
     [self performSelectorOnMainThread:@selector(_runBackgroundTasks:)
                            withObject:[taskFinisher copy]
                         waitUntilDone:NO
-                                modes:[NSArray arrayWithObjects:NSModalPanelRunLoopMode, NSRunLoopCommonModes, nil]];
+                                modes:@[NSModalPanelRunLoopMode, NSRunLoopCommonModes]];
     
     return NSTerminateLater;
 }
@@ -601,17 +601,17 @@ int UIApplicationMain(int argc, char *argv[], NSString *principalClassName, NSSt
         UIApplication *app = principalClassName? [NSClassFromString(principalClassName) sharedApplication] : [UIApplication sharedApplication];
         id<UIApplicationDelegate> delegate = delegateClassName? [NSClassFromString(delegateClassName) new] : nil;
 
-        [app setDelegate:delegate];
+        app.delegate = delegate;
 
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        NSString *mainNibName = [infoDictionary objectForKey:@"NSMainNibFile"];
+        NSDictionary *infoDictionary = [NSBundle mainBundle].infoDictionary;
+        NSString *mainNibName = infoDictionary[@"NSMainNibFile"];
         NSArray *topLevelObjects = nil;
         NSNib *mainNib = [[NSNib alloc] initWithNibNamed:mainNibName bundle:[NSBundle mainBundle]];
 
         [mainNib instantiateWithOwner:app topLevelObjects:&topLevelObjects];
         
         id<NSApplicationDelegate> backgroundTaskCatchingDelegate = [UINSApplicationDelegate new];
-        [[NSApplication sharedApplication] setDelegate:backgroundTaskCatchingDelegate];
+        [NSApplication sharedApplication].delegate = backgroundTaskCatchingDelegate;
         [[NSApplication sharedApplication] run];
         
         // the only purpose of this is to confuse ARC. I'm not sure how else to do it.

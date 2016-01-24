@@ -41,7 +41,7 @@
     CGPoint _beganPhaseLocationOnScreen;
 }
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _phase = UITouchPhaseBegan;
@@ -60,7 +60,7 @@
 
 - (void)_viewDidMoveToSuperviewNotification:(NSNotification *)notification
 {
-    if ([_view isDescendantOfView:[notification object]]) {
+    if ([_view isDescendantOfView:notification.object]) {
         _view = nil;
     }
 }
@@ -190,7 +190,7 @@
             break;
     }
     
-    return [NSString stringWithFormat:@"<%@: %p; timestamp = %e; tapCount = %lu; phase = %@; view = %@; window = %@>", [self className], self, self.timestamp, (unsigned long)self.tapCount, phase, self.view, self.window];
+    return [NSString stringWithFormat:@"<%@: %p; timestamp = %e; tapCount = %lu; phase = %@; view = %@; window = %@>", self.className, self, self.timestamp, (unsigned long)self.tapCount, phase, self.view, self.window];
 }
 
 @end

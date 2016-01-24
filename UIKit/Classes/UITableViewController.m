@@ -34,12 +34,12 @@
     BOOL _hasReloaded;
 }
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithStyle:UITableViewStylePlain];
 }
 
-- (id)initWithStyle:(UITableViewStyle)theStyle
+- (instancetype)initWithStyle:(UITableViewStyle)theStyle
 {
     if ((self=[super initWithNibName:nil bundle:nil])) {
         _style = theStyle;
@@ -96,7 +96,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; tableView = %@>", [self className], self, self.tableView];
+    return [NSString stringWithFormat:@"<%@: %p; tableView = %@>", self.className, self, self.tableView];
 }
 
 @end

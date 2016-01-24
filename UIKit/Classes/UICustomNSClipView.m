@@ -46,24 +46,24 @@
 - (void)scrollWheel:(NSEvent *)event
 {
     if ([self.behaviorDelegate clipViewShouldScroll]) {
-        NSPoint offset = [self bounds].origin;
-        offset.x += [event deltaX];
-        offset.y -= [event deltaY];
+        NSPoint offset = self.bounds.origin;
+        offset.x += event.deltaX;
+        offset.y -= event.deltaY;
         offset.x = floor(offset.x);
         offset.y = floor(offset.y);
         [self scrollToPoint:[self constrainScrollPoint:offset]];
     } else {
-        [[self nextResponder] scrollWheel:event];
+        [self.nextResponder scrollWheel:event];
     }
 }
 
 - (void)fixupTheLayer
 {
-    if ([self superview] && self.parentLayer) {
+    if (self.superview && self.parentLayer) {
         [CATransaction begin];
         [CATransaction setAnimationDuration:0];
         
-        CALayer *layer = [self layer];
+        CALayer *layer = self.layer;
 
         if (self.parentLayer != layer.superlayer) {
             [self.parentLayer addSublayer:layer];
@@ -91,7 +91,7 @@
 
 - (void)setFrame:(NSRect)frame
 {
-    [super setFrame:frame];
+    super.frame = frame;
     [self fixupTheLayer];
 }
 

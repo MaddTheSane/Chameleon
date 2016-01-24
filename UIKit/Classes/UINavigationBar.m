@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, _UINavigationBarTransition) {
     }
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     frame.size.height = kBarHeight;
     
@@ -139,12 +139,12 @@ typedef NS_ENUM(NSInteger, _UINavigationBarTransition) {
 
 - (UINavigationItem *)topItem
 {
-    return [_navStack lastObject];
+    return _navStack.lastObject;
 }
 
 - (UINavigationItem *)backItem
 {
-    return ([_navStack count] <= 1)? nil : [_navStack objectAtIndex:[_navStack count]-2];
+    return (_navStack.count <= 1)? nil : _navStack[_navStack.count-2];
 }
 
 - (void)_backButtonTapped:(id)sender
@@ -368,7 +368,7 @@ typedef NS_ENUM(NSInteger, _UINavigationBarTransition) {
 
 - (void)_navigationItemDidChange:(NSNotification *)note
 {
-    if ([note object] == self.topItem || [note object] == self.backItem) {
+    if (note.object == self.topItem || note.object == self.backItem) {
         // this is going to remove & re-add all the item views. Not ideal, but simple enough that it's worth profiling.
         // next step is to add animation support-- that will require changing _setViewsWithTransition:animated:
         //  such that it won't perform any coordinate translations, only fade in/out

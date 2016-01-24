@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIFont (AppKitIntegration)
 + (nullable instancetype)fontWithNSFont:(NSFont *)aFont;
-- (nullable NSFont *)NSFont;
+@property (nonatomic, readonly, copy) NSFont * _Nullable NSFont;
 
 /// these override the use of OSX's default system fonts, set to nil to use OSX default
 + (void)setSystemFontName:(nullable NSString *)aName;

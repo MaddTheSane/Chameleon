@@ -51,7 +51,7 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _clipView = [[UINSClipView alloc] initWithFrame:NSMakeRect(0,0,frame.size.width,frame.size.height) parentView:self];
@@ -60,9 +60,9 @@
     return self;
 }
 
-- (id)initWithNSView:(NSView *)aNSView
+- (instancetype)initWithNSView:(NSView *)aNSView
 {
-    const NSSize viewFrameSize = aNSView? [aNSView frame].size : NSZeroSize;
+    const NSSize viewFrameSize = aNSView? aNSView.frame.size : NSZeroSize;
     
     if ((self=[self initWithFrame:CGRectMake(0,0,viewFrameSize.width,viewFrameSize.height)])) {
         self.NSView = aNSView;
@@ -109,7 +109,7 @@
     [CATransaction setAnimationDuration:0];
     
     CALayer *layer = self.layer;
-    CALayer *clipLayer = [_clipView layer];
+    CALayer *clipLayer = _clipView.layer;
     
     // setting these here because I've had bad experiences with NSView changing some layer properties out from under me.
     clipLayer.geometryFlipped = NO;
@@ -127,9 +127,9 @@
 
 - (void)_updateScrollView
 {
-    const NSRect docRect = [_clipView documentRect];
+    const NSRect docRect = _clipView.documentRect;
     self.contentSize = CGSizeMake(docRect.size.width+docRect.origin.x, docRect.size.height+docRect.origin.y);
-    self.contentOffset = NSPointToCGPoint([_clipView bounds].origin);
+    self.contentOffset = NSPointToCGPoint(_clipView.bounds.origin);
 }
 
 - (void)_updateScrollViewAndFlashScrollbars
@@ -147,7 +147,7 @@
             if (v.hidden) {
                 return NO;
             }
-            v = [v superview];
+            v = v.superview;
         }
         
         return YES;
@@ -159,7 +159,7 @@
 - (void)_updateNSViews
 {
     if ([self _NSViewShouldBeVisible]) {
-        if ([_clipView superview] != self.window.screen.UIKitView) {
+        if (_clipView.superview != self.window.screen.UIKitView) {
             [self _addNSView];
         }
         
@@ -168,7 +168,7 @@
         const CGRect windowRect = [window convertRect:self.frame fromView:self.superview];
         const CGRect screenRect = [window convertRect:windowRect toWindow:nil];
         NSRect desiredFrame = NSRectFromCGRect(screenRect);
-        [_clipView setFrame:desiredFrame];
+        _clipView.frame = desiredFrame;
         
         [self _updateScrollView];
         [self _updateLayers];
@@ -179,7 +179,7 @@
 
 - (void)_hierarchyMayHaveChangedNotification:(NSNotification *)note
 {
-    if ([self isDescendantOfView:[note object]]) {
+    if ([self isDescendantOfView:note.object]) {
         [self _updateNSViews];
     }
 }
@@ -209,7 +209,7 @@
         [self _removeNSView];
         
         _view = aNSView;
-        [_clipView setDocumentView:_view];
+        _clipView.documentView = _view;
         
         [self _updateNSViews];
     }
@@ -233,7 +233,7 @@
 
 - (BOOL)canBecomeFirstResponder
 {
-    return [self _NSViewShouldBeVisible]? [_view acceptsFirstResponder] : NO;
+    return [self _NSViewShouldBeVisible]? _view.acceptsFirstResponder : NO;
 }
 
 - (BOOL)becomeFirstResponder
@@ -241,7 +241,7 @@
     [self _updateNSViews];
 
     if ([super becomeFirstResponder]) {
-        [[_view window] makeFirstResponder:_view];
+        [_view.window makeFirstResponder:_view];
         return YES;
     } else {
         return NO;
@@ -254,8 +254,8 @@
 
     const BOOL didResign = [super resignFirstResponder];
     
-    if (didResign && [[_view window] firstResponder] == _view) {
-        [[_view window] makeFirstResponder:self.window.screen.UIKitView];
+    if (didResign && _view.window.firstResponder == _view) {
+        [_view.window makeFirstResponder:self.window.screen.UIKitView];
     }
     
     return didResign;

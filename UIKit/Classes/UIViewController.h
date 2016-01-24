@@ -51,9 +51,9 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 @class UINavigationItem, UINavigationController, UIBarButtonItem, UISplitViewController;
 
 @interface UIViewController : UIResponder
-- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle;	// won't load a nib no matter what you do!
+- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle NS_DESIGNATED_INITIALIZER;	// won't load a nib no matter what you do!
 
-- (BOOL)isViewLoaded;
+@property (nonatomic, getter=isViewLoaded, readonly) BOOL viewLoaded;
 - (void)loadView;
 - (void)viewDidLoad;
 - (void)viewDidUnload;
@@ -77,22 +77,22 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 
 - (void)setToolbarItems:(NSArray *)toolbarItems animated:(BOOL)animated;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
-- (UIBarButtonItem *)editButtonItem;
+@property (nonatomic, readonly, strong) UIBarButtonItem *editButtonItem;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration;
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
 
-- (BOOL)isMovingFromParentViewController;
-- (BOOL)isMovingToParentViewController;
-- (BOOL)isBeingPresented;
-- (BOOL)isBeingDismissed;
+@property (nonatomic, getter=isMovingFromParentViewController, readonly) BOOL movingFromParentViewController;
+@property (nonatomic, getter=isMovingToParentViewController, readonly) BOOL movingToParentViewController;
+@property (nonatomic, getter=isBeingPresented, readonly) BOOL beingPresented;
+@property (nonatomic, getter=isBeingDismissed, readonly) BOOL beingDismissed;
 
 - (void)addChildViewController:(UIViewController *)childController;
 - (void)removeFromParentViewController;
-- (BOOL)shouldAutomaticallyForwardRotationMethods;
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods;
+@property (nonatomic, readonly) BOOL shouldAutomaticallyForwardRotationMethods;
+@property (nonatomic, readonly) BOOL shouldAutomaticallyForwardAppearanceMethods;
 - (void)transitionFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion;
 - (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated;    // iOS 6+
 - (void)endAppearanceTransition;                                                // iOS 6+

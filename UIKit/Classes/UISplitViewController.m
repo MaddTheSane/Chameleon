@@ -66,9 +66,9 @@ static const CGFloat SplitterPadding = 3;
 
 - (void)addViewControllers:(NSArray *)viewControllers
 {
-    if ([viewControllers count] == 2) {
-        UIView *leftView = [[viewControllers objectAtIndex:0] view];
-        UIView *rightView = [[viewControllers objectAtIndex:1] view];
+    if (viewControllers.count == 2) {
+        UIView *leftView = [viewControllers[0] view];
+        UIView *rightView = [viewControllers[1] view];
         
         leftView.autoresizingMask = rightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
@@ -176,7 +176,7 @@ static const CGFloat SplitterPadding = 3;
     } _delegateHas;
 }
 
-- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
+- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
     if ((self=[super initWithNibName:nibName bundle:nibBundle])) {
     }

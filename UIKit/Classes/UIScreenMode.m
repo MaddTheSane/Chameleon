@@ -33,11 +33,11 @@
 
 @implementation UIScreenMode
 
-+ (id)screenModeWithNSView:(NSView *)theNSView
++ (instancetype)screenModeWithNSView:(NSView *)theNSView
 {
     if (theNSView) {
         UIScreenMode *mode = [[self alloc] init];
-        mode->_size = NSSizeToCGSize([theNSView bounds].size);
+        mode->_size = NSSizeToCGSize(theNSView.bounds.size);
         mode->_pixelAspectRatio = 1;
         return mode;
     } else {
@@ -47,7 +47,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; size = %@>", [self className], self, NSStringFromCGSize(self.size)];
+    return [NSString stringWithFormat:@"<%@: %p; size = %@>", self.className, self, NSStringFromCGSize(self.size)];
 }
 
 @end

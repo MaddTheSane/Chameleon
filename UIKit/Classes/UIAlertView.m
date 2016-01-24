@@ -47,7 +47,7 @@
     } _delegateHas;
 }
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
+- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
     if ((self=[super initWithFrame:CGRectZero])) {
         self.title = title;
@@ -91,18 +91,18 @@
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
     [_buttonTitles addObject:title];
-    return ([_buttonTitles count] - 1);
+    return (_buttonTitles.count - 1);
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex
 {
-    return [_buttonTitles objectAtIndex:buttonIndex];
+    return _buttonTitles[buttonIndex];
 }
 
 
 - (NSInteger)numberOfButtons
 {
-    return [_buttonTitles count];
+    return _buttonTitles.count;
 }
 
 - (void)show
@@ -118,26 +118,26 @@
     NSMutableArray *buttonOrder = [[NSMutableArray alloc] initWithCapacity:self.numberOfButtons];
     
     if (self.title) {
-        [alert setMessageText:self.title];
+        alert.messageText = self.title;
     }
     
     if (self.message) {
-        [alert setInformativeText:self.message];
+        alert.informativeText = self.message;
     }
     
     for (NSInteger buttonIndex=0; buttonIndex<self.numberOfButtons; buttonIndex++) {
         if (buttonIndex != self.cancelButtonIndex) {
-            [alert addButtonWithTitle:[_buttonTitles objectAtIndex:buttonIndex]];
+            [alert addButtonWithTitle:_buttonTitles[buttonIndex]];
             [buttonOrder addObject:@(buttonIndex)];
         }
     }
     
     if (self.cancelButtonIndex >= 0) {
-        NSButton *btn = [alert addButtonWithTitle:[_buttonTitles objectAtIndex:self.cancelButtonIndex]];
+        NSButton *btn = [alert addButtonWithTitle:_buttonTitles[self.cancelButtonIndex]];
 
         // only change the key equivelent if there's more than one button, otherwise we lose the "Return" key for triggering the default action
         if (self.numberOfButtons > 1) {
-            [btn setKeyEquivalent:@"\033"];		// this should make the escape key trigger the cancel option
+            btn.keyEquivalent = @"\033";		// this should make the escape key trigger the cancel option
         }
 
         [buttonOrder addObject:@(self.cancelButtonIndex)];
@@ -148,17 +148,15 @@
     }
     
     [self performSelector:@selector(_showAlertWithOptions:)
-               withObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                           alert,		@"alert",
-                           buttonOrder, @"buttonOrder",
-                           nil]
+               withObject:@{@"alert": alert,
+                           @"buttonOrder": buttonOrder}
                afterDelay:0];
 }
 
 - (void)_showAlertWithOptions:(NSDictionary *)options
 {
-    NSAlert *alert = [options objectForKey:@"alert"];
-    NSMutableArray *buttonOrder = [options objectForKey:@"buttonOrder"];
+    NSAlert *alert = options[@"alert"];
+    NSMutableArray *buttonOrder = options[@"buttonOrder"];
     
     if (_delegateHas.didPresentAlertView) {
         [_delegate didPresentAlertView:self];
@@ -169,16 +167,16 @@
     
     switch (result) {
         case NSAlertFirstButtonReturn:
-            buttonIndex = [[buttonOrder objectAtIndex:0] intValue];
+            buttonIndex = [buttonOrder[0] intValue];
             break;
         case NSAlertSecondButtonReturn:
-            buttonIndex = [[buttonOrder objectAtIndex:1] intValue];
+            buttonIndex = [buttonOrder[1] intValue];
             break;
         case NSAlertThirdButtonReturn:
-            buttonIndex = [[buttonOrder objectAtIndex:2] intValue];
+            buttonIndex = [buttonOrder[2] intValue];
             break;
         default:
-            buttonIndex = [[buttonOrder objectAtIndex:2+(result-NSAlertThirdButtonReturn)] intValue];
+            buttonIndex = [buttonOrder[2+(result-NSAlertThirdButtonReturn)] intValue];
             break;
     }
     

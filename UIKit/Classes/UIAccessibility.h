@@ -65,7 +65,7 @@ extern UIAccessibilityNotifications UIAccessibilityPageScrolledNotification;
 @end
 
 @interface NSObject (UIAccessibilityContainer)
-- (NSInteger)accessibilityElementCount;
+@property (nonatomic, readonly) NSInteger accessibilityElementCount;
 - (id)accessibilityElementAtIndex:(NSInteger)index;
 - (NSInteger)indexOfAccessibilityElement:(id)element;
 @end
@@ -73,7 +73,7 @@ extern UIAccessibilityNotifications UIAccessibilityPageScrolledNotification;
 @interface NSObject (UIAccessibilityFocus)
 - (void)accessibilityElementDidBecomeFocused;
 - (void)accessibilityElementDidLoseFocus;
-- (BOOL)accessibilityElementIsFocused;
+@property (nonatomic, readonly) BOOL accessibilityElementIsFocused;
 @end
 
 extern void UIAccessibilityPostNotification(UIAccessibilityNotifications notification, id argument);

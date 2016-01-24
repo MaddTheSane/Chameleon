@@ -46,7 +46,7 @@
     } _delegateHas;
 }
 
-- (id)initWithTarget:(id)target action:(SEL)action
+- (instancetype)initWithTarget:(id)target action:(SEL)action
 {
     if ((self=[super init])) {
         _state = UIGestureRecognizerStatePossible;
@@ -106,7 +106,7 @@
 
 - (NSUInteger)numberOfTouches
 {
-    return [_trackingTouches count];
+    return _trackingTouches.count;
 }
 
 - (CGPoint)locationInView:(UIView *)view
@@ -135,7 +135,7 @@
 
 - (CGPoint)locationOfTouch:(NSUInteger)touchIndex inView:(UIView *)view
 {
-    return [[_trackingTouches objectAtIndex:touchIndex] locationInView:view];
+    return [_trackingTouches[touchIndex] locationInView:view];
 }
 
 - (void)setState:(UIGestureRecognizerState)state
@@ -269,19 +269,19 @@
     }
 
     if (_state == UIGestureRecognizerStatePossible || _state == UIGestureRecognizerStateBegan || _state == UIGestureRecognizerStateChanged) {
-        if ([began count]) {
+        if (began.count) {
             [self touchesBegan:began withEvent:event];
         }
 
-        if ([moved count]) {
+        if (moved.count) {
             [self touchesMoved:moved withEvent:event];
         }
         
-        if ([ended count]) {
+        if (ended.count) {
             [self touchesEnded:ended withEvent:event];
         }
         
-        if ([cancelled count]) {
+        if (cancelled.count) {
             [self touchesCancelled:cancelled withEvent:event];
         }
     }
@@ -325,7 +325,7 @@
             state = @"Failed";
             break;
     }
-    return [NSString stringWithFormat:@"<%@: %p; state = %@; view = %@>", [self className], self, state, self.view];
+    return [NSString stringWithFormat:@"<%@: %p; state = %@; view = %@>", self.className, self, state, self.view];
 }
 
 @end

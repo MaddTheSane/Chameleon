@@ -38,7 +38,7 @@
 @end
 
 @interface UINavigationController : UIViewController
-- (id)initWithRootViewController:(UIViewController *)rootViewController;
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController NS_DESIGNATED_INITIALIZER;
 - (void)setViewControllers:(NSArray *)newViewControllers animated:(BOOL)animated;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated;

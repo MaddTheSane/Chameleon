@@ -58,12 +58,12 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
     _UIViewControllerParentageTransition _parentageTransition;
 }
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithNibName:nil bundle:nil];
 }
 
-- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
+- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
     if ((self=[super init])) {
         _contentSizeForViewInPopover = CGSizeMake(320,1100);
@@ -327,7 +327,7 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
     UIViewController *controller = _parentViewController;
 
     while (controller && ![controller isKindOfClass:c]) {
-        controller = [controller parentViewController];
+        controller = controller.parentViewController;
     }
 
     return controller;
@@ -345,7 +345,7 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; title = %@; view = %@>", [self className], self, self.title, self.view];
+    return [NSString stringWithFormat:@"<%@: %p; title = %@; view = %@>", self.className, self, self.title, self.view];
 }
 
 
@@ -423,7 +423,7 @@ typedef NS_ENUM(NSInteger, _UIViewControllerParentageTransition) {
     if (_parentViewController) {
         [_parentViewController->_childViewControllers removeObject:self];
         
-        if ([_parentViewController->_childViewControllers count] == 0) {
+        if (_parentViewController->_childViewControllers.count == 0) {
             _parentViewController->_childViewControllers = nil;
         }
         

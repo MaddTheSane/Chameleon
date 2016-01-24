@@ -61,23 +61,23 @@
 
 - (NSString *)_localStorageDatabasePath
 {
-    NSString *appName = [[NSRunningApplication currentApplication] localizedName];
-    NSURL *applicationSupport = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
-    NSString *databasePath = [NSString stringWithFormat:@"%@/%@/WebKit/LocalStorage", [applicationSupport path], appName];
+    NSString *appName = [NSRunningApplication currentApplication].localizedName;
+    NSURL *applicationSupport = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
+    NSString *databasePath = [NSString stringWithFormat:@"%@/%@/WebKit/LocalStorage", applicationSupport.path, appName];
     return databasePath;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _scalesPageToFit = NO;
         self.chameleonAllowContextMenu = NO;
         
         _webView = [[WebView alloc] initWithFrame:NSRectFromCGRect(self.bounds)];
-        [_webView setAutoresizingMask:(NSViewWidthSizable|NSViewHeightSizable)];
-        [_webView setPolicyDelegate:self];
-        [_webView setFrameLoadDelegate:self];
-        [_webView setUIDelegate:self];
+        _webView.autoresizingMask = (NSViewWidthSizable|NSViewHeightSizable);
+        _webView.policyDelegate = self;
+        _webView.frameLoadDelegate = self;
+        _webView.UIDelegate = self;
         [_webView setDrawsBackground:NO];
         
         WebPreferences *preferences = [WebPreferences standardPreferences];
@@ -86,7 +86,7 @@
         [preferences _setLocalStorageDatabasePath:[self _localStorageDatabasePath]];
         [preferences setLocalStorageEnabled:YES];
         
-        [_webView setPreferences:preferences];
+        _webView.preferences = preferences;
 
         _webViewAdapter = [[UIViewAdapter alloc] initWithFrame:self.bounds];
         _webViewAdapter.NSView = _webView;
@@ -120,7 +120,7 @@
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
-    [[_webView mainFrame] loadHTMLString:string baseURL:baseURL];
+    [_webView.mainFrame loadHTMLString:string baseURL:baseURL];
 }
 
 - (void)loadRequest:(NSURLRequest *)request
@@ -129,7 +129,7 @@
         _request = request;
     }
 
-    [[_webView mainFrame] loadRequest:_request];
+    [_webView.mainFrame loadRequest:_request];
 }
 
 - (void)stopLoading
@@ -154,17 +154,17 @@
 
 - (BOOL)isLoading
 {
-    return [_webView isLoading];
+    return _webView.loading;
 }
 
 - (BOOL)canGoBack
 {
-    return [_webView canGoBack];
+    return _webView.canGoBack;
 }
 
 - (BOOL)canGoForward
 {
-    return [_webView canGoForward];
+    return _webView.canGoForward;
 }
 
 - (BOOL)scalesPageToFit
@@ -196,7 +196,7 @@
     BOOL shouldStartLoad = NO;
     
     if (_delegateHas.shouldStartLoadWithRequest) {
-        id navTypeObject = [actionInformation objectForKey:WebActionNavigationTypeKey];
+        id navTypeObject = actionInformation[WebActionNavigationTypeKey];
         NSInteger navTypeCode = [navTypeObject intValue];
         UIWebViewNavigationType navType = UIWebViewNavigationTypeOther;
 
@@ -244,7 +244,7 @@
 
 - (void)webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
 {
-    [[_webViewAdapter.NSView window] makeFirstResponder:responder];
+    [(_webViewAdapter.NSView).window makeFirstResponder:responder];
 }
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems

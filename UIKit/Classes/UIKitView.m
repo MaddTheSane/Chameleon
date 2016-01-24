@@ -66,7 +66,7 @@
     UINSResponderShim *_responderShim;
 }
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
     if ((self = [super initWithFrame:frame])) {
         _mouseMoveTouch = [[UITouch alloc] init];
@@ -90,7 +90,7 @@
     [self setWantsLayer:YES];
     
     CALayer *screenLayer = [_UIScreen _layer];
-    CALayer *myLayer = [self layer];
+    CALayer *myLayer = self.layer;
     
     [myLayer addSublayer:screenLayer];
     screenLayer.frame = myLayer.bounds;
@@ -130,13 +130,13 @@
     // UIKitView, and if we just returned YES here, AppKit would happily resign first responder from the text
     // view and set it for this UIKitView which causes the inputAccessoryView to disappear!
     
-    NSResponder *responder = [(NSWindow *)[self window] firstResponder];
+    NSResponder *responder = ((NSWindow *)self.window).firstResponder;
  
     while (responder) {
         if (responder == self) {
             return NO;
         } else {
-            responder = [responder nextResponder];
+            responder = responder.nextResponder;
         }
     }
     
@@ -206,7 +206,7 @@
 
 - (void)launchApplicationWithDelegate:(id<UIApplicationDelegate>)appDelegate afterDelay:(NSTimeInterval)delay
 {
-    [[UIApplication sharedApplication] setDelegate:appDelegate];
+    [UIApplication sharedApplication].delegate = appDelegate;
     
     if (delay) {
         UIImage *defaultImage = [UIImage imageNamed:@"Default-Landscape.png"];
@@ -230,8 +230,8 @@
 
 - (void)setNextResponder:(NSResponder *)aResponder
 {
-    [super setNextResponder:_responderShim];
-    [_responderShim setNextResponder:aResponder];
+    super.nextResponder = _responderShim;
+    _responderShim.nextResponder = aResponder;
 }
 
 - (UIResponder *)responderForResponderShim:(UINSResponderShim *)shim
@@ -269,20 +269,20 @@
 
 - (UITouch *)touchForEvent:(NSEvent *)theEvent
 {
-    const NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    const NSPoint location = [self convertPoint:theEvent.locationInWindow fromView:nil];
     
     UITouch *touch = [[UITouch alloc] init];
     touch.view = [self hitTestUIView:location];
     touch.locationOnScreen = NSPointToCGPoint(location);
-    touch.timestamp = [theEvent timestamp];
+    touch.timestamp = theEvent.timestamp;
     
     return touch;
 }
 
 - (void)updateTouchLocation:(UITouch *)touch withEvent:(NSEvent *)theEvent
 {
-    _touchEvent.touch.locationOnScreen = NSPointToCGPoint([self convertPoint:[theEvent locationInWindow] fromView:nil]);
-    _touchEvent.touch.timestamp = [theEvent timestamp];
+    _touchEvent.touch.locationOnScreen = NSPointToCGPoint([self convertPoint:theEvent.locationInWindow fromView:nil]);
+    _touchEvent.touch.timestamp = theEvent.timestamp;
 }
 
 - (void)cancelTouchesInView:(UIView *)view
@@ -311,13 +311,13 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    if ([theEvent modifierFlags] & NSControlKeyMask) {
+    if (theEvent.modifierFlags & NSControlKeyMask) {
         // I don't really like this, but it seemed to be necessary.
         // If I override the menuForEvent: method, when you control-click it *still* sends mouseDown:, so I don't
         // really win anything by overriding that since I'd still need a check in here to prevent that mouseDown: from being
         // sent to UIKit as a touch. That seems really wrong, IMO. A right click should be independent of a touch event.
         // soooo.... here we are. Whatever. Seems to work. Don't really like it.
-        [self rightMouseDown:[NSEvent mouseEventWithType:NSRightMouseDown location:[theEvent locationInWindow] modifierFlags:0 timestamp:[theEvent timestamp] windowNumber:[theEvent windowNumber] context:[theEvent context] eventNumber:[theEvent eventNumber] clickCount:[theEvent clickCount] pressure:[theEvent pressure]]];
+        [self rightMouseDown:[NSEvent mouseEventWithType:NSRightMouseDown location:theEvent.locationInWindow modifierFlags:0 timestamp:theEvent.timestamp windowNumber:theEvent.windowNumber context:theEvent.context eventNumber:theEvent.eventNumber clickCount:theEvent.clickCount pressure:theEvent.pressure]];
         return;
     }
     
@@ -341,7 +341,7 @@
     if (!_touchEvent) {
         _touchEvent = [[UITouchEvent alloc] initWithTouch:[self touchForEvent:theEvent]];
         _touchEvent.touchEventGesture = UITouchEventGestureNone;
-        _touchEvent.touch.tapCount = [theEvent clickCount];
+        _touchEvent.touch.tapCount = theEvent.clickCount;
         
         [[UIApplication sharedApplication] sendEvent:_touchEvent];
     }
@@ -402,7 +402,7 @@
         [self updateTouchLocation:_touchEvent.touch withEvent:theEvent];
         
         _touchEvent.touchEventGesture = UITouchEventGestureRotate;
-        _touchEvent.rotation = [theEvent rotation];
+        _touchEvent.rotation = theEvent.rotation;
 
         [[UIApplication sharedApplication] sendEvent:_touchEvent];
     }
@@ -415,7 +415,7 @@
         [self updateTouchLocation:_touchEvent.touch withEvent:theEvent];
         
         _touchEvent.touchEventGesture = UITouchEventGesturePinch;
-        _touchEvent.magnification = [theEvent magnification];
+        _touchEvent.magnification = theEvent.magnification;
 
         [[UIApplication sharedApplication] sendEvent:_touchEvent];
     }
@@ -430,7 +430,7 @@
     if (!_touchEvent) {
         UITouchEvent *swipeEvent = [[UITouchEvent alloc] initWithTouch:[self touchForEvent:theEvent]];
         swipeEvent.touchEventGesture = UITouchEventGestureSwipe;
-        swipeEvent.translation = CGPointMake([theEvent deltaX], [theEvent deltaY]);
+        swipeEvent.translation = CGPointMake(theEvent.deltaX, theEvent.deltaY);
         [[UIApplication sharedApplication] sendEvent:swipeEvent];
         [swipeEvent endTouchEvent];
     }
@@ -442,7 +442,7 @@
 {
     double dx, dy;
     
-    CGEventRef cgEvent = [theEvent CGEvent];
+    CGEventRef cgEvent = theEvent.CGEvent;
     const int64_t isContinious = CGEventGetIntegerValueField(cgEvent, kCGScrollWheelEventIsContinuous);
     
     if (isContinious == 0) {
@@ -497,7 +497,7 @@
     if (!_touchEvent) {
         UITouchEvent *mouseEvent = [[UITouchEvent alloc] initWithTouch:[self touchForEvent:theEvent]];
         mouseEvent.touchEventGesture = UITouchEventGestureRightClick;
-        mouseEvent.touch.tapCount = [theEvent clickCount];
+        mouseEvent.touch.tapCount = theEvent.clickCount;
         [[UIApplication sharedApplication] sendEvent:mouseEvent];
         [mouseEvent endTouchEvent];
     }
@@ -506,11 +506,11 @@
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     if (!_touchEvent) {
-        const NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        const NSPoint location = [self convertPoint:theEvent.locationInWindow fromView:nil];
         UIView *currentView = [self hitTestUIView:location];
         UIView *previousView = _mouseMoveTouch.view;
         
-        _mouseMoveTouch.timestamp = [theEvent timestamp];
+        _mouseMoveTouch.timestamp = theEvent.timestamp;
         _mouseMoveTouch.locationOnScreen = NSPointToCGPoint(location);
         _mouseMoveTouch.phase = UITouchPhaseMoved;
         

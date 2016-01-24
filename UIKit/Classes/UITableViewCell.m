@@ -44,7 +44,7 @@ extern CGFloat _UITableViewDefaultRowHeight;
     UILabel *_textLabel;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _indentationWidth = 10;
@@ -60,7 +60,7 @@ extern CGFloat _UITableViewDefaultRowHeight;
     return self;
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if ((self=[self initWithFrame:CGRectMake(0,0,320,_UITableViewDefaultRowHeight)])) {
         _style = style;
@@ -175,7 +175,7 @@ extern CGFloat _UITableViewDefaultRowHeight;
 {
     BOOL shouldHighlight = (_highlighted || _selected);
     _selectedBackgroundView.hidden = !shouldHighlight;
-    [self _setHighlighted:shouldHighlight forViews:[self subviews]];
+    [self _setHighlighted:shouldHighlight forViews:self.subviews];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

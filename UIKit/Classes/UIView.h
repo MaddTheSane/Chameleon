@@ -123,7 +123,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
 
 + (Class)layerClass;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 - (void)addSubview:(UIView *)subview;
 - (void)insertSubview:(UIView *)subview atIndex:(NSInteger)index;
 - (void)insertSubview:(UIView *)subview belowSubview:(UIView *)below;

@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, UIGestureRecognizerState) {
 @end
 
 @interface UIGestureRecognizer : NSObject
-- (instancetype)initWithTarget:(id)target action:(SEL)action;
+- (instancetype)initWithTarget:(id)target action:(SEL)action NS_DESIGNATED_INITIALIZER;
 
 - (void)addTarget:(id)target action:(SEL)action;
 - (void)removeTarget:(id)target action:(SEL)action;
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, UIGestureRecognizerState) {
 - (void)requireGestureRecognizerToFail:(UIGestureRecognizer *)otherGestureRecognizer;
 - (CGPoint)locationInView:(UIView *)view;
 
-- (NSUInteger)numberOfTouches;
+@property (nonatomic, readonly) NSUInteger numberOfTouches;
 
 @property (nonatomic, assign) id<UIGestureRecognizerDelegate> delegate;
 @property (nonatomic) BOOL delaysTouchesBegan;

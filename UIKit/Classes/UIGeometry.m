@@ -70,7 +70,7 @@ NSString *NSStringFromUIOffset(UIOffset offset)
 
 - (CGPoint)CGPointValue
 {
-    return NSPointToCGPoint([self pointValue]);
+    return NSPointToCGPoint(self.pointValue);
 }
 
 + (NSValue *)valueWithCGRect:(CGRect)rect
@@ -80,7 +80,7 @@ NSString *NSStringFromUIOffset(UIOffset offset)
 
 - (CGRect)CGRectValue
 {
-    return NSRectToCGRect([self rectValue]);
+    return NSRectToCGRect(self.rectValue);
 }
 
 + (NSValue *)valueWithCGSize:(CGSize)size
@@ -90,7 +90,7 @@ NSString *NSStringFromUIOffset(UIOffset offset)
 
 - (CGSize)CGSizeValue
 {
-    return NSSizeToCGSize([self sizeValue]);
+    return NSSizeToCGSize(self.sizeValue);
 }
 
 + (NSValue *)valueWithUIEdgeInsets:(UIEdgeInsets)insets
@@ -100,7 +100,7 @@ NSString *NSStringFromUIOffset(UIOffset offset)
 
 - (UIEdgeInsets)UIEdgeInsetsValue
 {
-    if(strcmp([self objCType], @encode(UIEdgeInsets)) == 0)
+    if(strcmp(self.objCType, @encode(UIEdgeInsets)) == 0)
     {
         UIEdgeInsets insets;
         [self getValue: &insets];
@@ -116,7 +116,7 @@ NSString *NSStringFromUIOffset(UIOffset offset)
 
 - (UIOffset)UIOffsetValue
 {
-    if(strcmp([self objCType], @encode(UIOffset)) == 0)
+    if(strcmp(self.objCType, @encode(UIOffset)) == 0)
     {
         UIOffset offset;
         [self getValue: &offset];

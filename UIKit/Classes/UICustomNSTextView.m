@@ -70,18 +70,18 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
             [self setFieldEditor:YES];
             [self setHorizontallyResizable:YES];
             [self setVerticallyResizable:NO];
-            [[self textContainer] setWidthTracksTextView:NO];
-            [[self textContainer] setContainerSize:maxSize];
-            [self setTextContainerInset:NSMakeSize(0, 0)];
+            [self.textContainer setWidthTracksTextView:NO];
+            self.textContainer.containerSize = maxSize;
+            self.textContainerInset = NSMakeSize(0, 0);
         } else {
             [self setFieldEditor:NO];
             [self setHorizontallyResizable:NO];
             [self setVerticallyResizable:YES];
-            [self setAutoresizingMask:NSViewWidthSizable];
-            [self setTextContainerInset:NSMakeSize(3, 8)];
+            self.autoresizingMask = NSViewWidthSizable;
+            self.textContainerInset = NSMakeSize(3, 8);
         }
 
-        [self setMaxSize:maxSize];
+        self.maxSize = maxSize;
         [self setDrawsBackground:NO];
         [self setRichText:NO];
         [self setUsesFontPanel:NO];
@@ -90,12 +90,12 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
         [self setDisplaysLinkToolTips:NO];
         [self setAutomaticDataDetectionEnabled:NO];
         [self setSecureTextEntry:isSecure];
-        [self setAutocorrectionType:UITextAutocorrectionTypeDefault];
+        self.autocorrectionType = UITextAutocorrectionTypeDefault;
         
-        [self setLayerContentsPlacement:NSViewLayerContentsPlacementTopLeft];
+        self.layerContentsPlacement = NSViewLayerContentsPlacementTopLeft;
         
         // this is for a spell checking hack.. see below
-        [[self layoutManager] setDelegate:self];
+        self.layoutManager.delegate = self;
     }
     return self;
 }
@@ -116,24 +116,24 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
         [self setSmartInsertDeleteEnabled:NO];
         [self setUsesFindPanel:NO];
         [self setAllowsUndo:NO];
-        [[self layoutManager] setGlyphGenerator:[[UIBulletGlyphGenerator alloc] init]];
-        [style setLineBreakMode:NSLineBreakByCharWrapping];
+        self.layoutManager.glyphGenerator = [[UIBulletGlyphGenerator alloc] init];
+        style.lineBreakMode = NSLineBreakByCharWrapping;
     } else {
         [self setAllowsUndo:YES];
         [self setContinuousSpellCheckingEnabled:YES];
         [self setSmartInsertDeleteEnabled:YES];
         [self setUsesFindPanel:YES];
-        [[self layoutManager] setGlyphGenerator:[NSGlyphGenerator sharedGlyphGenerator]];
+        self.layoutManager.glyphGenerator = [NSGlyphGenerator sharedGlyphGenerator];
     }
     
-    if ([self isFieldEditor]) {
-        [style setLineBreakMode:NSLineBreakByTruncatingTail];
+    if (self.fieldEditor) {
+        style.lineBreakMode = NSLineBreakByTruncatingTail;
     }
     
     // eliminate the built-in padding around the text field
-    [[self textContainer] setLineFragmentPadding:0];
+    self.textContainer.lineFragmentPadding = 0;
     
-    [self setDefaultParagraphStyle:style];
+    self.defaultParagraphStyle = style;
 }
 
 // vertically centre the text
@@ -149,7 +149,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    if (_secureTextEntry && ([menuItem action] == @selector(copy:) || [menuItem action] == @selector(cut:))) {
+    if (_secureTextEntry && (menuItem.action == @selector(copy:) || menuItem.action == @selector(cut:))) {
         return NO;	// don't allow copying/cutting out from a secure field
     } else {
         return [super validateMenuItem:menuItem];
@@ -161,7 +161,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
     if (_secureTextEntry) {
         return NSSelectByCharacter;		// trying to avoid the secure one giving any hints about what's under it. :/
     } else {
-        return [super selectionGranularity];
+        return super.selectionGranularity;
     }
 }
 
@@ -190,9 +190,9 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
     // it's possible that various key combos could still allow things like searching in spotlight which
     // then would revel the actual value of the password field, but at least those are sorta obscure :)
     if (_secureTextEntry) {
-        NSArray *items = [[menu itemArray] copy];
+        NSArray *items = [menu.itemArray copy];
         for (NSMenuItem *item in items) {
-            if ([item action] != @selector(paste:)) {
+            if (item.action != @selector(paste:)) {
                 [menu removeItem:item];
             }
         }
@@ -203,19 +203,19 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (id<UICustomNSTextViewDelegate>)delegate
 {
-    return (id<UICustomNSTextViewDelegate>)[super delegate];
+    return (id<UICustomNSTextViewDelegate>)super.delegate;
 }
 
 - (void)setDelegate:(id<UICustomNSTextViewDelegate>)d
 {
-    [super setDelegate:d];
+    super.delegate = d;
 }
 
 
 - (BOOL)becomeFirstResponder
 {
 	_isBecomingFirstResponder = YES;
-    BOOL result = [[self delegate] textViewBecomeFirstResponder:self];
+    BOOL result = [self.delegate textViewBecomeFirstResponder:self];
 	_isBecomingFirstResponder = NO;
 	return result;
 }
@@ -229,12 +229,12 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 {
 	if(_isBecomingFirstResponder) return NO;
 	
-    return [[self delegate] textViewResignFirstResponder:self];
+    return [self.delegate textViewResignFirstResponder:self];
 }
 
 - (BOOL)reallyResignFirstResponder
 {
-    if ([self isFieldEditor]) {
+    if (self.fieldEditor) {
         [self scrollRangeToVisible:NSMakeRange(0,0)];
     }
 
@@ -245,7 +245,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (void)keyDown:(NSEvent *)event
 {
-    if ([[self delegate] textView:self shouldAcceptKeyDown:event]) {
+    if ([self.delegate textView:self shouldAcceptKeyDown:event]) {
         [super keyDown:event];
     }
 }
@@ -283,7 +283,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (void)setNeedsFakeSpellCheck
 {
-    if ([self isContinuousSpellCheckingEnabled] && self->autocorrectionType != UITextAutocorrectionTypeNo) {
+    if (self.continuousSpellCheckingEnabled && self->autocorrectionType != UITextAutocorrectionTypeNo) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(forcedSpellCheck) object:nil];
         [self performSelector:@selector(forcedSpellCheck) withObject:nil afterDelay:0.5];
     }
@@ -303,7 +303,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
 - (void)forcedSpellCheck
 {
-	[self checkTextInRange:NSMakeRange(0,[[self string] length]) types:[self enabledTextCheckingTypes] options:@{}];
+	[self checkTextInRange:NSMakeRange(0, self.string.length) types:self.enabledTextCheckingTypes options:@{}];
 }
 
 // Because drawing the misspelling underline squiggle doesn't seem to work when the text view is used on a layer-backed NSView, we have to draw them
@@ -322,12 +322,12 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
     
     NSBezierPath *underlinePath = [NSBezierPath bezierPath];
     [underlinePath setLineDash:lineDash count:2 phase:0];
-    [underlinePath setLineWidth:2];
-    [underlinePath setLineCapStyle:NSRoundLineCapStyle];
+    underlinePath.lineWidth = 2;
+    underlinePath.lineCapStyle = NSRoundLineCapStyle;
     
-    NSLayoutManager *layout = [self layoutManager];
+    NSLayoutManager *layout = self.layoutManager;
     
-    NSRange checkRange = NSMakeRange(0,[[self string] length]);
+    NSRange checkRange = NSMakeRange(0, self.string.length);
     
     while (checkRange.length > 0) {
         NSRange effectiveRange = NSMakeRange(checkRange.location,0);
@@ -338,7 +338,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
 
             if ((spellingFlag & NSSpellingStateSpellingFlag) == NSSpellingStateSpellingFlag) {
                 NSUInteger count = 0;
-                const NSRectArray rects = [layout rectArrayForCharacterRange:effectiveRange withinSelectedCharacterRange:NSMakeRange(NSNotFound,0) inTextContainer:[self textContainer] rectCount:&count];
+                const NSRectArray rects = [layout rectArrayForCharacterRange:effectiveRange withinSelectedCharacterRange:NSMakeRange(NSNotFound,0) inTextContainer:self.textContainer rectCount:&count];
                 
                 for (NSUInteger i=0; i<count; i++) {
                     if (NSIntersectsRect(rects[i], rect)) {
@@ -352,7 +352,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
         }
         
         checkRange.location = NSMaxRange(effectiveRange);
-        checkRange.length = [[self string] length] - checkRange.location;
+        checkRange.length = self.string.length - checkRange.location;
     }
     
     [[NSColor redColor] setStroke];
@@ -365,7 +365,7 @@ static const CGFloat LargeNumberForText = 1.0e7; // Any larger dimensions and th
     // and layered on top of other views. It therefore cannot properly do subpixel rendering and the smoothing ends up looking like crap. Turning
     // the smoothing off is not as nice as properly smoothed text, of course, but at least its sorta readable. Yet another case of crap layer
     // support making things difficult. Amazingly, iOS fonts look fine when rendered without subpixel smoothing. Why?!
-    CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextRef ctx = [NSGraphicsContext currentContext].graphicsPort;
     CGContextSetShouldSmoothFonts(ctx, NO);
     
     [super drawRect:rect];

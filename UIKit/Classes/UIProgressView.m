@@ -33,7 +33,7 @@
 
 @implementation UIProgressView
 
-- (id)initWithProgressViewStyle:(UIProgressViewStyle)style
+- (instancetype)initWithProgressViewStyle:(UIProgressViewStyle)style
 {
     if ((self=[super initWithFrame:CGRectMake(0,0,0,0)])) {
         _progressViewStyle = style;

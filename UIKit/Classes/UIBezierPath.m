@@ -37,7 +37,7 @@
 }
 @synthesize CGPath=_path;
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _lineWidth = 1;

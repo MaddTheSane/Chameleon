@@ -35,7 +35,7 @@
 {
     if ((self = [super init])) {
         _expirationHandler = [handler copy];
-        _taskIdentifier = [self hash];  // may not be the best idea in the world
+        _taskIdentifier = self.hash;  // may not be the best idea in the world
     }
 
     return self;

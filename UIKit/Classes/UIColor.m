@@ -55,15 +55,15 @@ static UIColor *LightTextColor = nil;
     NSArray *_representations;
 }
 
-- (id)initWithNSColor:(NSColor *)aColor
+- (instancetype)initWithNSColor:(NSColor *)aColor
 {
     if (!aColor) {
         return nil;
     } else {
         NSColor *c = [aColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-        CGFloat components[[c numberOfComponents]];
+        CGFloat components[c.numberOfComponents];
         [c getComponents:components];
-        CGColorRef color = CGColorCreate([[c colorSpace] CGColorSpace], components);
+        CGColorRef color = CGColorCreate(c.colorSpace.CGColorSpace, components);
         self = [self initWithCGColor:color];
         CGColorRelease(color);
     }
@@ -71,7 +71,7 @@ static UIColor *LightTextColor = nil;
 }
 
 
-+ (id)colorWithNSColor:(NSColor *)c
++ (instancetype)colorWithNSColor:(NSColor *)c
 {
     return [[self alloc] initWithNSColor:c];
 }
@@ -119,24 +119,24 @@ static UIColor *LightTextColor = nil;
 + (UIColor *)lightTextColor		{ return LightTextColor ?: (LightTextColor = [[self alloc] initWithWhite:1 alpha:0.6]); }
 + (UIColor *)darkTextColor      { return [self blackColor]; }
 
-- (id)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha
+- (instancetype)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha
 {
     return [self initWithNSColor:[NSColor colorWithDeviceWhite:white alpha:alpha]];
 }
 
-- (id)initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
+- (instancetype)initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
 {
     return [self initWithNSColor:[NSColor colorWithDeviceHue:hue saturation:saturation brightness:brightness alpha:alpha]];
 }
 
-- (id)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+- (instancetype)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
     return [self initWithNSColor:[NSColor colorWithDeviceRed:red green:green blue:blue alpha:alpha]];
 }
 
 - (id)_initWithRepresentations:(NSArray *)reps
 {
-    if ([reps count] == 0) {
+    if (reps.count == 0) {
         self = nil;
     } else if ((self=[super init])) {
         _representations = [reps copy];
@@ -144,15 +144,15 @@ static UIColor *LightTextColor = nil;
     return self;
 }
 
-- (id)initWithCGColor:(CGColorRef)ref
+- (instancetype)initWithCGColor:(CGColorRef)ref
 {
     return [self _initWithRepresentations:@[[[UIColorRep alloc] initWithCGColor:ref]]];
 }
 
-- (id)initWithPatternImage:(UIImage *)patternImage
+- (instancetype)initWithPatternImage:(UIImage *)patternImage
 {
     NSArray *imageReps = [patternImage _representations];
-    NSMutableArray *colorReps = [NSMutableArray arrayWithCapacity:[imageReps count]];
+    NSMutableArray *colorReps = [NSMutableArray arrayWithCapacity:imageReps.count];
 
     for (UIImageRep *imageRep in imageReps) {
         [colorReps addObject:[[UIColorRep alloc] initWithPatternImageRepresentation:imageRep]];
@@ -173,7 +173,7 @@ static UIColor *LightTextColor = nil;
         }
     }
     
-    return bestRep ?: [_representations lastObject];
+    return bestRep ?: _representations.lastObject;
 }
 
 - (BOOL)_isOpaque
@@ -248,7 +248,7 @@ static UIColor *LightTextColor = nil;
     }
     [componentsString appendString:@"}"];
 
-    return [NSString stringWithFormat:@"<%@: %p; colorSpace = %@; components = %@>", [self className], self, colorSpace, componentsString];
+    return [NSString stringWithFormat:@"<%@: %p; colorSpace = %@; components = %@>", self.className, self, colorSpace, componentsString];
 }
 
 - (BOOL) isEqual:(id)object {

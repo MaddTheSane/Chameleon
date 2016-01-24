@@ -39,7 +39,13 @@ extern "C" {
 
 void UIGraphicsPushContext(CGContextRef _Nullable ctx);
 void UIGraphicsPopContext(void);
+
+CF_IMPLICIT_BRIDGING_ENABLED
+
 CGContextRef _Nullable UIGraphicsGetCurrentContext(void);
+
+CF_IMPLICIT_BRIDGING_DISABLED
+
     
 CGFloat _UIGraphicsGetContextScaleFactor(CGContextRef _Nullable ctx);
 

@@ -39,7 +39,7 @@
     UITextField *_searchField;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self = [super initWithFrame:frame])) {
         _searchField = [[UITextField alloc] initWithFrame:frame];

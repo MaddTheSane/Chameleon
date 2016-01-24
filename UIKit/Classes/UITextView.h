@@ -53,7 +53,7 @@ extern NSString *const UITextViewTextDidEndEditingNotification;
 
 @interface UITextView : UIScrollView <UITextInput>
 - (void)scrollRangeToVisible:(NSRange)range;
-- (BOOL)hasText;
+@property (nonatomic, readonly) BOOL hasText;
 
 @property (nonatomic) NSTextAlignment textAlignment; // stub, not yet implemented!
 @property (nonatomic) NSRange selectedRange;

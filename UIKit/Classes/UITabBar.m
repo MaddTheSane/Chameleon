@@ -44,7 +44,7 @@
     NSInteger _selectedItemIndex;
 }
 
-- (id)initWithFrame:(CGRect)rect
+- (instancetype)initWithFrame:(CGRect)rect
 {
     if ((self = [super initWithFrame:rect])) {
         rect.size.height = TABBAR_HEIGHT; // tabbar is always fixed
@@ -61,7 +61,7 @@
 - (UITabBarItem *)selectedItem
 {
     if (_selectedItemIndex >= 0) {
-        return [_items objectAtIndex:_selectedItemIndex];
+        return _items[_selectedItemIndex];
     }
     return nil;
 }
@@ -90,7 +90,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; selectedItem = %@; items = %@; delegate = %@>", [self className], self, self.selectedItem, self.items, self.delegate];
+    return [NSString stringWithFormat:@"<%@: %p; selectedItem = %@; items = %@; delegate = %@>", self.className, self, self.selectedItem, self.items, self.delegate];
 }
 
 @end

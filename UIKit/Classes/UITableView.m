@@ -79,12 +79,12 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 }
 @dynamic delegate;
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     return [self initWithFrame:frame style:UITableViewStylePlain];
 }
 
-- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle
 {
     if ((self=[super initWithFrame:frame])) {
         _style = theStyle;
@@ -125,7 +125,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 
 - (void)setDelegate:(id<UITableViewDelegate>)newDelegate
 {
-    [super setDelegate:newDelegate];
+    super.delegate = newDelegate;
 
     _delegateHas.heightForRowAtIndexPath = [newDelegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)];
     _delegateHas.heightForHeaderInSection = [newDelegate respondsToSelector:@selector(tableView:heightForHeaderInSection:)];
@@ -227,7 +227,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     // this is called from _setContentSize and other places that require access
     // to the section caches (mostly for size-related information)
     
-    if ([_sections count] == 0) {
+    if (_sections.count == 0) {
         [self _updateSectionsCache];
     }
 }
@@ -275,7 +275,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     
     // layout sections and rows
     NSMutableDictionary *availableCells = [_cachedCells mutableCopy];
-    const NSInteger numberOfSections = [_sections count];
+    const NSInteger numberOfSections = _sections.count;
     [_cachedCells removeAllObjects];
     
     for (NSInteger section=0; section<numberOfSections; section++) {
@@ -284,7 +284,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
         if (CGRectIntersectsRect(sectionRect, visibleBounds)) {
             const CGRect headerRect = [self rectForHeaderInSection:section];
             const CGRect footerRect = [self rectForFooterInSection:section];
-            UITableViewSection *sectionRecord = [_sections objectAtIndex:section];
+            UITableViewSection *sectionRecord = _sections[section];
             const NSInteger numberOfRows = sectionRecord.numberOfRows;
             
             if (sectionRecord.headerView) {
@@ -299,9 +299,9 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
                 CGRect rowRect = [self rectForRowAtIndexPath:indexPath];
                 if (CGRectIntersectsRect(rowRect,visibleBounds) && rowRect.size.height > 0) {
-                    UITableViewCell *cell = [availableCells objectForKey:indexPath] ?: [self.dataSource tableView:self cellForRowAtIndexPath:indexPath];
+                    UITableViewCell *cell = availableCells[indexPath] ?: [self.dataSource tableView:self cellForRowAtIndexPath:indexPath];
                     if (cell) {
-                        [_cachedCells setObject:cell forKey:indexPath];
+                        _cachedCells[indexPath] = cell;
                         [availableCells removeObjectForKey:indexPath];
                         cell.highlighted = [_highlightedRow isEqual:indexPath];
                         cell.selected = [_selectedRow isEqual:indexPath];
@@ -316,7 +316,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     }
     
     // remove old cells, but save off any that might be reusable
-    for (UITableViewCell *cell in [availableCells allValues]) {
+    for (UITableViewCell *cell in availableCells.allValues) {
         if (cell.reuseIdentifier) {
             [_reusableCells addObject:cell];
         } else {
@@ -333,7 +333,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     // the frame of the table view has actually animated down to the new, shorter size. So the animation is jumpy/ugly because
     // the cells suddenly disappear instead of seemingly animating down and out of view like they should. This tries to leave them
     // on screen as long as possible, but only if they don't get in the way.
-    NSArray* allCachedCells = [_cachedCells allValues];
+    NSArray* allCachedCells = _cachedCells.allValues;
     for (UITableViewCell *cell in _reusableCells) {
         if (CGRectIntersectsRect(cell.frame,visibleBounds) && ![allCachedCells containsObject: cell]) {
             [cell removeFromSuperview];
@@ -358,7 +358,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     CGFloat offset = _tableHeaderView? _tableHeaderView.frame.size.height : 0;
     
     for (NSInteger s=0; s<index; s++) {
-        offset += [[_sections objectAtIndex:s] sectionHeight];
+        offset += [_sections[s] sectionHeight];
     }
     
     return offset;
@@ -367,19 +367,19 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 - (CGRect)rectForSection:(NSInteger)section
 {
     [self _updateSectionsCacheIfNeeded];
-    return [self _CGRectFromVerticalOffset:[self _offsetForSection:section] height:[[_sections objectAtIndex:section] sectionHeight]];
+    return [self _CGRectFromVerticalOffset:[self _offsetForSection:section] height:[_sections[section] sectionHeight]];
 }
 
 - (CGRect)rectForHeaderInSection:(NSInteger)section
 {
     [self _updateSectionsCacheIfNeeded];
-    return [self _CGRectFromVerticalOffset:[self _offsetForSection:section] height:[[_sections objectAtIndex:section] headerHeight]];
+    return [self _CGRectFromVerticalOffset:[self _offsetForSection:section] height:[_sections[section] headerHeight]];
 }
 
 - (CGRect)rectForFooterInSection:(NSInteger)section
 {
     [self _updateSectionsCacheIfNeeded];
-    UITableViewSection *sectionRecord = [_sections objectAtIndex:section];
+    UITableViewSection *sectionRecord = _sections[section];
     CGFloat offset = [self _offsetForSection:section];
     offset += sectionRecord.headerHeight;
     offset += sectionRecord.rowsHeight;
@@ -390,8 +390,8 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 {
     [self _updateSectionsCacheIfNeeded];
 
-    if (indexPath && indexPath.section < [_sections count]) {
-        UITableViewSection *sectionRecord = [_sections objectAtIndex:indexPath.section];
+    if (indexPath && indexPath.section < _sections.count) {
+        UITableViewSection *sectionRecord = _sections[indexPath.section];
         const NSUInteger row = indexPath.row;
         
         if (row < sectionRecord.numberOfRows) {
@@ -423,7 +423,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 {
     // this is allowed to return nil if the cell isn't visible and is not restricted to only returning visible cells
     // so this simple call should be good enough.
-    return [_cachedCells objectForKey:indexPath];
+    return _cachedCells[indexPath];
 }
 
 - (NSArray *)indexPathsForRowsInRect:(CGRect)rect
@@ -435,11 +435,11 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
     [self _updateSectionsCacheIfNeeded];
 
     NSMutableArray *results = [[NSMutableArray alloc] init];
-    const NSInteger numberOfSections = [_sections count];
+    const NSInteger numberOfSections = _sections.count;
     CGFloat offset = _tableHeaderView? _tableHeaderView.frame.size.height : 0;
     
     for (NSInteger section=0; section<numberOfSections; section++) {
-        UITableViewSection *sectionRecord = [_sections objectAtIndex:section];
+        UITableViewSection *sectionRecord = _sections[section];
         CGFloat *rowHeights = sectionRecord.rowHeights;
         const NSInteger numberOfRows = sectionRecord.numberOfRows;
         
@@ -471,21 +471,21 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 - (NSIndexPath *)indexPathForRowAtPoint:(CGPoint)point
 {
     NSArray *paths = [self indexPathsForRowsInRect:CGRectMake(point.x,point.y,1,1)];
-    return ([paths count] > 0)? [paths objectAtIndex:0] : nil;
+    return (paths.count > 0)? paths[0] : nil;
 }
 
 - (NSArray *)indexPathsForVisibleRows
 {
     [self _layoutTableView];
 
-    NSMutableArray *indexes = [NSMutableArray arrayWithCapacity:[_cachedCells count]];
+    NSMutableArray *indexes = [NSMutableArray arrayWithCapacity:_cachedCells.count];
     const CGRect bounds = self.bounds;
 
     // Special note - it's unclear if UIKit returns these in sorted order. Because we're assuming that visibleCells returns them in order (top-bottom)
     // and visibleCells uses this method, I'm going to make the executive decision here and assume that UIKit probably does return them sorted - since
     // there's nothing warning that they aren't. :)
     
-    for (NSIndexPath *indexPath in [[_cachedCells allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+    for (NSIndexPath *indexPath in [_cachedCells.allKeys sortedArrayUsingSelector:@selector(compare:)]) {
         if (CGRectIntersectsRect(bounds,[self rectForRowAtIndexPath:indexPath])) {
             [indexes addObject:indexPath];
         }
@@ -552,7 +552,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 - (void)reloadData
 {
     // clear the caches and remove the cells since everything is going to change
-    [[_cachedCells allValues] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_cachedCells.allValues makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_reusableCells makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_reusableCells removeAllObjects];
     [_cachedCells removeAllObjects];
@@ -598,7 +598,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 {
     const CGRect oldFrame = self.frame;
     if (!CGRectEqualToRect(oldFrame,frame)) {
-        [super setFrame:frame];
+        super.frame = frame;
 
         if (oldFrame.size.width != frame.size.width) {
             [self _updateSectionsCache];
@@ -615,8 +615,8 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell
 {
-    for (NSIndexPath *index in [_cachedCells allKeys]) {
-        if ([_cachedCells objectForKey:index] == cell) {
+    for (NSIndexPath *index in _cachedCells.allKeys) {
+        if (_cachedCells[index] == cell) {
             return index;
         }
     }
@@ -840,7 +840,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
         if (_delegateHas.titleForDeleteConfirmationButtonForRowAtIndexPath) {
             menuItemTitle = [self.delegate tableView:self titleForDeleteConfirmationButtonForRowAtIndexPath:indexPath];
         }
-        if ([menuItemTitle length] == 0) {
+        if (menuItemTitle.length == 0) {
             menuItemTitle = @"Delete";
         }
 
@@ -937,8 +937,8 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 {
     NSArray *visibleRows = [self indexPathsForVisibleRows];
 
-    if ([visibleRows count] > 0) {
-        [self scrollToRowAtIndexPath:[visibleRows objectAtIndex:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (visibleRows.count > 0) {
+        [self scrollToRowAtIndexPath:visibleRows[0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         [NSCursor setHiddenUntilMouseMoves:YES];
         [self flashScrollIndicators];
     }
@@ -946,7 +946,7 @@ const CGFloat _UITableViewDefaultRowHeight = 43;
 
 - (void)pageDown:(id)sender
 {
-	[self scrollToRowAtIndexPath:[[self indexPathsForVisibleRows] lastObject] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	[self scrollToRowAtIndexPath:[self indexPathsForVisibleRows].lastObject atScrollPosition:UITableViewScrollPositionTop animated:YES];
     [NSCursor setHiddenUntilMouseMoves:YES];
 	[self flashScrollIndicators];
 }

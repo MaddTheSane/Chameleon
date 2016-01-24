@@ -54,7 +54,7 @@ static UIDevice *theDevice;
     return theDevice;
 }
 
-- (id)init
+- (instancetype)init
 {
     if ((self=[super init])) {
         _userInterfaceIdiom = UIUserInterfaceIdiomDesktop;
@@ -94,11 +94,11 @@ static UIDevice *theDevice;
     UIDeviceBatteryState state = UIDeviceBatteryStateUnknown;
     
     NSDictionary<NSString*,id> *powerSource = [self primaryPowerSource];
-    id powerSourceState = [powerSource objectForKey:@kIOPSPowerSourceStateKey];
+    id powerSourceState = powerSource[@kIOPSPowerSourceStateKey];
     
     if ([powerSourceState isEqualToString:@kIOPSACPowerValue]) {
-        id currentObj = [powerSource objectForKey:@kIOPSCurrentCapacityKey];
-        id capacityObj = [powerSource objectForKey:@kIOPSMaxCapacityKey];
+        id currentObj = powerSource[@kIOPSCurrentCapacityKey];
+        id capacityObj = powerSource[@kIOPSMaxCapacityKey];
         
         if ([currentObj isEqualToNumber:capacityObj]) {
             state = UIDeviceBatteryStateFull;
@@ -119,8 +119,8 @@ static UIDevice *theDevice;
     NSDictionary<NSString*,id> *powerSource = [self primaryPowerSource];
     
     if (powerSource != nil) {
-        id currentObj = [powerSource objectForKey:@kIOPSCurrentCapacityKey];
-        id capacityObj = [powerSource objectForKey:@kIOPSMaxCapacityKey];
+        id currentObj = powerSource[@kIOPSCurrentCapacityKey];
+        id capacityObj = powerSource[@kIOPSMaxCapacityKey];
         
         batteryLevel = [currentObj floatValue] / [capacityObj floatValue];
     }
@@ -140,7 +140,7 @@ static UIDevice *theDevice;
 
 - (NSString *)systemVersion
 {
-    return [[NSProcessInfo processInfo] operatingSystemVersionString];
+    return [NSProcessInfo processInfo].operatingSystemVersionString;
 }
 
 - (NSString *)model

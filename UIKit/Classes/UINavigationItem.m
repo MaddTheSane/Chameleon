@@ -33,7 +33,7 @@ NSString *const UINavigationItemDidChange = @"UINavigationItemDidChange";
 
 @implementation UINavigationItem
 
-- (id)initWithTitle:(NSString *)theTitle
+- (instancetype)initWithTitle:(NSString *)theTitle
 {
     if ((self=[super init])) {
         _title = [theTitle copy];

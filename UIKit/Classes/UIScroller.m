@@ -72,7 +72,7 @@ CGFloat UIScrollerWidthForBoundsSize(CGSize boundsSize)
 - (void)setFrame:(CGRect)frame
 {
     _isVertical = (frame.size.height > frame.size.width);
-    [super setFrame:frame];
+    super.frame = frame;
 }
 
 - (void)_fadeOut
@@ -190,24 +190,24 @@ CGFloat UIScrollerWidthForBoundsSize(CGSize boundsSize)
     const CGFloat knobPosition = MIN(MAX(0, point-_dragOffset), (dimension-knobSize));
     const CGFloat contentOffset = (knobPosition / (dimension-knobSize)) * maxContentOffset;
 
-    [self setContentOffset:contentOffset];
+    self.contentOffset = contentOffset;
 }
 
 - (void)pageUp
 {
     if (_isVertical) {
-        [self setContentOffset:_contentOffset-self.bounds.size.height];
+        self.contentOffset = _contentOffset-self.bounds.size.height;
     } else {
-        [self setContentOffset:_contentOffset-self.bounds.size.width];
+        self.contentOffset = _contentOffset-self.bounds.size.width;
     }
 }
 
 - (void)pageDown
 {
     if (_isVertical) {
-        [self setContentOffset:_contentOffset+self.bounds.size.height];
+        self.contentOffset = _contentOffset+self.bounds.size.height;
     } else {
-        [self setContentOffset:_contentOffset+self.bounds.size.width];
+        self.contentOffset = _contentOffset+self.bounds.size.width;
     }
 }
 
@@ -265,7 +265,7 @@ CGFloat UIScrollerWidthForBoundsSize(CGSize boundsSize)
     } else {
         [[[UIColor blackColor] colorWithAlphaComponent:0.5] setFill];
         [[[UIColor whiteColor] colorWithAlphaComponent:0.3] setStroke];
-        [path setLineWidth:1.8];
+        path.lineWidth = 1.8;
         [path stroke];
     }
     

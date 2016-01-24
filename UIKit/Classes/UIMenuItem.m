@@ -31,7 +31,7 @@
 
 @implementation UIMenuItem
 
-- (id)initWithTitle:(NSString *)title action:(SEL)action
+- (instancetype)initWithTitle:(NSString *)title action:(SEL)action
 {
     if ((self=[super init])) {
         self.title = title;

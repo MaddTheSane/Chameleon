@@ -69,12 +69,12 @@ static BOOL _animationsEnabled = YES;
     return [UIView instanceMethodForSelector:@selector(drawRect:)] != [self instanceMethodForSelector:@selector(drawRect:)];
 }
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithFrame:CGRectZero];
 }
 
-- (id)initWithFrame:(CGRect)theFrame
+- (instancetype)initWithFrame:(CGRect)theFrame
 {
     if ((self=[super init])) {
         _implementsDrawRect = [[self class] _instanceImplementsDrawRect];
@@ -103,7 +103,7 @@ static BOOL _animationsEnabled = YES;
 - (void)dealloc
 {
     [_gestureRecognizers makeObjectsPerformSelector:@selector(_setView:) withObject:nil];
-    [[_subviews allObjects] makeObjectsPerformSelector:@selector(_removeFromDeallocatedSuperview)];
+    [_subviews.allObjects makeObjectsPerformSelector:@selector(_removeFromDeallocatedSuperview)];
 
     _layer.layoutManager = nil;
     _layer.delegate = nil;
@@ -138,13 +138,13 @@ static BOOL _animationsEnabled = YES;
 - (NSArray *)subviews
 {
     NSArray *sublayers = _layer.sublayers;
-    NSMutableArray *subviews = [NSMutableArray arrayWithCapacity:[sublayers count]];
+    NSMutableArray *subviews = [NSMutableArray arrayWithCapacity:sublayers.count];
 
     // This builds the results from the layer instead of just using _subviews because I want the results to match
     // the order that CALayer has them. It's unclear in the docs if the returned order from this method is guarenteed or not,
     // however several other aspects of the system (namely the hit testing) depends on this order being correct.
     for (CALayer *layer in sublayers) {
-        id potentialView = [layer delegate];
+        id potentialView = layer.delegate;
         if ([_subviews containsObject:potentialView]) {
             [subviews addObject:potentialView];
         }
@@ -278,7 +278,7 @@ static BOOL _animationsEnabled = YES;
 - (void)bringSubviewToFront:(UIView *)subview
 {
     if (subview.superview == self) {
-        [_layer insertSublayer:subview.layer above:[[_layer sublayers] lastObject]];
+        [_layer insertSublayer:subview.layer above:_layer.sublayers.lastObject];
     }
 }
 
@@ -578,8 +578,8 @@ static BOOL _animationsEnabled = YES;
 
 - (id)actionForLayer:(CALayer *)theLayer forKey:(NSString *)event
 {
-    if (_animationsEnabled && [_animationGroups lastObject] && theLayer == _layer) {
-        return [[_animationGroups lastObject] actionForView:self forKey:event] ?: (id)[NSNull null];
+    if (_animationsEnabled && _animationGroups.lastObject && theLayer == _layer) {
+        return [_animationGroups.lastObject actionForView:self forKey:event] ?: (id)[NSNull null];
     } else {
         return [NSNull null];
     }
@@ -657,7 +657,7 @@ static BOOL _animationsEnabled = YES;
 
         if (!CGSizeEqualToSize(oldBounds.size, newBounds.size)) {
             if (_autoresizesSubviews) {
-                for (UIView *subview in [_subviews allObjects]) {
+                for (UIView *subview in _subviews.allObjects) {
                     [subview _superviewSizeDidChangeFrom:oldBounds.size to:newBounds.size];
                 }
             }
@@ -792,7 +792,7 @@ static BOOL _animationsEnabled = YES;
     
     if (scale > 0 && scale != self.contentScaleFactor) {
         if ([_layer respondsToSelector:@selector(setContentsScale:)]) {
-            [_layer setContentsScale:scale];
+            _layer.contentsScale = scale;
             [self setNeedsDisplay];
         }
     }
@@ -800,7 +800,7 @@ static BOOL _animationsEnabled = YES;
 
 - (CGFloat)contentScaleFactor
 {
-    return [_layer respondsToSelector:@selector(contentsScale)]? [_layer contentsScale] : 1;
+    return [_layer respondsToSelector:@selector(contentsScale)]? _layer.contentsScale : 1;
 }
 
 - (void)setHidden:(BOOL)h
@@ -967,7 +967,7 @@ static BOOL _animationsEnabled = YES;
 
 - (void)setGestureRecognizers:(NSArray *)newRecognizers
 {
-    for (UIGestureRecognizer *gesture in [_gestureRecognizers allObjects]) {
+    for (UIGestureRecognizer *gesture in _gestureRecognizers.allObjects) {
         [self removeGestureRecognizer:gesture];
     }
 
@@ -978,7 +978,7 @@ static BOOL _animationsEnabled = YES;
 
 - (NSArray *)gestureRecognizers
 {
-    return [_gestureRecognizers allObjects];
+    return _gestureRecognizers.allObjects;
 }
 
 + (void)_beginAnimationsWithOptions:(UIViewAnimationOptions)options
@@ -988,28 +988,28 @@ static BOOL _animationsEnabled = YES;
 
 + (void)_setAnimationName:(NSString *)name context:(void *)context
 {
-    [[_animationGroups lastObject] setName:name];
-    [[_animationGroups lastObject] setContext:context];
+    _animationGroups.lastObject.name = name;
+    _animationGroups.lastObject.context = context;
 }
 
 + (void)_setAnimationCompletionBlock:(void (^)(BOOL finished))completion
 {
-    [(UIViewAnimationGroup *)[_animationGroups lastObject] setCompletionBlock:completion];
+    ((UIViewAnimationGroup *)_animationGroups.lastObject).completionBlock = completion;
 }
 
 + (void (^)(BOOL))_animationCompletionBlock
 {
-    return [(UIViewAnimationGroup *)[_animationGroups lastObject] completionBlock];
+    return ((UIViewAnimationGroup *)_animationGroups.lastObject).completionBlock;
 }
 
 + (void)_setAnimationTransitionView:(UIView *)view
 {
-    [[_animationGroups lastObject] setTransitionView:view shouldCache:NO];
+    [_animationGroups.lastObject setTransitionView:view shouldCache:NO];
 }
 
 + (BOOL)_isAnimating
 {
-    return ([_animationGroups count] != 0);
+    return (_animationGroups.count != 0);
 }
 
 + (void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion
@@ -1077,55 +1077,55 @@ static BOOL _animationsEnabled = YES;
 
 + (void)commitAnimations
 {
-    if ([_animationGroups count] > 0) {
-        [[_animationGroups lastObject] commit];
+    if (_animationGroups.count > 0) {
+        [_animationGroups.lastObject commit];
         [_animationGroups removeLastObject];
     }
 }
 
 + (void)setAnimationBeginsFromCurrentState:(BOOL)beginFromCurrentState
 {
-    [[_animationGroups lastObject] setBeginsFromCurrentState:beginFromCurrentState];
+    _animationGroups.lastObject.beginsFromCurrentState = beginFromCurrentState;
 }
 
 + (void)setAnimationCurve:(UIViewAnimationCurve)curve
 {
-    [[_animationGroups lastObject] setCurve:curve];
+    _animationGroups.lastObject.curve = curve;
 }
 
 + (void)setAnimationDelay:(NSTimeInterval)delay
 {
-    [[_animationGroups lastObject] setDelay:delay];
+    _animationGroups.lastObject.delay = delay;
 }
 
 + (void)setAnimationDelegate:(id)delegate
 {
-    [[_animationGroups lastObject] setDelegate:delegate];
+    _animationGroups.lastObject.delegate = delegate;
 }
 
 + (void)setAnimationDidStopSelector:(SEL)selector
 {
-    [[_animationGroups lastObject] setDidStopSelector:selector];
+    _animationGroups.lastObject.didStopSelector = selector;
 }
 
 + (void)setAnimationDuration:(NSTimeInterval)duration
 {
-    [[_animationGroups lastObject] setDuration:duration];
+    _animationGroups.lastObject.duration = duration;
 }
 
 + (void)setAnimationRepeatAutoreverses:(BOOL)repeatAutoreverses
 {
-    [[_animationGroups lastObject] setRepeatAutoreverses:repeatAutoreverses];
+    _animationGroups.lastObject.repeatAutoreverses = repeatAutoreverses;
 }
 
 + (void)setAnimationRepeatCount:(float)repeatCount
 {
-    [[_animationGroups lastObject] setRepeatCount:repeatCount];
+    _animationGroups.lastObject.repeatCount = repeatCount;
 }
 
 + (void)setAnimationWillStartSelector:(SEL)selector
 {
-    [[_animationGroups lastObject] setWillStartSelector:selector];
+    _animationGroups.lastObject.willStartSelector = selector;
 }
 
 + (void)setAnimationTransition:(UIViewAnimationTransition)transition forView:(UIView *)view cache:(BOOL)cache
@@ -1134,23 +1134,23 @@ static BOOL _animationsEnabled = YES;
     
     switch (transition) {
         case UIViewAnimationTransitionNone:
-            [[_animationGroups lastObject] setTransition:UIViewAnimationGroupTransitionNone];
+            _animationGroups.lastObject.transition = UIViewAnimationGroupTransitionNone;
             break;
             
         case UIViewAnimationTransitionFlipFromLeft:
-            [[_animationGroups lastObject] setTransition:UIViewAnimationGroupTransitionFlipFromLeft];
+            _animationGroups.lastObject.transition = UIViewAnimationGroupTransitionFlipFromLeft;
             break;
             
         case UIViewAnimationTransitionFlipFromRight:
-            [[_animationGroups lastObject] setTransition:UIViewAnimationGroupTransitionFlipFromRight];
+            _animationGroups.lastObject.transition = UIViewAnimationGroupTransitionFlipFromRight;
             break;
             
         case UIViewAnimationTransitionCurlUp:
-            [[_animationGroups lastObject] setTransition:UIViewAnimationGroupTransitionCurlUp];
+            _animationGroups.lastObject.transition = UIViewAnimationGroupTransitionCurlUp;
             break;
             
         case UIViewAnimationTransitionCurlDown:
-            [[_animationGroups lastObject] setTransition:UIViewAnimationGroupTransitionCurlDown];
+            _animationGroups.lastObject.transition = UIViewAnimationGroupTransitionCurlDown;
             break;
     }
 }
@@ -1167,7 +1167,7 @@ static BOOL _animationsEnabled = YES;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; frame = %@; hidden = %@; layer = %@>", [self className], self, NSStringFromCGRect(self.frame), (self.hidden ? @"YES" : @"NO"), self.layer];
+    return [NSString stringWithFormat:@"<%@: %p; frame = %@; hidden = %@; layer = %@>", self.className, self, NSStringFromCGRect(self.frame), (self.hidden ? @"YES" : @"NO"), self.layer];
 }
 
 @end

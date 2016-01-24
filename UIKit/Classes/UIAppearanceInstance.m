@@ -73,11 +73,11 @@ static NSArray *UIAppearanceHierarchyForClass(Class klass)
     }
     va_end(args);
     
-    UIAppearanceProxy *record = [appearanceRules objectForKey:containmentPath];
+    UIAppearanceProxy *record = appearanceRules[containmentPath];
     
     if (!record) {
         record = [[UIAppearanceProxy alloc] initWithClass:self];
-        [appearanceRules setObject:record forKey:containmentPath];
+        appearanceRules[containmentPath] = record;
     }
     
     return record;
@@ -108,16 +108,16 @@ static NSArray *UIAppearanceHierarchyForClass(Class klass)
         // sorts the rule keys (which are arrays of classes) by length
         // if the lengths match, it sorts based on the last class being a superclass of the other or vice-versa
         // if the last classes aren't related at all, it marks them equal (I suspect these cases will always be filtered out in the next step)
-        NSArray *sortedRulePaths = [[rules allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSArray *path1, NSArray *path2) {
-            if ([path1 count] == [path2 count]) {
-                if ([[path2 lastObject] isKindOfClass:[path1 lastObject]]) {
+        NSArray *sortedRulePaths = [rules.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSArray *path1, NSArray *path2) {
+            if (path1.count == path2.count) {
+                if ([path2.lastObject isKindOfClass:path1.lastObject]) {
                     return (NSComparisonResult)NSOrderedAscending;
-                } else if ([[path1 lastObject] isKindOfClass:[path2 lastObject]]) {
+                } else if ([path1.lastObject isKindOfClass:path2.lastObject]) {
                     return (NSComparisonResult)NSOrderedDescending;
                 } else {
                     return (NSComparisonResult)NSOrderedSame;
                 }
-            } else if ([path1 count] < [path2 count]) {
+            } else if (path1.count < path2.count) {
                 return (NSComparisonResult)NSOrderedAscending;
             } else {
                 return (NSComparisonResult)NSOrderedDescending;
@@ -145,7 +145,7 @@ static NSArray *UIAppearanceHierarchyForClass(Class klass)
             }
             
             if (shouldApplyRule) {
-                UIAppearanceProxy *proxy = [rules objectForKey:rule];
+                UIAppearanceProxy *proxy = rules[rule];
                 [propertiesToSet addEntriesFromDictionary:[proxy _appearancePropertiesAndValues]];
             }
         }
@@ -157,10 +157,10 @@ static NSArray *UIAppearanceHierarchyForClass(Class klass)
     NSSet *originalProperties = objc_getAssociatedObject(self, UIAppearanceChangedPropertiesKey);
     
     // subtract any properties that have been overriden from the list to apply
-    [propertiesToSet removeObjectsForKeys:[originalProperties allObjects]];
+    [propertiesToSet removeObjectsForKeys:originalProperties.allObjects];
     
     // now apply everything that's left
-    for (UIAppearanceProperty *property in [propertiesToSet allValues]) {
+    for (UIAppearanceProperty *property in propertiesToSet.allValues) {
         [property invokeUsingTarget:self];
     }
     

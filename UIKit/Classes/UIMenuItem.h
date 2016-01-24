@@ -30,7 +30,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UIMenuItem : NSObject
-- (instancetype)initWithTitle:(NSString *)title action:(SEL)action;
+- (instancetype)initWithTitle:(NSString *)title action:(SEL)action NS_DESIGNATED_INITIALIZER;
 
 @property SEL action;
 @property (copy) NSString *title;

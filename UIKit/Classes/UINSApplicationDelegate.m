@@ -44,7 +44,7 @@
 
 - (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent
 {
-    NSURL* url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
+    NSURL* url = [NSURL URLWithString:[event paramDescriptorForKeyword:keyDirectObject].stringValue];
     UIApplication *app = [UIApplication sharedApplication];
     
     [app.delegate application:app openURL:url sourceApplication:nil annotation:nil];

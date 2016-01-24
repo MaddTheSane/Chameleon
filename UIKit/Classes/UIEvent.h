@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, UIEventSubtype) {
 @class UITouch;
 
 @interface UIEvent : NSObject
-- (NSSet<UITouch*> *)allTouches;
+@property (nonatomic, readonly, copy) NSSet<UITouch *> *allTouches;
 - (NSSet<UITouch*> *)touchesForView:(UIView *)view;
 - (NSSet<UITouch*> *)touchesForWindow:(UIWindow *)window;
 - (NSSet<UITouch*> *)touchesForGestureRecognizer:(UIGestureRecognizer *)gesture;

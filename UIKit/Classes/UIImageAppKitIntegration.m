@@ -42,15 +42,15 @@ static UIImageRep *UIImageRepFromNSImageRep(NSImageRep *rep, NSRect rect, CGFloa
 
 @implementation UIImage (AppKitIntegration)
 
-+ (id)imageWithNSImage:(NSImage *)theImage
++ (instancetype)imageWithNSImage:(NSImage *)theImage
 {
     return [[self alloc] initWithNSImage:theImage];
 }
 
-- (id)initWithNSImage:(NSImage *)theImage
+- (instancetype)initWithNSImage:(NSImage *)theImage
 {
-    NSRect rect1X = NSMakeRect(0, 0, [theImage size].width, [theImage size].height);
-    NSRect rect2X = NSMakeRect(0, 0, [theImage size].width*2, [theImage size].height*2);
+    NSRect rect1X = NSMakeRect(0, 0, theImage.size.width, theImage.size.height);
+    NSRect rect2X = NSMakeRect(0, 0, theImage.size.width*2, theImage.size.height*2);
     
     //Retina displays mess up this math...
     NSImageRep *theImageRep1X = [theImage bestRepresentationForRect:rect1X context:nil hints:nil];
@@ -98,18 +98,18 @@ static UIImageRep *UIImageRepFromNSImageRep(NSImageRep *rep, NSRect rect, CGFloa
     return cached;
 }
 
-+ (id)imageWithScaledImages:(NSArray *)images
++ (instancetype)imageWithScaledImages:(NSArray *)images
 {
     return [[self alloc] initWithScaledImages:images];
 }
 
-- (id)initWithScaledImages:(NSArray *)images
+- (instancetype)initWithScaledImages:(NSArray *)images
 {
-    NSMutableArray *reps = [NSMutableArray arrayWithCapacity:[images count]];
-    NSMutableSet *scaleFactors = [NSMutableSet setWithCapacity:[images count]];
+    NSMutableArray *reps = [[NSMutableArray alloc] initWithCapacity:images.count];
+    NSMutableSet *scaleFactors = [NSMutableSet setWithCapacity:images.count];
     
     for (UIImage *img in images) {
-        NSNumber *scale = [NSNumber numberWithFloat:img.scale];
+        NSNumber *scale = @(img.scale);
         assert(CGSizeEqualToSize(img.size, [[images lastObject] size]));
         assert(![scaleFactors containsObject:scale]);
         

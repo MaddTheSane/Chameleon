@@ -91,7 +91,7 @@ static UIImage *UIActivityIndicatorViewFrameImage(UIActivityIndicatorViewStyle s
     BOOL _hidesWhenStopped;
 }
 
-- (id)initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style
+- (instancetype)initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style
 {
     CGRect frame = CGRectZero;
     frame.size = UIActivityIndicatorViewStyleSize(style);
@@ -107,7 +107,7 @@ static UIImage *UIActivityIndicatorViewFrameImage(UIActivityIndicatorViewStyle s
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self = [self initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite])) {
         self.frame = frame;

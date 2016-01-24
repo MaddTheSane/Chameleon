@@ -46,13 +46,13 @@ NSMutableDictionary *imageCache = nil;
 + (void)_cacheImage:(UIImage *)image forName:(NSString *)name
 {
     if (image && name) {
-        [imageCache setObject:image forKey:name];
+        imageCache[name] = image;
     }
 }
 
 + (UIImage *)_cachedImageForName:(NSString *)name
 {
-    return [imageCache objectForKey:name];
+    return imageCache[name];
 }
 
 + (UIImage *)_frameworkImageWithName:(NSString *)name leftCapWidth:(NSUInteger)leftCapWidth topCapHeight:(NSUInteger)topCapHeight
@@ -61,7 +61,7 @@ NSMutableDictionary *imageCache = nil;
 
     if (!image) {
         NSBundle *frameworkBundle = [NSBundle bundleForClass:[self class]];
-        NSString *frameworkFile = [[frameworkBundle resourcePath] stringByAppendingPathComponent:name];
+        NSString *frameworkFile = [frameworkBundle.resourcePath stringByAppendingPathComponent:name];
         image = [[self imageWithContentsOfFile:frameworkFile] stretchableImageWithLeftCapWidth:leftCapWidth topCapHeight:topCapHeight];
         [self _cacheImage:image forName:name];
     }
@@ -151,7 +151,7 @@ NSMutableDictionary *imageCache = nil;
 
 - (id)_initWithRepresentations:(NSArray *)reps
 {
-    if ([reps count] == 0) {
+    if (reps.count == 0) {
         self = nil;
     } else if ((self=[super init])) {
         _representations = [reps copy];
@@ -177,7 +177,7 @@ NSMutableDictionary *imageCache = nil;
         }
     }
     
-    return bestRep ?: [[self _representations] lastObject];
+    return bestRep ?: [self _representations].lastObject;
 }
 
 - (BOOL)_isOpaque

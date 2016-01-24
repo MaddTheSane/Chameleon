@@ -33,7 +33,7 @@
 
 @implementation UIBarItem
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init])) {
         self.enabled = YES;

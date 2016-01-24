@@ -40,9 +40,9 @@
 
 static NSArray *CGImagesWithUIImages(NSArray *images)
 {
-    NSMutableArray *CGImages = [NSMutableArray arrayWithCapacity:[images count]];
+    NSMutableArray *CGImages = [[NSMutableArray alloc] initWithCapacity:images.count];
     for (UIImage *img in images) {
-        [CGImages addObject:(__bridge id)[img CGImage]];
+        [CGImages addObject:(__bridge id)img.CGImage];
     }
     return CGImages;
 }
@@ -56,7 +56,7 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
     return NO;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _drawMode = _UIImageViewDrawModeNormal;
@@ -66,7 +66,7 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
     return self;
 }
 
-- (id)initWithImage:(UIImage *)theImage
+- (instancetype)initWithImage:(UIImage *)theImage
 {
     CGRect frame = CGRectZero;
 
@@ -93,7 +93,7 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
         _highlighted = h;
         [self setNeedsDisplay];
 
-        if ([self isAnimating]) {
+        if (self.animating) {
             [self startAnimating];
         }
     }
@@ -178,7 +178,7 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
     theLayer.contents = (__bridge id)bestRepresentation.CGImage;
     
     if ([theLayer respondsToSelector:@selector(setContentsScale:)]) {
-        [theLayer setContentsScale:bestRepresentation.scale];
+        theLayer.contentsScale = bestRepresentation.scale;
     }
 }
 
@@ -192,13 +192,13 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
 - (void)setFrame:(CGRect)newFrame
 {
     [self _displayIfNeededChangingFromOldSize:self.frame.size toNewSize:newFrame.size];
-    [super setFrame:newFrame];
+    super.frame = newFrame;
 }
 
 - (void)setBounds:(CGRect)newBounds
 {
     [self _displayIfNeededChangingFromOldSize:self.bounds.size toNewSize:newBounds.size];
-    [super setBounds:newBounds];
+    super.bounds = newBounds;
 }
 
 - (void)startAnimating
@@ -207,7 +207,7 @@ static NSArray *CGImagesWithUIImages(NSArray *images)
 
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
     animation.calculationMode = kCAAnimationDiscrete;
-    animation.duration = self.animationDuration ?: ([images count] * (1/30.0));
+    animation.duration = self.animationDuration ?: (images.count * (1/30.0));
     animation.repeatCount = self.animationRepeatCount ?: HUGE_VALF;
     animation.values = CGImagesWithUIImages(images);
     animation.removedOnCompletion = NO;

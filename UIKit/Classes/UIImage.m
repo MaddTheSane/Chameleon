@@ -40,21 +40,21 @@
 + (UIImage *)_imageNamed:(NSString *)name
 {
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *path = [[bundle resourcePath] stringByAppendingPathComponent:name];
+    NSString *path = [bundle.resourcePath stringByAppendingPathComponent:name];
     UIImage *img = [self imageWithContentsOfFile:path];
     
     if (!img) {
         // if nothing is found, try again after replacing any underscores in the name with dashes.
         // I don't know why, but UIKit does something similar. it probably has a good reason and it might not be this simplistic, but
         // for now this little hack makes Ramp Champ work. :)
-        path = [[[bundle resourcePath] stringByAppendingPathComponent:[[name stringByDeletingPathExtension] stringByReplacingOccurrencesOfString:@"_" withString:@"-"]] stringByAppendingPathExtension:[name pathExtension]];
+        path = [[bundle.resourcePath stringByAppendingPathComponent:[name.stringByDeletingPathExtension stringByReplacingOccurrencesOfString:@"_" withString:@"-"]] stringByAppendingPathExtension:name.pathExtension];
         img = [self imageWithContentsOfFile:path];
     }
     
     return img;
 }
 
-+ (id)imageNamed:(NSString *)name
++ (instancetype)imageNamed:(NSString *)name
 {
     UIImage *img = [self _cachedImageForName:name];
     
@@ -67,24 +67,24 @@
     return img;
 }
 
-- (id)initWithContentsOfFile:(NSString *)imagePath
+- (instancetype)initWithContentsOfFile:(NSString *)imagePath
 {
     return [self _initWithRepresentations:[UIImageRep imageRepsWithContentsOfFile:imagePath]];
 }
 
-- (id)initWithData:(NSData *)data
+- (instancetype)initWithData:(NSData *)data
 {
-    return [self _initWithRepresentations:[NSArray arrayWithObjects:[[UIImageRep alloc] initWithData:data], nil]];
+    return [self _initWithRepresentations:@[[[UIImageRep alloc] initWithData:data]]];
 }
 
-- (id)initWithCGImage:(CGImageRef)imageRef
+- (instancetype)initWithCGImage:(CGImageRef)imageRef
 {
     return [self initWithCGImage:imageRef scale:1 orientation:UIImageOrientationUp];
 }
 
-- (id)initWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation
+- (instancetype)initWithCGImage:(CGImageRef)imageRef scale:(CGFloat)scale orientation:(UIImageOrientation)orientation
 {
-    return [self _initWithRepresentations:[NSArray arrayWithObjects:[[UIImageRep alloc] initWithCGImage:imageRef scale:scale], nil]];
+    return [self _initWithRepresentations:@[[[UIImageRep alloc] initWithCGImage:imageRef scale:scale]]];
 }
 
 
@@ -131,7 +131,7 @@
 - (CGSize)size
 {
     CGSize size = CGSizeZero;
-    UIImageRep *rep = [_representations lastObject];
+    UIImageRep *rep = _representations.lastObject;
     const CGSize repSize = rep.imageSize;
     const CGFloat scale = rep.scale;
     size.width = floor(repSize.width / scale);
@@ -216,7 +216,7 @@ NSData *UIImageJPEGRepresentation(UIImage *image, CGFloat compressionQuality)
     CGImageDestinationAddImage(dest, image.CGImage, (__bridge CFDictionaryRef)@{(__bridge NSString *)kCGImageDestinationLossyCompressionQuality : @(compressionQuality)});
     CGImageDestinationFinalize(dest);
     CFRelease(dest);
-    return (__bridge_transfer NSMutableData *)data;
+    return CFBridgingRelease(data);
 }
 
 NSData *UIImagePNGRepresentation(UIImage *image)
@@ -226,5 +226,5 @@ NSData *UIImagePNGRepresentation(UIImage *image)
     CGImageDestinationAddImage(dest, image.CGImage, NULL);
     CGImageDestinationFinalize(dest);
     CFRelease(dest);
-    return (__bridge_transfer NSMutableData *)data;
+    return CFBridgingRelease(data);
 }

@@ -49,7 +49,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
     UIImage *_adjustedDisabledImage;
 }
 
-+ (id)buttonWithType:(UIButtonType)buttonType
++ (instancetype)buttonWithType:(UIButtonType)buttonType
 {
     switch (buttonType) {
         case UIButtonTypeRoundedRect:
@@ -65,7 +65,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
     }
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if ((self=[super initWithFrame:frame])) {
         _buttonType = UIButtonTypeCustom;
@@ -127,7 +127,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
 
 - (id)_contentForState:(UIControlState)state type:(NSString *)type
 {
-    return [[_content objectForKey:type] objectForKey:[NSNumber numberWithInt:state]];
+    return _content[type][@(state)];
 }
 
 - (id)_normalContentForState:(UIControlState)state type:(NSString *)type
@@ -179,16 +179,16 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
 
 - (void)_setContent:(id)value forState:(UIControlState)state type:(NSString *)type
 {
-    NSMutableDictionary *typeContent = [_content objectForKey:type];
+    NSMutableDictionary *typeContent = _content[type];
     
     if (!typeContent) {
         typeContent = [[NSMutableDictionary alloc] init];
-        [_content setObject:typeContent forKey:type];
+        _content[type] = typeContent;
     }
     
-    NSNumber *key = [NSNumber numberWithInt:state];
+    NSNumber *key = @(state);
     if (value) {
-        [typeContent setObject:value forKey:key];
+        typeContent[key] = value;
     } else {
         [typeContent removeObjectForKey:key];
     }
@@ -266,7 +266,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
 - (CGSize)_titleSizeForState:(UIControlState)state
 {
     NSString *title = [self titleForState:state];
-    return ([title length] > 0)? [title sizeWithFont:_titleLabel.font constrainedToSize:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)] : CGSizeZero;
+    return (title.length > 0)? [title sizeWithFont:_titleLabel.font constrainedToSize:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)] : CGSizeZero;
 }
 
 - (CGSize)_imageSizeForState:(UIControlState)state
@@ -375,7 +375,7 @@ static NSString *UIButtonContentTypeImage = @"UIButtonContentTypeImage";
     fitSize.width = _contentEdgeInsets.left + _contentEdgeInsets.right + titleSize.width + imageSize.width;
     fitSize.height = _contentEdgeInsets.top + _contentEdgeInsets.bottom + MAX(titleSize.height,imageSize.height);
     
-    UIImage* background = [self currentBackgroundImage];
+    UIImage* background = self.currentBackgroundImage;
     if(background) {
         CGSize backgroundSize = background.size;
         fitSize.width = MAX(fitSize.width, backgroundSize.width);

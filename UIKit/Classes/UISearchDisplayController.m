@@ -49,7 +49,7 @@
 @synthesize searchResultsDataSource = _tableViewDataSource;
 @synthesize searchResultsDelegate = _tableViewDelegate;
 
-- (id)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController
+- (instancetype)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController
 {
     if ((self = [super init])) {
         _searchBar = searchBar;
