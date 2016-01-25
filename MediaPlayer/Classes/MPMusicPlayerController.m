@@ -27,15 +27,33 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <Foundation/Foundation.h>
+#import <iTunesLibrary/iTunesLibrary.h>
 #import "MPMusicPlayerController.h"
+#import "MPiTunesMusicPlayerController.h"
 
 NSString *const MPMusicPlayerControllerPlaybackStateDidChangeNotification = @"MPMusicPlayerControllerPlaybackStateDidChangeNotification";
+
+static MPiTunesMusicPlayerController *iTunesPlayer;
 
 @implementation MPMusicPlayerController
 
 + (MPMusicPlayerController *)iPodMusicPlayer
 {
-    return nil;
+    return [self systemMusicPlayer];
+}
+
++ (MPMusicPlayerController *)systemMusicPlayer
+{
+	if (!iTunesPlayer) {
+		iTunesPlayer = [[MPiTunesMusicPlayerController alloc] init];
+	}
+	return iTunesPlayer;
+}
+
++ (MPMusicPlayerController *)applicationMusicPlayer;
+{
+	return nil;
 }
 
 - (MPMusicPlaybackState)playbackState
@@ -49,6 +67,26 @@ NSString *const MPMusicPlayerControllerPlaybackStateDidChangeNotification = @"MP
 
 - (void)endGeneratingPlaybackNotifications
 {
+}
+
+- (void)play
+{
+	
+}
+
+- (void)pause
+{
+	
+}
+
+- (void)prepareToPlay
+{
+	
+}
+
+- (void)stop
+{
+	
 }
 
 @end

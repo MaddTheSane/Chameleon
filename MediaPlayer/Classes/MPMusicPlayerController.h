@@ -28,6 +28,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "MPMediaPlayback.h"
 
 typedef NS_ENUM(NSInteger, MPMusicPlaybackState) {
     MPMusicPlaybackStateStopped,
@@ -40,10 +41,16 @@ typedef NS_ENUM(NSInteger, MPMusicPlaybackState) {
 
 extern NSString *const MPMusicPlayerControllerPlaybackStateDidChangeNotification;
 
-@interface MPMusicPlayerController : NSObject {
+@interface MPMusicPlayerController : NSObject <MPMediaPlayback> {
 }
 
-+ (MPMusicPlayerController *)iPodMusicPlayer;
+//! Calls \c systemMusicPlayer
++ (MPMusicPlayerController *)iPodMusicPlayer DEPRECATED_ATTRIBUTE;
+
+//! Uses iTunes, will launch iTunes if it isn't running.
++ (MPMusicPlayerController *)systemMusicPlayer;
+//! Not implemented
++ (MPMusicPlayerController *)applicationMusicPlayer;
 
 - (void)beginGeneratingPlaybackNotifications;
 - (void)endGeneratingPlaybackNotifications;

@@ -17,6 +17,10 @@
 		4C16781A13C71E6200814195 /* UIInternalMovieView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C16781813C71E6200814195 /* UIInternalMovieView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		4C16781B13C71E6200814195 /* UIInternalMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C16781913C71E6200814195 /* UIInternalMovieView.m */; };
 		4C72FDF613C746E800D3E453 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C72FDF513C746E800D3E453 /* QuartzCore.framework */; };
+		554DC1261C569A2400284B0A /* MPiTunesMusicPlayerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 554DC1241C569A2400284B0A /* MPiTunesMusicPlayerController.h */; };
+		554DC1271C569A2400284B0A /* MPiTunesMusicPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 554DC1251C569A2400284B0A /* MPiTunesMusicPlayerController.m */; };
+		554DC1291C569C3A00284B0A /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554DC1281C569C3A00284B0A /* iTunesLibrary.framework */; };
+		554DC12B1C569D4C00284B0A /* iTunes.h in Headers */ = {isa = PBXBuildFile; fileRef = 554DC12A1C569D4C00284B0A /* iTunes.h */; };
 		55A3AB021C53E356004FA75E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A3AB011C53E356004FA75E /* AVFoundation.framework */; };
 		55FE7F6C1C533F11002F6F1C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C16787A13C71F8A00814195 /* UIKit.framework */; };
 /* End PBXBuildFile section */
@@ -41,18 +45,22 @@
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		14C25EF21211ED0400622309 /* MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPlayer.h; path = Classes/MediaPlayer.h; sourceTree = "<group>"; };
+		14C25EF21211ED0400622309 /* MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaPlayer.h; path = Classes/MediaPlayer.h; sourceTree = SOURCE_ROOT; };
 		14C25EF41211ED0C00622309 /* MediaPlayer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayer_Prefix.pch; sourceTree = "<group>"; };
-		14C25EFE1211ED4C00622309 /* MPMusicPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMusicPlayerController.h; path = Classes/MPMusicPlayerController.h; sourceTree = "<group>"; };
-		14C25EFF1211ED4C00622309 /* MPMusicPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMusicPlayerController.m; path = Classes/MPMusicPlayerController.m; sourceTree = "<group>"; };
+		14C25EFE1211ED4C00622309 /* MPMusicPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMusicPlayerController.h; path = Classes/MPMusicPlayerController.h; sourceTree = SOURCE_ROOT; };
+		14C25EFF1211ED4C00622309 /* MPMusicPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMusicPlayerController.m; path = Classes/MPMusicPlayerController.m; sourceTree = SOURCE_ROOT; };
 		14EFB1BA1211DB5300D19B0C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		4C1677D713C70F1900814195 /* MPMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMoviePlayerController.h; path = Classes/MPMoviePlayerController.h; sourceTree = "<group>"; };
-		4C1677D813C70F1900814195 /* MPMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMoviePlayerController.m; path = Classes/MPMoviePlayerController.m; sourceTree = "<group>"; };
-		4C16781513C71E4900814195 /* MPMediaPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMediaPlayback.h; path = Classes/MPMediaPlayback.h; sourceTree = "<group>"; };
-		4C16781813C71E6200814195 /* UIInternalMovieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIInternalMovieView.h; path = Classes/UIInternalMovieView.h; sourceTree = "<group>"; };
-		4C16781913C71E6200814195 /* UIInternalMovieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIInternalMovieView.m; path = Classes/UIInternalMovieView.m; sourceTree = "<group>"; };
+		4C1677D713C70F1900814195 /* MPMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMoviePlayerController.h; path = Classes/MPMoviePlayerController.h; sourceTree = SOURCE_ROOT; };
+		4C1677D813C70F1900814195 /* MPMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMoviePlayerController.m; path = Classes/MPMoviePlayerController.m; sourceTree = SOURCE_ROOT; };
+		4C16781513C71E4900814195 /* MPMediaPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMediaPlayback.h; path = Classes/MPMediaPlayback.h; sourceTree = SOURCE_ROOT; };
+		4C16781813C71E6200814195 /* UIInternalMovieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIInternalMovieView.h; path = Classes/UIInternalMovieView.h; sourceTree = SOURCE_ROOT; };
+		4C16781913C71E6200814195 /* UIInternalMovieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIInternalMovieView.m; path = Classes/UIInternalMovieView.m; sourceTree = SOURCE_ROOT; };
 		4C16787213C71F8A00814195 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = ../UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
 		4C72FDF513C746E800D3E453 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		554DC1241C569A2400284B0A /* MPiTunesMusicPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPiTunesMusicPlayerController.h; path = Classes/MPiTunesMusicPlayerController.h; sourceTree = SOURCE_ROOT; };
+		554DC1251C569A2400284B0A /* MPiTunesMusicPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPiTunesMusicPlayerController.m; path = Classes/MPiTunesMusicPlayerController.m; sourceTree = SOURCE_ROOT; };
+		554DC1281C569C3A00284B0A /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = /Library/Frameworks/iTunesLibrary.framework; sourceTree = "<absolute>"; };
+		554DC12A1C569D4C00284B0A /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunes.h; path = Classes/iTunes.h; sourceTree = "<group>"; };
 		55A3AB011C53E356004FA75E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* MediaPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MediaPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554DC1291C569C3A00284B0A /* iTunesLibrary.framework in Frameworks */,
 				55A3AB021C53E356004FA75E /* AVFoundation.framework in Frameworks */,
 				55FE7F6C1C533F11002F6F1C /* UIKit.framework in Frameworks */,
 				4C72FDF613C746E800D3E453 /* QuartzCore.framework in Frameworks */,
@@ -90,7 +99,6 @@
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				4C16787213C71F8A00814195 /* UIKit.xcodeproj */,
 			);
 			name = UIKit;
 			sourceTree = "<group>";
@@ -98,6 +106,8 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				554DC1281C569C3A00284B0A /* iTunesLibrary.framework */,
+				4C16787213C71F8A00814195 /* UIKit.xcodeproj */,
 				55A3AB011C53E356004FA75E /* AVFoundation.framework */,
 				4C72FDF513C746E800D3E453 /* QuartzCore.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
@@ -139,8 +149,11 @@
 		4C16780A13C71DDC00814195 /* Private Classes */ = {
 			isa = PBXGroup;
 			children = (
+				554DC12A1C569D4C00284B0A /* iTunes.h */,
 				4C16781813C71E6200814195 /* UIInternalMovieView.h */,
 				4C16781913C71E6200814195 /* UIInternalMovieView.m */,
+				554DC1241C569A2400284B0A /* MPiTunesMusicPlayerController.h */,
+				554DC1251C569A2400284B0A /* MPiTunesMusicPlayerController.m */,
 			);
 			name = "Private Classes";
 			sourceTree = "<group>";
@@ -163,7 +176,9 @@
 				14C25EF31211ED0400622309 /* MediaPlayer.h in Headers */,
 				14C25F001211ED4C00622309 /* MPMusicPlayerController.h in Headers */,
 				4C1677D913C70F1A00814195 /* MPMoviePlayerController.h in Headers */,
+				554DC12B1C569D4C00284B0A /* iTunes.h in Headers */,
 				4C16781613C71E4900814195 /* MPMediaPlayback.h in Headers */,
+				554DC1261C569A2400284B0A /* MPiTunesMusicPlayerController.h in Headers */,
 				4C16781A13C71E6200814195 /* UIInternalMovieView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14C25F011211ED4C00622309 /* MPMusicPlayerController.m in Sources */,
+				554DC1271C569A2400284B0A /* MPiTunesMusicPlayerController.m in Sources */,
 				4C1677DA13C70F1A00814195 /* MPMoviePlayerController.m in Sources */,
 				4C16781B13C71E6200814195 /* UIInternalMovieView.m in Sources */,
 			);
@@ -280,7 +296,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -310,7 +327,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;

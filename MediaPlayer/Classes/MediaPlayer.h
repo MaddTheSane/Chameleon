@@ -27,5 +27,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import "MPMediaPlayback.h"
 #import "MPMusicPlayerController.h"
 #import "MPMoviePlayerController.h"
