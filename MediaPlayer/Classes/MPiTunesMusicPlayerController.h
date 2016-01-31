@@ -10,4 +10,6 @@
 
 @interface MPiTunesMusicPlayerController : MPMusicPlayerController
 
+- (void)run;
+
 @end

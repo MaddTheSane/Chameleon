@@ -48,6 +48,7 @@ static MPiTunesMusicPlayerController *iTunesPlayer;
 	if (!iTunesPlayer) {
 		iTunesPlayer = [[MPiTunesMusicPlayerController alloc] init];
 	}
+	[iTunesPlayer run];
 	return iTunesPlayer;
 }
 

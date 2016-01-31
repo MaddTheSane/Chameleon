@@ -18,9 +18,13 @@
 {
 	if (self = [super init]) {
 		iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
-		[iTunes run];
 	}
 	return self;
+}
+
+- (void)run
+{
+	[iTunes run];
 }
 
 - (MPMusicPlaybackState)playbackState
