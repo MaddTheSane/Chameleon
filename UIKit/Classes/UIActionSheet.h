@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, UIActionSheetStyle) {
 };
 
 @interface UIActionSheet : UIView
-- (instancetype)initWithTitle:(NSString *)title delegate:(id<UIActionSheetDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
+- (instancetype)initWithTitle:(NSString *)title delegate:(id<UIActionSheetDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 - (NSInteger)addButtonWithTitle:(NSString *)title;
 
 - (void)showInView:(UIView *)view;														// menu will appear wherever the mouse cursor is

@@ -32,5 +32,5 @@
 @class NSView;
 
 @interface UIScreenMode ()
-+ (id)screenModeWithNSView:(NSView *)theNSView;
++ (instancetype)screenModeWithNSView:(NSView *)theNSView;
 @end

@@ -26,6 +26,7 @@ extension UIEdgeInsets: Equatable {
 	public func insetRect(rect: CGRect) -> CGRect {
 		return UIEdgeInsetsInsetRect(rect, self)
 	}
+
 }
 
 extension UIOffset: Equatable {
@@ -72,6 +73,11 @@ extension UIActionSheet {
 	}
 }
 
+extension UIColor: _ColorLiteralConvertible {
+	public required convenience init(colorLiteralRed red: Float, green: Float, blue: Float, alpha: Float) {
+		self.init(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
+	}
+}
 
 @warn_unused_result
 public func UIDeviceOrientationIsLandscape(orientation: UIDeviceOrientation) -> Bool {

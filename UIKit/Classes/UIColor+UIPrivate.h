@@ -32,7 +32,7 @@
 @class UIColorRep;
 
 @interface UIColor (UIPrivate)
-- (instancetype)_initWithRepresentations:(NSArray *)reps;
+- (instancetype)_initWithRepresentations:(NSArray<UIColorRep*> *)reps;
 - (UIColorRep *)_bestRepresentationForProposedScale:(CGFloat)scale;
 - (BOOL)_isOpaque;
 @end

@@ -55,7 +55,9 @@
 
 - (void)play
 {
-	[iTunes playpause];
+	if (iTunes.playerState != iTunesEPlSPlaying) {
+		[iTunes playpause];
+	}
 }
 
 - (void)pause
@@ -65,7 +67,7 @@
 
 - (void)prepareToPlay
 {
-	
+	[self run];
 }
 
 - (void)stop

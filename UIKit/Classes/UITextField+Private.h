@@ -27,9 +27,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+@class UITextLayer;
+
 @interface UITextField(Private)
 
-- (id)textLayer;
+- (UITextLayer *)textLayer;
 
 @end
 

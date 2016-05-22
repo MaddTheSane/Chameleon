@@ -30,6 +30,8 @@
 #import "UIScrollView.h"
 #import "UIDataDetectors.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, UIWebViewNavigationType) {
     UIWebViewNavigationTypeLinkClicked,
     UIWebViewNavigationTypeFormSubmitted,
@@ -44,26 +46,26 @@ typedef NS_ENUM(NSInteger, UIWebViewNavigationType) {
 @protocol UIWebViewDelegate <NSObject>
 @optional
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
-- (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)error;
+- (void)webView:(UIWebView *)aWebView didFailLoadWithError:(nullable NSError *)error;
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 @end
 
 @interface UIWebView : UIView
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
+- (void)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;
 - (void)loadRequest:(NSURLRequest *)request;
 - (void)stopLoading;
 - (void)reload;
 - (void)goBack;
 - (void)goForward;
 
-- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script;
+- (nullable NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script;
 
-@property (nonatomic, assign) id<UIWebViewDelegate> delegate;
+@property (nullable, nonatomic, weak) id<UIWebViewDelegate> delegate;
 @property (nonatomic, readonly, getter=isLoading) BOOL loading;
 @property (nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
 @property (nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
 @property (nonatomic, assign) BOOL scalesPageToFit; // not implemented
-@property (nonatomic, readonly, strong) NSURLRequest *request;
+@property (nullable, nonatomic, readonly, strong) NSURLRequest *request;
 @property (nonatomic) UIDataDetectorTypes dataDetectorTypes;
 @property (nonatomic, readonly, strong) UIScrollView *scrollView;   // not implemented
 
@@ -76,3 +78,5 @@ typedef NS_ENUM(NSInteger, UIWebViewNavigationType) {
 @property (nonatomic, assign) BOOL chameleonAllowContextMenu;
 
 @end
+
+NS_ASSUME_NONNULL_END

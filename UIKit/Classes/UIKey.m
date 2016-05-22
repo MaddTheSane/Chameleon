@@ -30,6 +30,7 @@
 #import "UIKey.h"
 #import <AppKit/NSEvent.h>
 #import <AppKit/NSText.h>
+#import "UIResponderAppKitIntegration.h"
 
 @implementation UIKey {
     NSUInteger _modifierFlags;
