@@ -44,15 +44,15 @@ static CFArrayRef CreateCTLinesForString(NSString *string, CGSize constrainedToS
     CGSize drawSize = CGSizeZero;
 
     if (font) {
-        CFMutableDictionaryRef attributes = CFDictionaryCreateMutable(NULL, 2, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-        CFDictionarySetValue(attributes, kCTFontAttributeName,font->_font);
-        CFDictionarySetValue(attributes, kCTForegroundColorFromContextAttributeName, kCFBooleanTrue);
+        NSMutableDictionary<NSString*, id> *attributes = [[NSMutableDictionary alloc] init];
+        attributes[(NSString*)kCTFontAttributeName] = (__bridge id)font->_font;
+        attributes[(NSString*)kCTForegroundColorFromContextAttributeName] = @YES;
         
-        CFAttributedStringRef attributedString = CFAttributedStringCreate(NULL, (__bridge CFStringRef)string, attributes);
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:attributes];
         
-        CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString(attributedString);
+        CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((CFAttributedStringRef)attributedString);
         
-        const CFIndex stringLength = CFAttributedStringGetLength(attributedString);
+        const CFIndex stringLength = attributedString.length;
         const CGFloat lineHeight = font.lineHeight;
         const CGFloat capHeight = font.capHeight;
         
@@ -82,13 +82,12 @@ static CFArrayRef CreateCTLinesForString(NSString *string, CGSize constrainedToS
                     }
                     
                     usedCharacters = stringLength - start;
-                    CFAttributedStringRef ellipsisString = CFAttributedStringCreate(NULL, CFSTR("…"), attributes);
-                    CTLineRef ellipsisLine = CTLineCreateWithAttributedString(ellipsisString);
+                    NSAttributedString *ellipsisString = [[NSAttributedString alloc] initWithString:@"…" attributes:attributes];
+                    CTLineRef ellipsisLine = CTLineCreateWithAttributedString((CFAttributedStringRef)ellipsisString);
                     CTLineRef tempLine = CTTypesetterCreateLine(typesetter, CFRangeMake(start, usedCharacters));
                     line = CTLineCreateTruncatedLine(tempLine, constrainedToSize.width, truncType, ellipsisLine);
                     CFRelease(tempLine);
                     CFRelease(ellipsisLine);
-                    CFRelease(ellipsisString);
                 }
             } else {
                 if (lineBreakMode == UILineBreakModeCharacterWrap) {
@@ -110,8 +109,6 @@ static CFArrayRef CreateCTLinesForString(NSString *string, CGSize constrainedToS
         }
         
         CFRelease(typesetter);
-        CFRelease(attributedString);
-        CFRelease(attributes);
     }
     
     if (renderSize) {

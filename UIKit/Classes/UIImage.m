@@ -211,20 +211,20 @@ BOOL UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(NSString *videoPath)
 
 NSData *UIImageJPEGRepresentation(UIImage *image, CGFloat compressionQuality)
 {
-    CFMutableDataRef data = CFDataCreateMutable(NULL, 0);
-    CGImageDestinationRef dest = CGImageDestinationCreateWithData(data, kUTTypeJPEG, 1, NULL);
-    CGImageDestinationAddImage(dest, image.CGImage, (__bridge CFDictionaryRef)@{(__bridge NSString *)kCGImageDestinationLossyCompressionQuality : @(compressionQuality)});
+    NSMutableData *data = [[NSMutableData alloc] init];
+    CGImageDestinationRef dest = CGImageDestinationCreateWithData((CFMutableDataRef)data, kUTTypeJPEG, 1, NULL);
+    CGImageDestinationAddImage(dest, image.CGImage, (__bridge CFDictionaryRef)@{(NSString *)kCGImageDestinationLossyCompressionQuality : @(compressionQuality)});
     CGImageDestinationFinalize(dest);
     CFRelease(dest);
-    return CFBridgingRelease(data);
+    return data;
 }
 
 NSData *UIImagePNGRepresentation(UIImage *image)
 {
-    CFMutableDataRef data = CFDataCreateMutable(NULL, 0);
-    CGImageDestinationRef dest = CGImageDestinationCreateWithData(data, kUTTypePNG, 1, NULL);
+    NSMutableData *data = [[NSMutableData alloc] init];
+    CGImageDestinationRef dest = CGImageDestinationCreateWithData((CFMutableDataRef)data, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(dest, image.CGImage, NULL);
     CGImageDestinationFinalize(dest);
     CFRelease(dest);
-    return CFBridgingRelease(data);
+    return data;
 }
