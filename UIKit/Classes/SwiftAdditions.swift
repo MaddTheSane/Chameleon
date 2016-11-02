@@ -8,12 +8,10 @@
 
 import Foundation
 
-@warn_unused_result
 public func ==(lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> Bool {
 	return UIEdgeInsetsEqualToEdgeInsets(lhs, rhs)
 }
 
-@warn_unused_result
 public func ==(lhs: UIOffset, rhs: UIOffset) -> Bool {
 	return UIOffsetEqualToOffset(lhs, rhs)
 }
@@ -23,10 +21,9 @@ extension UIEdgeInsets: Equatable {
 		return UIEdgeInsetsZero
 	}
 	
-	public func insetRect(rect: CGRect) -> CGRect {
+	public func inset(rect: CGRect) -> CGRect {
 		return UIEdgeInsetsInsetRect(rect, self)
 	}
-
 }
 
 extension UIOffset: Equatable {
@@ -37,69 +34,64 @@ extension UIOffset: Equatable {
 
 extension UIDeviceOrientation {
 	public var isLandscape: Bool {
-		return self == .LandscapeLeft || self == .LandscapeRight
+		return self == .landscapeLeft || self == .landscapeRight
 	}
 	
 	public var isPortrait: Bool {
-		return self == .Portrait || self == .PortraitUpsideDown
+		return self == .portrait || self == .portraitUpsideDown
 	}
 	
 	public var isFlat: Bool {
-		return self == .FaceUp || self == .FaceDown
+		return self == .faceUp || self == .faceDown
 	}
 	
 	public var isValidInterfaceOrientation: Bool {
-		return self != .Unknown
+		return self != .unknown
 	}
 }
 
 extension UIInterfaceOrientation {
 	public var isLandscape: Bool {
-		return self == .LandscapeLeft || self == .LandscapeRight
+		return self == .landscapeLeft || self == .landscapeRight
 	}
 	
 	public var isPortrait: Bool {
-		return self == .Portrait || self == .PortraitUpsideDown
+		return self == .portrait || self == .portraitUpsideDown
 	}
 }
 
 extension UIActionSheet {
 	public convenience init(title: String?, delegate: UIActionSheetDelegate?, cancelButtonTitle: String?, destructiveButtonTitle: String?, otherButtonTitles firstButtonTitle: String, _ moreButtonTitles: String...) {
 		self.init(title: title, delegate: delegate, cancelButtonTitle: cancelButtonTitle, destructiveButtonTitle: destructiveButtonTitle)
-		addButtonWithTitle(firstButtonTitle)
+		addButton(withTitle: firstButtonTitle)
 		for str in moreButtonTitles {
-			addButtonWithTitle(str)
+			addButton(withTitle: str)
 		}
 	}
 }
 
-extension UIColor: _ColorLiteralConvertible {
+extension UIColor: _ExpressibleByColorLiteral {
 	public required convenience init(colorLiteralRed red: Float, green: Float, blue: Float, alpha: Float) {
 		self.init(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
 	}
 }
 
-@warn_unused_result
-public func UIDeviceOrientationIsLandscape(orientation: UIDeviceOrientation) -> Bool {
+public func UIDeviceOrientationIsLandscape(_ orientation: UIDeviceOrientation) -> Bool {
 	return orientation.isLandscape
 }
 
-@warn_unused_result
-public func UIDeviceOrientationIsPortrait(orientation: UIDeviceOrientation) -> Bool {
+public func UIDeviceOrientationIsPortrait(_ orientation: UIDeviceOrientation) -> Bool {
 	return orientation.isPortrait
 }
 
-@warn_unused_result
-public func UIDeviceOrientationIsValidInterfaceOrientation(orientation: UIDeviceOrientation) -> Bool {
+public func UIDeviceOrientationIsValidInterfaceOrientation(_ orientation: UIDeviceOrientation) -> Bool {
 	return orientation.isValidInterfaceOrientation
 }
 
-@warn_unused_result
-public func UIInterfaceOrientationIsLandscape(orientation: UIInterfaceOrientation) -> Bool {
+public func UIInterfaceOrientationIsLandscape(_ orientation: UIInterfaceOrientation) -> Bool {
 	return orientation.isLandscape
 }
 
-@warn_unused_result
-public func UIInterfaceOrientationIsPortrait(orientation: UIInterfaceOrientation) -> Bool {
+public func UIInterfaceOrientationIsPortrait(_ orientation: UIInterfaceOrientation) -> Bool {
 	return orientation.isPortrait
 }

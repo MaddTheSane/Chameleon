@@ -40,24 +40,24 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)colorWithCGColor:(CGColorRef)ref;
 + (instancetype)colorWithPatternImage:(UIImage *)patternImage;
 
-+ (UIColor *)blackColor;
-+ (UIColor *)darkGrayColor;
-+ (UIColor *)lightGrayColor;
-+ (UIColor *)whiteColor;
-+ (UIColor *)grayColor;
-+ (UIColor *)redColor;
-+ (UIColor *)greenColor;
-+ (UIColor *)blueColor;
-+ (UIColor *)cyanColor;
-+ (UIColor *)yellowColor;
-+ (UIColor *)magentaColor;
-+ (UIColor *)orangeColor;
-+ (UIColor *)purpleColor;
-+ (UIColor *)brownColor;
-+ (UIColor *)clearColor;
+@property (class, readonly, retain) UIColor *blackColor;
+@property (class, readonly, retain) UIColor *darkGrayColor;
+@property (class, readonly, retain) UIColor *lightGrayColor;
+@property (class, readonly, retain) UIColor *whiteColor;
+@property (class, readonly, retain) UIColor *grayColor;
+@property (class, readonly, retain) UIColor *redColor;
+@property (class, readonly, retain) UIColor *greenColor;
+@property (class, readonly, retain) UIColor *blueColor;
+@property (class, readonly, retain) UIColor *cyanColor;
+@property (class, readonly, retain) UIColor *yellowColor;
+@property (class, readonly, retain) UIColor *magentaColor;
+@property (class, readonly, retain) UIColor *orangeColor;
+@property (class, readonly, retain) UIColor *purpleColor;
+@property (class, readonly, retain) UIColor *brownColor;
+@property (class, readonly, retain) UIColor *clearColor;
 
-+ (UIColor *)lightTextColor;
-+ (UIColor *)darkTextColor;
+@property (class, readonly, retain) UIColor *lightTextColor;
+@property (class, readonly, retain) UIColor *darkTextColor;
 
 - (instancetype)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
 - (instancetype)initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;

@@ -283,15 +283,22 @@
 - (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
     switch (textAlignment) {
-        case NSLeftTextAlignment:
+        case NSTextAlignmentLeft:
             _textView.alignment = NSLeftTextAlignment;
             break;
-        case NSCenterTextAlignment:
+        case NSTextAlignmentCenter:
             _textView.alignment = NSCenterTextAlignment;
             break;
-        case NSRightTextAlignment:
+        case NSTextAlignmentRight:
             _textView.alignment = NSRightTextAlignment;
             break;
+        case NSTextAlignmentNatural:
+            _textView.alignment = NSTextAlignmentNatural;
+            break;
+        case NSTextAlignmentJustified:
+            _textView.alignment = NSTextAlignmentJustified;
+            break;
+
     }
 }
 

@@ -30,6 +30,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UIMenuItem : NSObject
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithTitle:(NSString *)title action:(SEL)action NS_DESIGNATED_INITIALIZER;
 
 @property SEL action;

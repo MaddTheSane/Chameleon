@@ -38,6 +38,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageRep.h"
 
+@interface UIView ()
+- (void)displayLayer:(CALayer *)theLayer;
+@end
+
 static NSArray *CGImagesWithUIImages(NSArray *images)
 {
     NSMutableArray *CGImages = [[NSMutableArray alloc] initWithCapacity:images.count];

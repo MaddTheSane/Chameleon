@@ -28,6 +28,7 @@
  */
 
 #import "UIView.h"
+#import <QuartzCore/QuartzCore.h>
 
 typedef NS_ENUM(NSInteger, UIViewAnimationGroupTransition) {
     UIViewAnimationGroupTransitionNone,
@@ -42,7 +43,7 @@ typedef NS_ENUM(NSInteger, UIViewAnimationGroupTransition) {
 
 extern BOOL UIViewAnimationOptionIsSet(UIViewAnimationOptions options, UIViewAnimationOptions option);
 
-@interface UIViewAnimationGroup : NSObject
+@interface UIViewAnimationGroup : NSObject <CAAnimationDelegate>
 
 - (instancetype)initWithAnimationOptions:(UIViewAnimationOptions)options;
 

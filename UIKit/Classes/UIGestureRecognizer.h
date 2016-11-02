@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, UIGestureRecognizerState) {
 @end
 
 @interface UIGestureRecognizer : NSObject
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithTarget:(id)target action:(SEL)action NS_DESIGNATED_INITIALIZER;
 
 - (void)addTarget:(id)target action:(SEL)action;

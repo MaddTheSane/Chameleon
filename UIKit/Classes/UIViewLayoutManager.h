@@ -28,7 +28,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface UIViewLayoutManager : NSObject
+@interface UIViewLayoutManager : NSObject <CALayoutManager>
 + (UIViewLayoutManager *)layoutManager;
 @end

@@ -49,7 +49,7 @@ static UIViewLayoutManager *theLayoutManager = nil;
 
 - (void)layoutSublayersOfLayer:(CALayer *)theLayer
 {
-    [theLayer.delegate _layoutSubviews];
+    [(UIView*)theLayer.delegate _layoutSubviews];
 }
 
 @end

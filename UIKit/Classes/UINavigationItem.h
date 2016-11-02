@@ -32,6 +32,7 @@
 @class UIBarButtonItem, UIView;
 
 @interface UINavigationItem : NSObject
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithTitle:(NSString *)title NS_DESIGNATED_INITIALIZER;
 - (void)setLeftBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;
 - (void)setRightBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated;

@@ -70,21 +70,21 @@ typedef NS_ENUM(NSInteger, UIDeviceBatteryState) {
     (orientation) == UIDeviceOrientationLandscapeRight)
 
 @interface UIDevice : NSObject
-+ (UIDevice *)currentDevice;
+@property (class, readonly, retain) UIDevice *currentDevice;
 
 @property (nonatomic, readonly, strong) NSString *name;
-@property (nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom;					// always returns UIUserInterfaceIdiomDesktop
-@property (nonatomic, readonly) UIDeviceOrientation orientation;							// always returns UIDeviceOrientationPortrait
+@property (nonatomic, readonly) UIUserInterfaceIdiom userInterfaceIdiom;					///< always returns UIUserInterfaceIdiomDesktop
+@property (nonatomic, readonly) UIDeviceOrientation orientation;							///< always returns UIDeviceOrientationPortrait
 @property (nonatomic, readonly) UIDeviceBatteryState batteryState;
 @property (nonatomic, readonly) float batteryLevel;
-@property (nonatomic, readonly,getter=isMultitaskingSupported) BOOL multitaskingSupported;	// always returns YES
+@property (nonatomic, readonly,getter=isMultitaskingSupported) BOOL multitaskingSupported;	///< always returns YES
 @property (nonatomic, readonly, strong) NSString *systemName;
 @property (nonatomic, readonly, strong) NSString *systemVersion;
 @property (nonatomic, readonly, strong) NSString *model;
-@property (nonatomic, readonly, getter=isGeneratingDeviceOrientationNotifications) BOOL generatesDeviceOrientationNotifications; // aways returns NO
+@property (nonatomic, readonly, getter=isGeneratingDeviceOrientationNotifications) BOOL generatesDeviceOrientationNotifications; ///< aways returns NO
 @property (nonatomic, assign) BOOL batteryMonitoringEnabled;
 
-- (void)beginGeneratingDeviceOrientationNotifications;  // no effect
-- (void)endGeneratingDeviceOrientationNotifications;    // no effect
+- (void)beginGeneratingDeviceOrientationNotifications;  ///< no effect
+- (void)endGeneratingDeviceOrientationNotifications;    ///< no effect
 
 @end

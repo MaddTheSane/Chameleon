@@ -50,6 +50,10 @@ NSString *const UIViewHiddenDidChangeNotification = @"UIViewHiddenDidChangeNotif
 static NSMutableArray<UIViewAnimationGroup*> *_animationGroups;
 static BOOL _animationsEnabled = YES;
 
+@interface UIView () <CALayerDelegate>
+
+@end
+
 @implementation UIView
 
 + (void)initialize

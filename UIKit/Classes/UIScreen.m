@@ -46,6 +46,10 @@ NSString *const UIScreenModeDidChangeNotification = @"UIScreenModeDidChangeNotif
 
 NSMutableArray *_allScreens = nil;
 
+@interface UIScreen () <CALayerDelegate>
+
+@end
+
 @implementation UIScreen {
     UIImageView *_grabber;
     CALayer *_layer;
